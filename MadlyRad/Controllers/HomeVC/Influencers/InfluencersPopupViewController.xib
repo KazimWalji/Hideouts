@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="InfluencersPopupViewController" customModule="Hideouts" customModuleProvider="target">
+            <connections>
+                <outlet property="backgroundView" destination="Mub-Ox-xnk" id="bhN-6Z-NZ5"/>
+                <outlet property="gradientView" destination="YsT-42-RTk" id="ypa-PH-9Dn"/>
+                <outlet property="tableView" destination="ELb-ab-uAi" id="dfj-oV-38w"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Mub-Ox-xnk">
+                    <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                    <color key="backgroundColor" white="1" alpha="0.01797945205479452" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YsT-42-RTk">
+                    <rect key="frame" x="52" y="162.5" width="310.5" height="531"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                </view>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="ELb-ab-uAi">
+                    <rect key="frame" x="52" y="202.5" width="310.5" height="491"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </tableView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Meet Our Influencers" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="z5l-ts-vxL">
+                    <rect key="frame" x="52" y="162.5" width="310.5" height="40"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="40" id="BWe-XD-7K0"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
+                    <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="ELb-ab-uAi" firstAttribute="height" secondItem="Mub-Ox-xnk" secondAttribute="height" multiplier="0.6" id="0Bc-SC-SdY"/>
+                <constraint firstItem="ELb-ab-uAi" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="AFW-Rq-1bX"/>
+                <constraint firstItem="YsT-42-RTk" firstAttribute="top" secondItem="z5l-ts-vxL" secondAttribute="top" id="Cxr-O2-Oos"/>
+                <constraint firstItem="z5l-ts-vxL" firstAttribute="leading" secondItem="ELb-ab-uAi" secondAttribute="leading" id="MFR-m2-dhO"/>
+                <constraint firstItem="YsT-42-RTk" firstAttribute="leading" secondItem="ELb-ab-uAi" secondAttribute="leading" id="NQA-xw-ttF"/>
+                <constraint firstItem="Mub-Ox-xnk" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="P4C-Cl-FfR"/>
+                <constraint firstItem="ELb-ab-uAi" firstAttribute="width" secondItem="Mub-Ox-xnk" secondAttribute="width" multiplier="0.75" id="TG8-2P-GYD"/>
+                <constraint firstItem="YsT-42-RTk" firstAttribute="bottom" secondItem="ELb-ab-uAi" secondAttribute="bottom" id="WbG-zc-r4r"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Mub-Ox-xnk" secondAttribute="trailing" id="Xld-nZ-21g"/>
+                <constraint firstItem="YsT-42-RTk" firstAttribute="trailing" secondItem="ELb-ab-uAi" secondAttribute="trailing" id="bPj-8M-KOb"/>
+                <constraint firstItem="ELb-ab-uAi" firstAttribute="top" secondItem="z5l-ts-vxL" secondAttribute="bottom" id="e2i-fn-gEH"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="Mub-Ox-xnk" secondAttribute="bottom" id="gCY-Pi-Jc7"/>
+                <constraint firstItem="Mub-Ox-xnk" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="jqG-UA-0Bf"/>
+                <constraint firstItem="z5l-ts-vxL" firstAttribute="trailing" secondItem="ELb-ab-uAi" secondAttribute="trailing" id="u7T-i3-6AC"/>
+                <constraint firstItem="ELb-ab-uAi" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="ySi-cc-wI3"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <point key="canvasLocation" x="137.68115942028987" y="144.64285714285714"/>
+        </view>
+    </objects>
+</document>

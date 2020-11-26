@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="InfluencerDetailViewController" customModule="Hideouts" customModuleProvider="target">
+            <connections>
+                <outlet property="imageView" destination="Gqd-F7-gAk" id="uJt-Vf-NPi"/>
+                <outlet property="infoTextView" destination="viT-8w-nb2" id="VHA-PO-3ez"/>
+                <outlet property="instaButton" destination="PPJ-31-Fz2" id="h6I-jx-xIL"/>
+                <outlet property="nameLabel" destination="hG6-82-Zky" id="VQT-Tp-Org"/>
+                <outlet property="tiktokButton" destination="Obg-3Y-bxO" id="M9U-wm-YTj"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cat3" translatesAutoresizingMaskIntoConstraints="NO" id="Gqd-F7-gAk">
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="295.5"/>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="6" translatesAutoresizingMaskIntoConstraints="NO" id="hG6-82-Zky">
+                    <rect key="frame" x="20" y="315.5" width="374" height="27"/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="22"/>
+                    <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="viT-8w-nb2">
+                    <rect key="frame" x="20" y="352.5" width="374" height="409.5"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                    <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                </textView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Obg-3Y-bxO">
+                    <rect key="frame" x="344" y="782" width="50" height="50"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="50" id="JLK-BA-8kn"/>
+                        <constraint firstAttribute="width" constant="50" id="o4J-Vt-68F"/>
+                    </constraints>
+                    <state key="normal" image="ttLogo"/>
+                    <connections>
+                        <action selector="onTiktokHandler:" destination="-1" eventType="touchUpInside" id="3e2-jL-aba"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PPJ-31-Fz2">
+                    <rect key="frame" x="274" y="782" width="50" height="50"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="50" id="Iqd-Z6-C97"/>
+                        <constraint firstAttribute="height" constant="50" id="qqI-G0-PWd"/>
+                    </constraints>
+                    <state key="normal" image="instagram logobest-1"/>
+                    <connections>
+                        <action selector="onInstaHandler:" destination="-1" eventType="touchUpInside" id="0Sg-py-ETp"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+            <constraints>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="hG6-82-Zky" secondAttribute="trailing" constant="20" id="8AC-IE-5tJ"/>
+                <constraint firstItem="Obg-3Y-bxO" firstAttribute="leading" secondItem="PPJ-31-Fz2" secondAttribute="trailing" constant="20" id="I4y-Ne-rKr"/>
+                <constraint firstItem="hG6-82-Zky" firstAttribute="top" secondItem="Gqd-F7-gAk" secondAttribute="bottom" constant="20" id="VNp-5u-4Pp"/>
+                <constraint firstItem="PPJ-31-Fz2" firstAttribute="top" secondItem="viT-8w-nb2" secondAttribute="bottom" constant="20" id="Wbf-So-oMJ"/>
+                <constraint firstAttribute="trailing" secondItem="Obg-3Y-bxO" secondAttribute="trailing" constant="20" id="Y96-K7-W7w"/>
+                <constraint firstItem="viT-8w-nb2" firstAttribute="top" secondItem="hG6-82-Zky" secondAttribute="bottom" constant="10" id="YFJ-nw-cJw"/>
+                <constraint firstItem="Gqd-F7-gAk" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="dET-1B-I7y"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="viT-8w-nb2" secondAttribute="trailing" constant="20" id="dk5-WU-IhT"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Gqd-F7-gAk" secondAttribute="trailing" id="eKO-1d-Lem"/>
+                <constraint firstItem="Gqd-F7-gAk" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="gbB-t2-UHt"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="viT-8w-nb2" secondAttribute="bottom" constant="100" id="hus-Pm-Zl6"/>
+                <constraint firstItem="viT-8w-nb2" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="20" id="jQ8-Jj-RXO"/>
+                <constraint firstItem="hG6-82-Zky" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="20" id="nbU-hs-iXh"/>
+                <constraint firstItem="Gqd-F7-gAk" firstAttribute="height" secondItem="i5M-Pr-FkT" secondAttribute="height" multiplier="0.33" id="wMm-pp-Kg5"/>
+                <constraint firstItem="Obg-3Y-bxO" firstAttribute="top" secondItem="viT-8w-nb2" secondAttribute="bottom" constant="20" id="yRc-mQ-Bhk"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <point key="canvasLocation" x="140.57971014492756" y="140.625"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="cat3" width="1200" height="667"/>
+        <image name="instagram logobest-1" width="1200" height="1200"/>
+        <image name="ttLogo" width="318" height="317"/>
+    </resources>
+</document>
