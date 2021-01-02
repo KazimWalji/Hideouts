@@ -157,7 +157,7 @@ class AddFriendVC: UIViewController{
 
     // ---------------------------------------------------------------------------------------------------------------------------------------------------- //
     private func blockedButton(){
-    let button = UIButton(frame: CGRect(x: self.view.center.x, y: 550, width: 325, height: 50))
+    let button = UIButton(frame: CGRect(x: self.view.center.x, y: 570, width: 325, height: 50))
     button.center.x = self.view.center.x
     button.setTitleColor(UIColor.black, for: UIControl.State.normal)
       button.setTitle("Block", for: .normal)

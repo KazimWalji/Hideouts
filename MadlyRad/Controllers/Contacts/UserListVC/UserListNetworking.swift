@@ -20,7 +20,6 @@ class UserListNetworking {
                 guard let snapshot = child as? DataSnapshot else { return }
                 guard let values = snapshot.value as? [String: Any] else { return }
                 user.email = values["email"] as? String
-                user.profileImage = values["profileImage"] as? String
                 user.name = values["name"] as? String
                 user.UserID = values["UserID"] as? String
                 user.id = snapshot.key

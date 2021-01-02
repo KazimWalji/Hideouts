@@ -785,7 +785,7 @@ class ChatVC: UIViewController,UIImagePickerControllerDelegate, UINavigationCont
         messageContainer.heightAnchr.constant += 50
         UIView.animate(withDuration: 0.1, animations: {
             self.view.layoutIfNeeded()
-            self.responseMessageLine(message, forwardedName)
+            self.responseMessageLine(message: message, fN: forwardedName)
         }) { (true) in
             self.responseViewChangeAlpha(a: 1)
         }

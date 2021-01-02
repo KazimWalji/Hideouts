@@ -18,7 +18,6 @@ pod 'Giphy'
 pod 'Kingfisher', '~> 5.0'
 pod 'ImagePicker'
 pod 'SwiftyGif'
-pod 'Analytics', '~> 4.1'
 pod 'IQKeyboardManagerSwift'
 
 use_frameworks!

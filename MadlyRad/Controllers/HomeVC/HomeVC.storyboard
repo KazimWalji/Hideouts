@@ -1775,6 +1775,9 @@
                             <constraint firstItem="pj6-lI-HBx" firstAttribute="centerX" secondItem="eff-IJ-HBf" secondAttribute="centerX" id="yAQ-GC-9do"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="gifCollectionView" destination="pj6-lI-HBx" id="0Ja-yS-tTC"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gJI-rY-YaH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

@@ -40,7 +40,7 @@ class SignInVC: UIViewController, UITextFieldDelegate {
     // ---------------------------------------------------------------------------------------------------------------------------------------------------- //
     private func HideoutsLabel(){
         let yourLabel: UILabel = UILabel()
-        yourLabel.frame = CGRect(x: self.view.center.x, y: 120, width: 225, height: 100) //changed top space from from 150 to 120
+        yourLabel.frame = CGRect(x: self.view.center.x, y: 150, width: 225, height: 100)
         yourLabel.center.x = self.view.center.x
         yourLabel.textColor = ThemeColors.mainColor
         yourLabel.textAlignment = NSTextAlignment.center
@@ -120,7 +120,7 @@ class SignInVC: UIViewController, UITextFieldDelegate {
         attributedString.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.systemBlue, range: range)
         signUpButton.setAttributedTitle(attributedString, for: .normal)
         signUpButton.tintColor = .black
-        signUpButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
+        signUpButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18)
         signUpButton.addTarget(self, action: #selector(signUpButtonPressed), for: .touchUpInside)
         let constraints = [
             signUpButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
@@ -140,7 +140,8 @@ class SignInVC: UIViewController, UITextFieldDelegate {
         attributedString.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.systemBlue, range: range)
         signUpButton.setAttributedTitle(attributedString, for: .normal)
         signUpButton.tintColor = .black
-        signUpButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
+        //Increases the font size --making the sign up button bigger
+        signUpButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18)
         signUpButton.addTarget(self, action: #selector(forgotPasswordSelected), for: .touchUpInside)
         let constraints = [
             signUpButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),

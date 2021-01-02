@@ -11,7 +11,7 @@ class SignUpVC: UIViewController, UITextFieldDelegate, SFSafariViewControllerDel
     var backButton: AuthBackButton!
     var continueButton: AuthActionButton!
     var signUpView: SignUpView!
-    //var nameTextView: NameTextField!
+    var nameTextView: NameTextField!
     var authNetworking: AuthNetworking!
     var authKeyboardHandler = AuthKeyboardHandler()
     
@@ -20,7 +20,7 @@ class SignUpVC: UIViewController, UITextFieldDelegate, SFSafariViewControllerDel
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        //signUpView.isHidden = true
+        signUpView.isHidden = true
        //background
         view.backgroundColor = .white
         authKeyboardHandler.view = view
@@ -39,7 +39,7 @@ class SignUpVC: UIViewController, UITextFieldDelegate, SFSafariViewControllerDel
         view.backgroundColor = .white
         //setupGradientView()
         setupRegisterView()
-        //setupNameView()
+        setupNameView()
         setupContinueButton()
         setupBackButton()
         UserProtectionsButton()
@@ -48,7 +48,7 @@ class SignUpVC: UIViewController, UITextFieldDelegate, SFSafariViewControllerDel
     // ---------------------------------------------------------------------------------------------------------------------------------------------------- //
     private func HideoutsLabel(){
         let yourLabel: UILabel = UILabel()
-        yourLabel.frame = CGRect(x: self.view.center.x, y: 80, width: 225, height: 100)
+        yourLabel.frame = CGRect(x: self.view.center.x, y: 130, width: 225, height: 100)
         yourLabel.center.x = self.view.center.x
         yourLabel.textColor = ThemeColors.mainColor
         yourLabel.textAlignment = NSTextAlignment.center
@@ -65,10 +65,10 @@ class SignUpVC: UIViewController, UITextFieldDelegate, SFSafariViewControllerDel
     private func setupRegisterView() {
         signUpView = SignUpView(self)
     }
-//    private func setupNameView() {
-//        nameTextView = NameTextField(self)
-//        (self)
-//    }
+    private func setupNameView() {
+        nameTextView = NameTextField(self)
+        (self)
+    }
     
     // ---------------------------------------------------------------------------------------------------------------------------------------------------- //
     private func UserProtectionsButton(){
@@ -97,7 +97,7 @@ class SignUpVC: UIViewController, UITextFieldDelegate, SFSafariViewControllerDel
         continueButton = AuthActionButton("CONTINUE", self)
         view.addSubview(continueButton)
         continueButton.addTarget(self, action: #selector(continueButtonPressed), for: .touchUpInside)
-        continueButton.alpha = 1
+        continueButton.alpha = 0
         let constraints = [
             continueButton.centerXAnchor.constraint(equalTo: signUpView.centerXAnchor),
             continueButton.centerYAnchor.constraint(equalTo: signUpView.bottomAnchor),
@@ -111,7 +111,7 @@ class SignUpVC: UIViewController, UITextFieldDelegate, SFSafariViewControllerDel
     
     private func setupBackButton() {
         backButton = AuthBackButton(self)
-        backButton.alpha = 1
+        backButton.alpha = 0
         backButton.addTarget(self, action: #selector(backButtonPressed), for: .touchUpInside)
         backButton.tintColor = ThemeColors.mainColor
     }
@@ -128,16 +128,15 @@ class SignUpVC: UIViewController, UITextFieldDelegate, SFSafariViewControllerDel
     // MARK: TEXTFIELD VALIDATION
     
     private func validateTF() -> String?{
-        if signUpView.nameTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) == "" || signUpView.emailTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) == "" || signUpView.passwordTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) == "" ||
-            signUpView.UserIDTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) == "" || signUpView.pronounTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) == ""{
+        if nameTextView.nameTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) == "" || signUpView.emailTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) == "" || signUpView.passwordTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) == "" ||
+        signUpView.UserIDTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) == ""{
             return "Make sure you fill in all fields."
         }
         
         let password = signUpView.passwordTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
-        let name = signUpView.nameTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
+        let name = nameTextView.nameTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
         let email = signUpView.emailTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
         let UserID = signUpView.UserIDTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
-        let pronoun = signUpView.pronounTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
         if password.count < 6 {
             return "Password should be at least 6 characters long."
         }
@@ -149,13 +148,8 @@ class SignUpVC: UIViewController, UITextFieldDelegate, SFSafariViewControllerDel
         if email.count > 30 {
             return "Your email exceeds a limit of 30 characters."
         }
-        
         if UserID.count > 30 {
             return "Your Username exceeds the limit"
-        }
-        
-        if pronoun.count > 30 {
-            return "Your pronoun exceeds the limit"
         }
         
         if !email.isValidEmail {
@@ -179,11 +173,11 @@ class SignUpVC: UIViewController, UITextFieldDelegate, SFSafariViewControllerDel
     }
     
     @objc private func continueButtonPressed() {
-//        if signUpView.isHidden == true{
-//            signUpView.isHidden = false
-//            nameTextView.isHidden = true
-//            return
-//        }
+        if signUpView.isHidden == true{
+            signUpView.isHidden = false
+            nameTextView.isHidden = true
+            return
+        }
         
         signUpView.errorLabel.text = ""
         let validation = validateTF()
@@ -197,9 +191,9 @@ class SignUpVC: UIViewController, UITextFieldDelegate, SFSafariViewControllerDel
             guard errorMessage == nil else {
                 self.signUpView.errorLabel.text = errorMessage
                 return
-                
-                
-            }
+            
+            
+        }
         }
         let UserID = signUpView.UserIDTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
         authNetworking = AuthNetworking(self)
@@ -207,9 +201,9 @@ class SignUpVC: UIViewController, UITextFieldDelegate, SFSafariViewControllerDel
             guard errorMessage == nil else {
                 self.signUpView.errorLabel.text = errorMessage
                 return
-                    
-                    self.goToNextController()
-            }
+
+        self.goToNextController()
+}
         }
     }
 
@@ -222,14 +216,12 @@ class SignUpVC: UIViewController, UITextFieldDelegate, SFSafariViewControllerDel
         let email = signUpView.emailTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
         let password = signUpView.passwordTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
         let UserID = signUpView.UserIDTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
-        let pronoun = signUpView.pronounTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
         let controller = SelectProfileImageVC()
         controller.modalPresentationStyle = .fullScreen
         controller.name = name
         controller.email = email
         controller.password = password
         controller.UserID = UserID
-        controller.pronoun = pronoun
         self.show(controller, sender: nil)
     }
     

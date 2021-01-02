@@ -1,6 +1,7 @@
 
 
 import UIKit
+import ScreenShieldKit
 import Firebase
 
 class MessageView: UIView{
@@ -10,15 +11,16 @@ class MessageView: UIView{
     var friendName: String!
     var cell: ChatCell!
     var message: Messages!
-    let messageView = UILabel()
+    let messageView = SSKProtectedLabel(text: "")
     let mediaMessage = UIImageView()
     let responseLine = UIView()
     let responseNameLabel = UILabel()
-    let responseTextMessage = UILabel()
+    let responseTextMessage = SSKProtectedLabel(text: "")
     let responseMediaMessage = UIImageView()
     var responseAudioLabel = UILabel()
     let audioPlayButton = UIButton(type: .system)
     let durationLabel = UILabel()
+    
     
     // ---------------------------------------------------------------------------------------------------------------------------------------------------- //
     
@@ -68,14 +70,20 @@ class MessageView: UIView{
     
     // ---------------------------------------------------------------------------------------------------------------------------------------------------- //
     
-    private func setupMsgText() -> UILabel {
+    private func setupMsgText() -> SSKProtectedLabel {
         messageView.text = message.message
-        messageView.numberOfLines = 0
-        messageView.backgroundColor = .clear
-        messageView.textColor = cell.message.textColor
+       // messageView.numberOfLines = 0
+        if message?.sender == CurrentUser.uid{
+            messageView.backgroundColor = ThemeColors.selectedOutcomingColor
+        }else{
+            messageView.backgroundColor = ThemeColors.selectedIncomingColor
+        }
+
+
+        //messageView.textColor = cell.message.textColor
         addSubview(messageView)
         messageView.translatesAutoresizingMaskIntoConstraints = false
-        messageView.font = UIFont(name: "Helvetica Neue", size: 16)
+        //messageView.font = UIFont(name: "Helvetica Neue", size: 16)
         if message.repMID != nil {
             messageView.topAnchor.constraint(equalTo: topAnchor, constant: 50).isActive = true
         }else{
@@ -138,8 +146,8 @@ class MessageView: UIView{
     
     private func setupRepTextMessage(text: String){
         responseTextMessage.text = text
-        responseTextMessage.textColor = cell.responseTextMessage.textColor
-        responseTextMessage.font = UIFont(name: "Helvetica Neue", size: 15)
+        responseTextMessage.backgroundColor = cell.responseTextMessage.textColor
+       // responseTextMessage.font = UIFont(name: "Helvetica Neue", size: 15)
         addSubview(responseTextMessage)
         responseTextMessage.translatesAutoresizingMaskIntoConstraints = false
         responseTextMessage.addSubview(responseNameLabel)

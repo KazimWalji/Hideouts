@@ -1,6 +1,7 @@
 
 
 import UIKit
+import ScreenShieldKit
 
 class UserResponse {
     
@@ -20,7 +21,7 @@ class UserResponse {
     
     var nameLabelConstraint: NSLayoutConstraint!
     
-    let messageLabel = UILabel()
+    let messageLabel = SSKProtectedLabel(text: "")
     
     let mediaMessage = UIImageView()
     

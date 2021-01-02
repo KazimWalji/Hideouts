@@ -9,7 +9,7 @@ class ToolsTB: UITableView, UITableViewDelegate, UITableViewDataSource {
 
     // ---------------------------------------------------------------------------------------------------------------------------------------------------- //
     
-    var tools = ["Reply", "Copy", "Delete", "Smile Notes"]
+    var tools = ["Reply", "Delete", "Smile Notes"]
     var toolsImg = ["arrowshape.turn.up.left", "doc.on.doc", "trash", "smile"]
     var selectedMessage: Messages!
     var scrollView: ToolsMenu!
@@ -31,8 +31,8 @@ class ToolsTB: UITableView, UITableViewDelegate, UITableViewDataSource {
    //     }
         
         if selectedMessage.recipient == CurrentUser.uid{
-            tools.remove(at: 2)
-            toolsImg.remove(at: 2)
+            tools.remove(at: 1)
+            toolsImg.remove(at: 1)
             print("Message selected sender")
         }
         scrollView = sV
@@ -62,13 +62,16 @@ class ToolsTB: UITableView, UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        print("____", tools.count)
         return tools.count
+        
     }
 
     // ---------------------------------------------------------------------------------------------------------------------------------------------------- //
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ToolsCell") as! ToolsCell
+        print(indexPath.row)
         let tool = tools[indexPath.row]
         cell.toolName.text = tool
         cell.toolImg.image = UIImage(systemName: toolsImg[indexPath.row])

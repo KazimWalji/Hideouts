@@ -175,7 +175,6 @@ class UsersListVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
         let user = users[indexPath.row]
         cell.userName.text = user.name
         cell.userEmail.text = user.UserID
-        cell.profileImage.loadImage(url: user.profileImage ?? "")
         cell.backgroundColor = .clear
         
 
@@ -205,9 +204,8 @@ func filterSearch(searchText: String) {
             return
         }
         DispatchQueue.global(qos: .userInteractive).async { [weak self] in
-            
             self?.users = self?.users.filter({
-                let match = $0.UserID?.range(of: searchText, options: .caseInsensitive)
+                let match = $0.UserID?.range(of: searchText)
                 return match != nil
             }) ?? [FriendInfo]()
             DispatchQueue.main.async {

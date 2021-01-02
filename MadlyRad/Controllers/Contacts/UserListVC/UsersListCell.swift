@@ -4,7 +4,6 @@ class UsersListCell: UITableViewCell {
 
     // ---------------------------------------------------------------------------------------------------------------------------------------------------- //
     
-    let profileImage = UIImageView()
     let userName = UILabel()
     let userEmail = UILabel()
     
@@ -12,7 +11,7 @@ class UsersListCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        setupImage()
+        //setupImage()
         //setupNameLabel()
         setupEmailLabel()
         //let backgroundImage = UIImageView(frame: UIScreen.main.bounds)
@@ -28,20 +27,7 @@ class UsersListCell: UITableViewCell {
     
     // ---------------------------------------------------------------------------------------------------------------------------------------------------- //
     
-    private func setupImage(){
-        addSubview(profileImage)
-        profileImage.contentMode = .scaleAspectFill
-        profileImage.layer.cornerRadius = 40
-        profileImage.layer.masksToBounds = true
-        profileImage.translatesAutoresizingMaskIntoConstraints = false
-        let constraints = [
-            profileImage.centerYAnchor.constraint(equalTo: centerYAnchor),
-            profileImage.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 12),
-            profileImage.heightAnchor.constraint(equalToConstant: 80),
-            profileImage.widthAnchor.constraint(equalToConstant: 80)
-        ]
-        NSLayoutConstraint.activate(constraints)
-    }
+   
     
     // ---------------------------------------------------------------------------------------------------------------------------------------------------- //
     
@@ -53,7 +39,7 @@ class UsersListCell: UITableViewCell {
         userEmail.translatesAutoresizingMaskIntoConstraints = false
         let constraints = [
             userEmail.topAnchor.constraint(equalTo: topAnchor, constant: 30),
-            userEmail.leadingAnchor.constraint(equalTo: profileImage.trailingAnchor, constant: 15)
+            userEmail.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15)
         ]
         NSLayoutConstraint.activate(constraints)
     }
@@ -67,7 +53,7 @@ class UsersListCell: UITableViewCell {
         userName.translatesAutoresizingMaskIntoConstraints = false
         let constraints = [
             userName.topAnchor.constraint(equalTo: topAnchor, constant: 0),
-            userName.leadingAnchor.constraint(equalTo: profileImage.trailingAnchor, constant: 15)
+            userName.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15)
         ]
         NSLayoutConstraint.activate(constraints)
     }

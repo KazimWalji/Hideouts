@@ -29,7 +29,7 @@ extension ChatVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollec
     // ---------------------------------------------------------------------------------------------------------------------------------------------------- //
     
     func calculateFrameInText(message: String) -> CGRect{
-        return NSString(string: message).boundingRect(with: CGSize(width: 200, height: 9999999), options: NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin), attributes: [NSAttributedString.Key.font:UIFont(name: "Helvetica Neue", size: 16)!], context: nil)
+        return NSString(string: message).boundingRect(with: CGSize(width: 200, height: 9999999), options: NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin), attributes: [NSAttributedString.Key.font:UIFont(name: "Helvetica Neue", size: 20)!], context: nil)
     }
     
     // ---------------------------------------------------------------------------------------------------------------------------------------------------- //

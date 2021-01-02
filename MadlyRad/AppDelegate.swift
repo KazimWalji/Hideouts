@@ -10,7 +10,6 @@ import CoreData
 import GiphyCoreSDK
 import GiphyUISDK
 import ScreenShieldKit
-import Segment
 import IQKeyboardManagerSwift
 
 @UIApplicationMain
@@ -51,11 +50,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
         
-        let configuration = AnalyticsConfiguration(writeKey: "dNiZ8DWsjnICRL8fw8qApEKBT4lBqcA0")
-        configuration.trackApplicationLifecycleEvents = true // Enable this to record certain application events automatically!
-        configuration.recordScreenViews = true // Enable this to record screen views automatically!
-        Analytics.setup(with: configuration)
-        
+
         
         Giphy.configure(apiKey: "LrJf34hRudUjbHHum4ShNwUGxm2UXjfa")
         ScreenShieldKit.setLicenseKey("MEYCIQDb+JhAa/gyMEcMUq2/zE+Vk3AWPF5MFszcWAf+4t6FEQIhAMw2u5LTiIehRHC3hBxYIEZNHeIBmxcjZWMeognRZjpk")

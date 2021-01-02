@@ -79,7 +79,7 @@ class gifVC: UIViewController, UICollectionViewDataSource, UICollectionViewDeleg
             let gifName = itemArr[indexPath.row].name
             
             var gifItem = gifRef.child(gifName)
-            gifItem.getData(maxSize: 100000000000) { (data, error) in
+            gifItem.getData(maxSize: 1000000) { (data, error) in
                 if let error = error {
                     print("Error loading gif")
                 } else {
@@ -162,7 +162,7 @@ class gifVC: UIViewController, UICollectionViewDataSource, UICollectionViewDeleg
             
             
             var gifItem = gifRef.child(gifName)
-            gifItem.getData(maxSize: 100000000000) { (data, error) in
+            gifItem.getData(maxSize: 1000000) { (data, error) in
                 if let error = error {
                     print("Error loading gif")
                 } else {

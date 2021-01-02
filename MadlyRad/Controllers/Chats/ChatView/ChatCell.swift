@@ -1,17 +1,17 @@
 
 import UIKit
 import AVFoundation
-import GiphyCoreSDK 
+import GiphyCoreSDK
 import GiphyUISDK
 import SwiftyGif
-//import ScreenShieldKit
+import ScreenShieldKit
 
 
 class ChatCell: UICollectionViewCell {
     
     // ---------------------------------------------------------------------------------------------------------------------------------------------------- //
     let message = UILabel()
-  //  let message = SSKProtectedLabel(text: "")
+    //let message = SSKProtectedLabel(text: "")
     let messageBackground = UIView()
     let mediaMessage = UIImageView()
     var chatVC: ChatVC!
