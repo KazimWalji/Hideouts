@@ -183,8 +183,7 @@ extension SettingsVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         if indexPath.section == 0{
-            let controller = CurrentUserVC()
-            show(controller, sender: self)
+            self.changeProfileImage()
         }else{ //if indexPath.section == 1
             let item = settingsItems[indexPath.row]
             if item == "Appearance"{

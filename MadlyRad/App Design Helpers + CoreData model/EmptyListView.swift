@@ -1,5 +1,4 @@
 
-
 import UIKit
 
 class EmptyListView: UIView{
