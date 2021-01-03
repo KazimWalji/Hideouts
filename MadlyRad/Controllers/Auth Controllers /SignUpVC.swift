@@ -212,16 +212,21 @@ class SignUpVC: UIViewController, UITextFieldDelegate, SFSafariViewControllerDel
     // MARK: NEXT CONTROLLER METHOD
     
     private func goToNextController(){
-        let name = signUpView.nameTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
-        let email = signUpView.emailTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
-        let password = signUpView.passwordTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
-        let UserID = signUpView.UserIDTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard let name = signUpView.nameTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines),
+              let email = signUpView.emailTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines),
+              let password = signUpView.passwordTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines),
+              let UserID = signUpView.UserIDTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines),
+              let pronoun = signUpView.pronounTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) else {
+            // TODO: warn user
+            return
+        }
         let controller = SelectProfileImageVC()
         controller.modalPresentationStyle = .fullScreen
         controller.name = name
         controller.email = email
         controller.password = password
         controller.UserID = UserID
+        controller.pronoun = pronoun
         self.show(controller, sender: nil)
     }
     

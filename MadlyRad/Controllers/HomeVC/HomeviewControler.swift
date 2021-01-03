@@ -9,25 +9,54 @@
 import Foundation
 import UIKit
 class HomeViewController: UIViewController {
-
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-      warningLabel()
-       //background
-        view.backgroundColor = .white
-      //  view.addGestureRecognizer(edgePan)
-        addInfluencersButton()
-       // starsButton()
-        navigationItem.title = "Home"
+        
+        setupUI()
         NotificationCenter.default.addObserver(
-               forName: UIApplication.userDidTakeScreenshotNotification,
-               object: nil, queue: nil) { _ in
-                 print("I see what you did there")
-             }
- 
-
+            forName: UIApplication.userDidTakeScreenshotNotification,
+            object: nil, queue: nil) { _ in
+            print("I see what you did there")
+        }
     }
-    private func addInfluencersButton() {
+    
+    private func setupUI() {
+        setupWarningLabel()
+        
+        view.backgroundColor = .white
+//        setupInfluencersButton()
+        // starsButton()
+    }
+    
+    private func setupWarningLabel() {
+        let label = UILabel(frame: .zero)
+        layoutWarningLabel(label: label)
+        configureWarningLabel(label: label)
+    }
+    
+    private func layoutWarningLabel(label: UILabel) {
+        label.translatesAutoresizingMaskIntoConstraints = false
+        
+        view.addSubview(label)
+        NSLayoutConstraint.activate([
+            label.heightAnchor.constraint(equalToConstant: 100),
+            label.widthAnchor.constraint(equalToConstant: 250),
+            label.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            label.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+        ])
+    }
+    
+    private func configureWarningLabel(label: UILabel) {
+        label.textColor = UIColor.black
+        label.text = "More coming soon!"
+        label.numberOfLines = 0
+        label.textAlignment = NSTextAlignment.center
+    }
+    
+    private func setupInfluencersButton() {
         let button = UIButton(type: .system)
         view.addSubview(button)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -97,17 +126,5 @@ class HomeViewController: UIViewController {
         }
         
     }*/
-    private func warningLabel(){
-        let label: UILabel = UILabel()
-        label.frame = CGRect(x: self.view.center.x, y: self.view.center.y, width: 250, height: 100)
-        label.center.x = self.view.center.x
-        label.center.y = self.view.center.y
-        label.textColor = UIColor.black
-        label.textAlignment = NSTextAlignment.center
-        label.text = "More coming soon!"
-        label.numberOfLines = 0
-        self.view.addSubview(label)
-
-    }
-
+    
  }
