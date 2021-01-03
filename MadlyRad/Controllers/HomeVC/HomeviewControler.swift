@@ -24,36 +24,32 @@ class HomeViewController: UIViewController {
     }
     
     private func setupUI() {
-        setupWarningLabel()
+        setupBackgroundImage()
         
         view.backgroundColor = .white
 //        setupInfluencersButton()
         // starsButton()
     }
     
-    private func setupWarningLabel() {
-        let label = UILabel(frame: .zero)
-        layoutWarningLabel(label: label)
-        configureWarningLabel(label: label)
+    private func setupBackgroundImage() {
+        let imageView = UIImageView(frame: .zero)
+        layoutBackgroundImageView(imageView: imageView)
+        configureBackgroundImageView(imageView: imageView)
     }
     
-    private func layoutWarningLabel(label: UILabel) {
-        label.translatesAutoresizingMaskIntoConstraints = false
-        
-        view.addSubview(label)
+    private func layoutBackgroundImageView(imageView: UIImageView) {
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(imageView)
         NSLayoutConstraint.activate([
-            label.heightAnchor.constraint(equalToConstant: 100),
-            label.widthAnchor.constraint(equalToConstant: 250),
-            label.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            label.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            imageView.topAnchor.constraint(equalTo: view.safeTopAnchor),
+            imageView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            imageView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            imageView.bottomAnchor.constraint(equalTo: view.safeBottomAnchor),
         ])
     }
     
-    private func configureWarningLabel(label: UILabel) {
-        label.textColor = UIColor.black
-        label.text = "More coming soon!"
-        label.numberOfLines = 0
-        label.textAlignment = NSTextAlignment.center
+    private func configureBackgroundImageView(imageView: UIImageView) {
+        imageView.image = #imageLiteral(resourceName: "girl_standing_on_rock")
     }
     
     private func setupInfluencersButton() {
