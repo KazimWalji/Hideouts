@@ -33,6 +33,12 @@ class HomeViewController: UIViewController {
         setupBackground()
         
         navigationController?.navigationBar.isHidden = true
+        var tabBarBounds = navigationController?.tabBarController?.tabBar.bounds
+        navigationController?.tabBarController?.tabBar.backgroundImage = UIImage()
+        navigationController?.tabBarController?.tabBar.shadowImage = UIImage()
+        navigationController?.tabBarController?.tabBar.bounds = tabBarBounds!
+
+
 //        setupInfluencersButton()
         // starsButton()
     }
