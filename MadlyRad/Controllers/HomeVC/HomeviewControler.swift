@@ -42,7 +42,7 @@ class HomeViewController: UIViewController {
 //        setupInfluencersButton()
         // starsButton()
         
-        var star1 = createStar()
+        var star1 = createStar(x: 100, y: 75)
         view.addSubview(star1)
     }
     
@@ -232,16 +232,18 @@ class HomeViewController: UIViewController {
     --------------------- Star Buttons Code ---------------------
     */
     
-    private func createStar() -> UIButton {
-        let starButton = UIButton(frame: CGRect(x: 100, y: 100, width: 30, height: 30))
-        starButton.backgroundColor = .green
-        starButton.setTitle("Star Button", for: .normal)
+    private func createStar(x: Int, y: Int) -> UIButton {
+        let starButton = UIButton(frame: CGRect(x: x, y: y, width: 30, height: 30))
+        starButton.setBackgroundImage(#imageLiteral(resourceName: "redstar"), for: .normal)
+        starButton.setTitle("A", for: .normal)
         starButton.addTarget(self, action: #selector(starButtonAction), for: .touchUpInside)
         return starButton
     }
     
     @objc func starButtonAction(sender: UIButton!) {
       print("\nStar Clicked!\n")
+        tabBarController?.selectedIndex = 1
+    
     }
     
     
