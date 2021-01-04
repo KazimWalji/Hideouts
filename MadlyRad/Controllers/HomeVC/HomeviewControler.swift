@@ -8,14 +8,20 @@
 
 import Foundation
 import UIKit
+import AVKit
+
 class HomeViewController: UIViewController {
     
+    private var playerLooper: AVPlayerLooper?
     
+    private var girlWithWaterImageTopConstraint: NSLayoutConstraint?
+    private var girlWithWaterImageHeightConstraint: NSLayoutConstraint?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupUI()
+        
         NotificationCenter.default.addObserver(
             forName: UIApplication.userDidTakeScreenshotNotification,
             object: nil, queue: nil) { _ in
@@ -24,32 +30,117 @@ class HomeViewController: UIViewController {
     }
     
     private func setupUI() {
-        setupBackgroundImage()
+        setupBackground()
         
-        view.backgroundColor = .white
+        navigationController?.navigationBar.isHidden = true
 //        setupInfluencersButton()
         // starsButton()
     }
     
-    private func setupBackgroundImage() {
-        let imageView = UIImageView(frame: .zero)
-        layoutBackgroundImageView(imageView: imageView)
-        configureBackgroundImageView(imageView: imageView)
+    private func setupBackground() {
+        setupBackgroundAnimation()
+        setupBackgroundImage()
     }
     
-    private func layoutBackgroundImageView(imageView: UIImageView) {
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
+    private func setupBackgroundAnimation() {
+        guard let animationPath = Bundle.main.path(forResource: "Star Fractal Noise", ofType: "mp4") else { return }
+        let animationURL = URL(fileURLWithPath: animationPath)
+        var videoAsset = AVAsset(url: animationURL)
+        
+        let playerItem = AVPlayerItem(asset: videoAsset)
+        let queuePlayer = AVQueuePlayer(playerItem: playerItem)
+        playerLooper = AVPlayerLooper(player: queuePlayer, templateItem: playerItem)
+        
+        let videoView = UIView(frame: .zero)
+        layoutVideoView(videoView: videoView)
+        let playerLayer = AVPlayerLayer(player: queuePlayer)
+        view.layoutIfNeeded()
+        playerLayer.frame = videoView.frame
+        playerLayer.videoGravity = .resizeAspectFill
+        videoView.layer.addSublayer(playerLayer)
+        queuePlayer.play()
+    }
+    
+    private func layoutVideoView(videoView: UIView) {
+        videoView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(videoView)
+        
+        NSLayoutConstraint.activate([
+            videoView.topAnchor.constraint(equalTo: view.topAnchor),
+            videoView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            videoView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            videoView.bottomAnchor.constraint(equalTo: view.centerYAnchor, constant: -30),
+        ])
+    }
+    
+    private func setupBackgroundImage() {
+        setupGirlAndWaterImage()
+        setupFullBackgroundImage()
+    }
+    
+    private func setupGirlAndWaterImage() {
+        let imageView = UIImageView(frame: .zero)
+        layoutGirlAndWaterImageView(imageView)
+        configureGirlAndWaterImageView(imageView)
+    }
+    
+    private func layoutGirlAndWaterImageView(_ imageView: UIImageView) {
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        
+        girlWithWaterImageTopConstraint = imageView.topAnchor.constraint(equalTo: view.topAnchor)
+        
+        guard let girlWithWaterImageTopConstraint = girlWithWaterImageTopConstraint else { return }
+        
+        view.addSubview(imageView)
+        NSLayoutConstraint.activate([
+            girlWithWaterImageTopConstraint,
+            imageView.bottomAnchor.constraint(equalTo: view.safeBottomAnchor),
+            imageView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            imageView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+        ])
+    }
+    
+    private func configureGirlAndWaterImageView(_ imageView: UIImageView) {
+        imageView.image = #imageLiteral(resourceName: "girl_and_water")
+        imageView.contentMode = .scaleAspectFit
+        
+        view.layoutIfNeeded()
+        
+        guard let imageSize = imageView.image?.size else { return }
+        let ratio = imageSize.width / imageSize.height
+        
+        let imageViewHieght = view.bounds.width / ratio
+        
+        girlWithWaterImageHeightConstraint = imageView.heightAnchor.constraint(equalToConstant: imageViewHieght)
+        girlWithWaterImageTopConstraint?.isActive = false
+        girlWithWaterImageHeightConstraint?.isActive = true
+        imageView.layoutIfNeeded()
+    }
+    
+    private func setupFullBackgroundImage() {
+        let imageView = UIImageView(frame: .zero)
+        layoutFullBackgroundImageView(imageView)
+        configureFullBackgroundImageView(imageView)
+    }
+    
+    private func layoutFullBackgroundImageView(_ imageView: UIImageView) {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(imageView)
         NSLayoutConstraint.activate([
-            imageView.topAnchor.constraint(equalTo: view.safeTopAnchor),
+            imageView.topAnchor.constraint(equalTo: view.topAnchor),
             imageView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             imageView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             imageView.bottomAnchor.constraint(equalTo: view.safeBottomAnchor),
         ])
     }
     
-    private func configureBackgroundImageView(imageView: UIImageView) {
+    private func configureFullBackgroundImageView(_ imageView: UIImageView) {
         imageView.image = #imageLiteral(resourceName: "girl_standing_on_rock")
+        imageView.layer.compositingFilter = "screenBlendMode"
     }
     
     private func setupInfluencersButton() {
