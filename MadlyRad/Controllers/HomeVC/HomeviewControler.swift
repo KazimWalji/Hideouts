@@ -73,7 +73,7 @@ class HomeViewController: UIViewController {
             videoView.topAnchor.constraint(equalTo: view.topAnchor),
             videoView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             videoView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            videoView.bottomAnchor.constraint(equalTo: view.centerYAnchor, constant: -30),
+            videoView.bottomAnchor.constraint(equalTo: view.centerYAnchor, constant: 10),
         ])
     }
     
@@ -111,9 +111,10 @@ class HomeViewController: UIViewController {
         view.layoutIfNeeded()
         
         guard let imageSize = imageView.image?.size else { return }
-        let ratio = imageSize.width / imageSize.height
+        let ratio = (imageSize.height / imageSize.width)
         
-        let imageViewHieght = view.bounds.width / ratio
+        let imageViewHieght = view.bounds.width * ratio
+        
         
         girlWithWaterImageHeightConstraint = imageView.heightAnchor.constraint(equalToConstant: imageViewHieght)
         girlWithWaterImageTopConstraint?.isActive = false
