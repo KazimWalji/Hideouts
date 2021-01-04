@@ -77,6 +77,7 @@ class HomeViewController: UIViewController {
         ])
     }
     
+    
     private func setupBackgroundImage() {
         setupGirlAndWaterImage()
         setupFullBackgroundImage()
