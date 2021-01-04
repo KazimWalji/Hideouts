@@ -14,8 +14,8 @@ class HomeViewController: UIViewController {
     
     private var playerLooper: AVPlayerLooper?
     
-    private var girlWithWaterImageTopConstraint: NSLayoutConstraint?
-    private var girlWithWaterImageHeightConstraint: NSLayoutConstraint?
+//    private var girlWithWaterImageTopConstraint: NSLayoutConstraint?
+//    private var girlWithWaterImageHeightConstraint: NSLayoutConstraint?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -91,15 +91,16 @@ class HomeViewController: UIViewController {
     
     private func layoutGirlAndWaterImageView(_ imageView: UIImageView) {
         imageView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(imageView)
         
-        girlWithWaterImageTopConstraint = imageView.topAnchor.constraint(equalTo: view.topAnchor)
+//        girlWithWaterImageTopConstraint = imageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 100)
         
-        guard let girlWithWaterImageTopConstraint = girlWithWaterImageTopConstraint else { return }
+//        guard let girlWithWaterImageTopConstraint = girlWithWaterImageTopConstraint else { return }
         
         view.addSubview(imageView)
         NSLayoutConstraint.activate([
-            girlWithWaterImageTopConstraint,
-            imageView.bottomAnchor.constraint(equalTo: view.safeBottomAnchor),
+            imageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 105),
+            imageView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             imageView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             imageView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
         ])
@@ -107,19 +108,20 @@ class HomeViewController: UIViewController {
     
     private func configureGirlAndWaterImageView(_ imageView: UIImageView) {
         imageView.image = #imageLiteral(resourceName: "girl_and_water")
-        imageView.contentMode = .scaleAspectFit
+        imageView.contentMode = .scaleToFill
         
         view.layoutIfNeeded()
         
-        guard let imageSize = imageView.image?.size else { return }
-        let ratio = (imageSize.height / imageSize.width)
+//        guard let imageSize = imageView.image?.size else { return }
+//        let ratio = (imageSize.height / imageSize.width)
+//
+//        let imageViewHieght = view.bounds.width * ratio
         
-        let imageViewHieght = view.bounds.width * ratio
         
-        
-        girlWithWaterImageHeightConstraint = imageView.heightAnchor.constraint(equalToConstant: imageViewHieght)
-        girlWithWaterImageTopConstraint?.isActive = false
-        girlWithWaterImageHeightConstraint?.isActive = true
+//        girlWithWaterImageHeightConstraint = imageView.heightAnchor.constraint(equalToConstant: imageViewHieght)
+//        girlWithWaterImageTopConstraint?.constant = 170
+//        girlWithWaterImageTopConstraint?.isActive = true
+//        girlWithWaterImageHeightConstraint?.isActive = true
         imageView.layoutIfNeeded()
     }
     
