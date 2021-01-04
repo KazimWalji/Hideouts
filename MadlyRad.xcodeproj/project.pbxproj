@@ -161,6 +161,7 @@
 		FAB28F992583DAC5009AE1C3 /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB28F982583DAC5009AE1C3 /* SettingsVC.swift */; };
 		FAEE171025A2E5D800249BF8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAEE170F25A2E5D800249BF8 /* SceneDelegate.swift */; };
 		FAEE171225A2E65800249BF8 /* EmptyListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAEE171125A2E65800249BF8 /* EmptyListView.swift */; };
+		FAEE180525A3298300249BF8 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FAEE180425A3298300249BF8 /* Launch Screen.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -337,6 +338,7 @@
 		FAB28F982583DAC5009AE1C3 /* SettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
 		FAEE170F25A2E5D800249BF8 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		FAEE171125A2E65800249BF8 /* EmptyListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyListView.swift; sourceTree = "<group>"; };
+		FAEE180425A3298300249BF8 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -819,6 +821,7 @@
 				EB3A637924E1469800F82E93 /* Controllers */,
 				EB3A63F524E1469900F82E93 /* Assets */,
 				FAEE170F25A2E5D800249BF8 /* SceneDelegate.swift */,
+				FAEE180425A3298300249BF8 /* Launch Screen.storyboard */,
 			);
 			path = MadlyRad;
 			sourceTree = "<group>";
@@ -906,6 +909,7 @@
 				EBD1A53224E1FFDA00A120F2 /* HomeVC.storyboard in Resources */,
 				EB3A647724E1469A00F82E93 /* Alata-Regular.ttf in Resources */,
 				EB288C12253505A500F150B0 /* InfluencerCell.xib in Resources */,
+				FAEE180525A3298300249BF8 /* Launch Screen.storyboard in Resources */,
 				EB52173824F6C21500A145CB /* 12634-audio-play.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

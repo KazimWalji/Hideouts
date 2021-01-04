@@ -10,7 +10,7 @@ class AddFriendVC: UIViewController{
     
     // ---------------------------------------------------------------------------------------------------------------------------------------------------- //
     static let blockedUsersKey = "FriendInformationVC_blockedUsersKey"
-
+    
     var user: FriendInfo!
     var addButton: UIButton!
     let addFriendNetworking = AddFriendNetworking()
@@ -20,6 +20,7 @@ class AddFriendVC: UIViewController{
     var grayGradientLayer: CALayer!
     var ref: DatabaseReference?
     var friend: FriendInfo!
+    private var blockButton:UIButton!
     
     // ---------------------------------------------------------------------------------------------------------------------------------------------------- //
     
@@ -33,7 +34,7 @@ class AddFriendVC: UIViewController{
         blockedButton()
         addButton.setTitle("Add Friend", for: .normal)
         
-
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -54,16 +55,16 @@ class AddFriendVC: UIViewController{
         addFriendNetworking.controller = self
         addFriendNetworking.friend = user
         addFriendNetworking.checkFriend()
-        }
+    }
     
     // ---------------------------------------------------------------------------------------------------------------------------------------------------- //
     
     private func setupUI(){
         navigationController?.navigationBar.tintColor = .black
-       // view.backgroundColor = .white
+        // view.backgroundColor = .white
         handleButtonGradient()
         //setupGradientView()
-       setupExitButton()
+        setupExitButton()
         setupUserInfoView()
         reportButton()
         
@@ -107,7 +108,7 @@ class AddFriendVC: UIViewController{
         gradient.frame = CGRect(x: 0, y: 0, width: 200, height: 35)
         return gradient
     }
-
+    
     // ---------------------------------------------------------------------------------------------------------------------------------------------------- //
     
     private func setupGradientView() {
@@ -126,63 +127,84 @@ class AddFriendVC: UIViewController{
         let button = UIButton(frame: CGRect(x: self.view.center.x, y: 600, width: 325, height: 50))
         button.center.x = self.view.center.x
         button.setTitleColor(UIColor.black, for: UIControl.State.normal)
-          button.setTitle("Report User", for: .normal)
-          button.addTarget(self, action: #selector(reportButtonPressed), for: .touchUpInside)
-
-          self.view.addSubview(button)
-
-        }
-
+        button.setTitle("Report User", for: .normal)
+        button.addTarget(self, action: #selector(reportButtonPressed), for: .touchUpInside)
+        
+        self.view.addSubview(button)
+        
+    }
+    
     @objc func reportButtonPressed() {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         let subview = alert.view.subviews.first! as UIView
         let alertContentView = subview.subviews.first! as UIView
         alertContentView.backgroundColor = UIColor.clear
         alert.addAction(UIAlertAction(title: "Spam", style: .default, handler: { (alertAction) in
-                  self.ref = Database.database().reference()
+            self.ref = Database.database().reference()
             self.ref?.child("reported").child("spam").childByAutoId().setValue(self.user.email)
         }))
         alert.addAction(UIAlertAction(title: "Explicit Content", style: .default, handler: { action in
             self.ref = Database.database().reference()
             self.ref?.child("reported").child("explict").childByAutoId().setValue(self.user.email)
         }))
-
+        
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         cancelAction.setValue(UIColor.systemRed, forKey: "titleTextColor")
         alert.addAction(cancelAction)
         present(alert, animated: true, completion: nil)
-
-        }
-
-
+        
+    }
+    
+    
     // ---------------------------------------------------------------------------------------------------------------------------------------------------- //
     private func blockedButton(){
-    let button = UIButton(frame: CGRect(x: self.view.center.x, y: 570, width: 325, height: 50))
-    button.center.x = self.view.center.x
-    button.setTitleColor(UIColor.black, for: UIControl.State.normal)
-      button.setTitle("Block", for: .normal)
-      button.addTarget(self, action: #selector(blockedButtonpressed), for: .touchUpInside)
-
-      self.view.addSubview(button)
-
+        self.blockButton = UIButton(frame: CGRect(x: self.view.center.x, y: 570, width: 325, height: 50))
+        self.blockButton.center.x = self.view.center.x
+        self.blockButton.setTitleColor(UIColor.black, for: UIControl.State.normal)
+        
+        self.blockButton.addTarget(self, action: #selector(blockedButtonpressed), for: .touchUpInside)
+        
+        self.view.addSubview(self.blockButton)
+        
+        if var array = UserDefaults.standard.stringArray(forKey: FriendInformationVC.blockedUsersKey){
+            if array.contains(self.user.UserID!){
+                self.blockButton.setTitle("UnBlock", for: .normal)
+            }else{
+                self.blockButton.setTitle("Block", for: .normal)
+            }
+            
+        }
     }
     @objc func blockedButtonpressed() {
-        print("hi")
-             if var array = UserDefaults.standard.stringArray(forKey: FriendInformationVC.blockedUsersKey) {
-                 array.append(self.user.UserID!)
-                 UserDefaults.standard.set(array, forKey: FriendInformationVC.blockedUsersKey)
-             } else {
+        if self.blockButton.title(for: .normal) == "Block"{
+            self.blockButton.setTitle("UnBlock", for: .normal)
+            if var array = UserDefaults.standard.stringArray(forKey: FriendInformationVC.blockedUsersKey){
+                if !array.contains(self.user.UserID!){
+                    array.append(self.user.UserID!)
+                    UserDefaults.standard.set(array, forKey: FriendInformationVC.blockedUsersKey)
+                }
+                
+            } else {
                 UserDefaults.standard.set([self.user.UserID!], forKey: FriendInformationVC.blockedUsersKey)
-             }
-        addFriendNetworking.removeFriend(completion: { [weak self] _ in
-         
-             self?.navigationController?.popToRootViewController(animated: true)
-        
-        })
-
+            }
+            addFriendNetworking.removeFriend(completion: { [weak self] _ in
+                self?.navigationController?.popToRootViewController(animated: true)
+            })
+        }else{
+            //unblock case
+            self.blockButton.setTitle("Block", for: .normal)
+            if var array = UserDefaults.standard.stringArray(forKey: FriendInformationVC.blockedUsersKey){
+                if array.contains(self.user.UserID!), let index = array.firstIndex(of: self.user.UserID!){
+                    array.remove(at: index)
+                    UserDefaults.standard.set(array, forKey: FriendInformationVC.blockedUsersKey)
+                    addFriendNetworking.addAsFriend()
+                }
+                
+            }
+        }
     }
-
-
+    
+    
     private func setupExitButton() {
         let exitButton = UIButton(type: .system)
         view.addSubview(exitButton)
@@ -213,10 +235,10 @@ class AddFriendVC: UIViewController{
             addButton.layer.insertSublayer(grayGradientLayer, at: 0)
             redGradientLayer.removeFromSuperlayer()
             greenGradientLayer.removeFromSuperlayer()
+            addFriendNetworking.addAsFriend()
         }else{
-           
-                addFriendNetworking.removeFriendRequest()
-    addFriendNetworking.removeFriend(completion: {_ in})
+            addFriendNetworking.removeFriendRequest()
+            addFriendNetworking.removeFriend(completion: {_ in})
             Friends.contactsVC?.tableView.reloadData()
             addButton.layer.insertSublayer(greenGradientLayer, at: 0)
             redGradientLayer.removeFromSuperlayer()
@@ -224,12 +246,11 @@ class AddFriendVC: UIViewController{
             addButton.setTitle("Add Friend", for: .normal)
             return
         }
-        addFriendNetworking.addAsFriend()
     }
     
     // ---------------------------------------------------------------------------------------------------------------------------------------------------- //
-
-
+    
+    
 }
 
 extension AddFriendVC: FriendsNetworkingViewType {
@@ -242,8 +263,8 @@ extension AddFriendVC: FriendsNetworkingViewType {
             self.addButton.layer.insertSublayer(self.greenGradientLayer, at: 0)
             self.redGradientLayer.removeFromSuperlayer()
             self.grayGradientLayer.removeFromSuperlayer()
-           // self.loadingIndicator.stopAnimating()
-
+            // self.loadingIndicator.stopAnimating()
+            
         } else {
             
             self.greenGradientLayer.removeFromSuperlayer()
@@ -251,7 +272,7 @@ extension AddFriendVC: FriendsNetworkingViewType {
             self.addButton.layer.insertSublayer(self.redGradientLayer, at: 0)
             self.addButton.setTitle("Remove Friend", for: .normal)
             //self.loadingIndicator.stopAnimating()
-
+            
         }
     }
     

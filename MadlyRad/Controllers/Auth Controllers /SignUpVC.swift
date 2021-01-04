@@ -21,7 +21,7 @@ class SignUpVC: UIViewController, UITextFieldDelegate, SFSafariViewControllerDel
         super.viewDidLoad()
         setupUI()
         signUpView.isHidden = true
-       //background
+        //background
         view.backgroundColor = .white
         authKeyboardHandler.view = view
         authKeyboardHandler.notificationCenterHandler()
@@ -92,7 +92,7 @@ class SignUpVC: UIViewController, UITextFieldDelegate, SFSafariViewControllerDel
         NSLayoutConstraint.activate(constraints)
         
     }
-
+    
     private func setupContinueButton() {
         continueButton = AuthActionButton("CONTINUE", self)
         view.addSubview(continueButton)
@@ -129,7 +129,7 @@ class SignUpVC: UIViewController, UITextFieldDelegate, SFSafariViewControllerDel
     
     private func validateTF() -> String?{
         if nameTextView.nameTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) == "" || signUpView.emailTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) == "" || signUpView.passwordTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) == "" ||
-        signUpView.UserIDTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) == ""{
+            signUpView.UserIDTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) == ""{
             return "Make sure you fill in all fields."
         }
         
@@ -140,7 +140,7 @@ class SignUpVC: UIViewController, UITextFieldDelegate, SFSafariViewControllerDel
         if password.count < 6 {
             return "Password should be at least 6 characters long."
         }
-    
+        
         if name.count > 30 {
             return "Your name exceeds a limit of 30 characters."
         }
@@ -163,11 +163,11 @@ class SignUpVC: UIViewController, UITextFieldDelegate, SFSafariViewControllerDel
     // MARK: SIGN UP METHOD.
     @objc private func termsAndCondtions() {
         let urlString = "https://madlyradlabs.com/madlyrad-_-terms-of-service/"
-
+        
         if let url = URL(string: urlString) {
             let vc = SFSafariViewController(url: url, entersReaderIfAvailable: true)
             vc.delegate = self
-
+            
             present(vc, animated: true)
         }
     }
@@ -191,9 +191,7 @@ class SignUpVC: UIViewController, UITextFieldDelegate, SFSafariViewControllerDel
             guard errorMessage == nil else {
                 self.signUpView.errorLabel.text = errorMessage
                 return
-            
-            
-        }
+            }
         }
         let UserID = signUpView.UserIDTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
         authNetworking = AuthNetworking(self)
@@ -201,12 +199,11 @@ class SignUpVC: UIViewController, UITextFieldDelegate, SFSafariViewControllerDel
             guard errorMessage == nil else {
                 self.signUpView.errorLabel.text = errorMessage
                 return
-
-        self.goToNextController()
-}
+            }
+            self.goToNextController()
         }
     }
-
+    
     
     // ---------------------------------------------------------------------------------------------------------------------------------------------------- //
     // MARK: NEXT CONTROLLER METHOD
@@ -216,12 +213,14 @@ class SignUpVC: UIViewController, UITextFieldDelegate, SFSafariViewControllerDel
         let email = signUpView.emailTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
         let password = signUpView.passwordTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
         let UserID = signUpView.UserIDTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
+        let pronoun = signUpView.pronounTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
         let controller = SelectProfileImageVC()
         controller.modalPresentationStyle = .fullScreen
         controller.name = name
         controller.email = email
         controller.password = password
         controller.UserID = UserID
+        controller.pronoun = pronoun
         self.show(controller, sender: nil)
     }
     

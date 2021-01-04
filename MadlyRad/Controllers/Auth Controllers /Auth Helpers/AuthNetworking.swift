@@ -100,14 +100,14 @@ class AuthNetworking {
     }
     func checkForExistingUserID(with UserID: String, completion: @escaping (_ errorMessage: String?)-> Void) {
         Database.database().reference().child("users").queryOrdered(byChild: "UserID").queryEqual(toValue: UserID).observeSingleEvent(of: .value) { (sanpshot) in
-                if sanpshot.exists() == true {
-                              return completion(nil)
-                          }else{
-                              return completion("This UserID is already in use.")
-                          }
-                sanpshot.exists() // it will return true or false
-              }
+            if sanpshot.exists() == true {
+                return completion("This UserID is already in use.")
+            }else{
+                return completion(nil)
+            }
+            //sanpshot.exists() // it will return true or false
         }
+    }
 
     // ---------------------------------------------------------------------------------------------------------------------------------------------------- //
     // MARK: SIGN UP USER METHOD
