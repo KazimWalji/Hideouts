@@ -37,6 +37,7 @@ class ContactsVC: UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        print("viewDidLoad in ContactsVC")
         //777
 //        setupUI()
         self.tableView.isHidden = false
@@ -81,8 +82,14 @@ class ContactsVC: UIViewController{
         setupUI()
         
     }
-    
+    override func viewWillAppear(_ animated: Bool) {
+        print("viewWillAppear in ContactsVC")
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+        print("viewWillDisappear in ContactsVC")
+    }
     override func viewDidAppear(_ animated: Bool) {
+        print("viewDidAppear in ContactsVC")
         super.viewDidAppear(animated)
         tabBarController?.tabBar.isHidden = false
         //222
@@ -234,7 +241,6 @@ class ContactsVC: UIViewController{
     }
     
     // ---------------------------------------------------------------------------------------------------------------------------------------------------- //
-    //what the fuck
     func setupFriendInfoMenuView(_ cell: ContactsCell, cellFrame: CGRect, friend: FriendInfo){
         cell.isHidden = true
         tableView.isUserInteractionEnabled = false
@@ -318,7 +324,6 @@ extension ContactsVC: UITableViewDataSource, UITableViewDelegate {
     }
     
     // ---------------------------------------------------------------------------------------------------------------------------------------------------- //
-    //what the fuck
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ContactsCell") as! ContactsCell

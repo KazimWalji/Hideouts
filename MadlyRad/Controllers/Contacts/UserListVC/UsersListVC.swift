@@ -9,7 +9,7 @@ class UsersListVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
     
     // ---------------------------------------------------------------------------------------------------------------------------------------------------- //
     var users = [FriendInfo]()
-
+    
     let userListNetworking = UserListNetworking()
     let tableView = UITableView()
     let searchbar = UISearchBar()
@@ -26,6 +26,7 @@ class UsersListVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        print("viewDidLoad in UsersListVC")
         searchController.hidesNavigationBarDuringPresentation = false
         self.blankLoadingView.isHidden = true
         setupTableView()
@@ -53,12 +54,19 @@ class UsersListVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        print("viewWillAppear in UsersListVC")
         tabBarController?.tabBar.isHidden = true
+        
+        
     }
-     
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        print("viewWillDisappear in UsersListVC")
         tabBarController?.tabBar.isHidden = false
+        if searchController.isActive == true {
+            searchController.isActive = false
+        }
     }
     
     // ---------------------------------------------------------------------------------------------------------------------------------------------------- //
@@ -83,15 +91,15 @@ class UsersListVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
         tableViewC.backgroundColor = .white
         let constraints = [
             tableViewC.topAnchor.constraint(equalTo: tableView.topAnchor, constant: -100),
-                tableViewC.bottomAnchor.constraint(equalTo: tableView.bottomAnchor),
-                tableViewC.leadingAnchor.constraint(equalTo: tableView.leadingAnchor),
-                tableViewC.trailingAnchor.constraint(equalTo: tableView.trailingAnchor)
-            ]
-            NSLayoutConstraint.activate(constraints)
-            
-        }
+            tableViewC.bottomAnchor.constraint(equalTo: tableView.bottomAnchor),
+            tableViewC.leadingAnchor.constraint(equalTo: tableView.leadingAnchor),
+            tableViewC.trailingAnchor.constraint(equalTo: tableView.trailingAnchor)
+        ]
+        NSLayoutConstraint.activate(constraints)
         
-        
+    }
+    
+    
     
     
     // ---------------------------------------------------------------------------------------------------------------------------------------------------- //
@@ -115,29 +123,29 @@ class UsersListVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
         
     }
     private func searchBar() {
+        
+        view.addSubview(searchbar)
+        searchbar.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .white
+        let constraints = [
+            searchbar.topAnchor.constraint(equalTo: view.topAnchor),
+            searchbar.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             
-            view.addSubview(searchbar)
-            searchbar.translatesAutoresizingMaskIntoConstraints = false
-            view.backgroundColor = .white
-            let constraints = [
-                searchbar.topAnchor.constraint(equalTo: view.topAnchor),
-             searchbar.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-       
-            ]
-            NSLayoutConstraint.activate(constraints)
-
+        ]
+        NSLayoutConstraint.activate(constraints)
+        
         
     }
     func dataLabel() {
         let noDataLabel: UILabel  = UILabel(frame: CGRect(x: 0, y: 0, width:
-        tableView.bounds.size.width, height: tableView.bounds.size.height))
+                                                            tableView.bounds.size.width, height: tableView.bounds.size.height))
         noDataLabel.text          = "No data available"
         noDataLabel.textColor     = UIColor.black
         noDataLabel.textAlignment = .center
         tableView.backgroundView  = noDataLabel
         tableView.separatorStyle  = .none
     }
-//table view stuff
+    //table view stuff
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         print("\(users.count)")
@@ -148,24 +156,24 @@ class UsersListVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
             tableView.isHidden = true
         }
         /*
-        if users.count > 1{
-            
-            
-        }
-        else{
-            let noDataLabel: UILabel  = UILabel(frame: CGRect(x: 0, y: 0, width:
-            tableView.bounds.size.width, height: tableView.bounds.size.height))
-              noDataLabel.text          = "No data available"
-              noDataLabel.textColor     = UIColor.black
-              noDataLabel.textAlignment = .center
-              tableView.backgroundView  = noDataLabel
-              tableView.separatorStyle  = .none
-
-        }
-        */
+         if users.count > 1{
+         
+         
+         }
+         else{
+         let noDataLabel: UILabel  = UILabel(frame: CGRect(x: 0, y: 0, width:
+         tableView.bounds.size.width, height: tableView.bounds.size.height))
+         noDataLabel.text          = "No data available"
+         noDataLabel.textColor     = UIColor.black
+         noDataLabel.textAlignment = .center
+         tableView.backgroundView  = noDataLabel
+         tableView.separatorStyle  = .none
+         
+         }
+         */
         return users.count
         
-
+        
     }
     
     // ---------------------------------------------------------------------------------------------------------------------------------------------------- //
