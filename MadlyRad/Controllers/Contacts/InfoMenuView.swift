@@ -246,14 +246,12 @@ class InfoMenuView: UIView {
         infoName.font = UIFont(name: "Proxima Nova", size: 18)
       //  infoEmail.layer.removeAllAnimations()
         infoImage.layer.removeAllAnimations()
-        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 1, options: .curveEaseIn, animations: {
-            self.layer.shadowRadius = 0
-            self.layer.shadowOpacity = 0
-            self.layer.cornerRadius = 0
-            self.frame = self.cellFrame
-        }) { (true) in
-            self.exitInfoMenuHandler()
-        }
+        self.layer.shadowRadius = 0
+        self.layer.shadowOpacity = 0
+        self.layer.cornerRadius = 0
+        self.frame = self.cellFrame
+        self.exitInfoMenuHandler()
+        
     }
     
     // ---------------------------------------------------------------------------------------------------------------------------------------------------- //
