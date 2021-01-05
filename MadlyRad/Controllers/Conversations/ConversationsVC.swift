@@ -17,7 +17,8 @@ class ConversationsVC: UIViewController {
     var newConversationButton = UIBarButtonItem()
     var tabBarBadge: UITabBarItem!
     let blankLoadingView = AnimationView(animation: Animation.named("blankLoadingAnim"))
-    var emptyListView: EmptyListView!
+    
+    var emptyListView: EmptyListView! //view with button, when no item to show
     var contactNavigation = UIBarButtonItem()
     var groupedMessages = [String: Messages]()
     var unreadMessages = [String: Int]()
@@ -37,7 +38,14 @@ class ConversationsVC: UIViewController {
        conversationBug.convoVC = self
         conversationBug.observeFriendList()
         loadConversations()
-        setupUI()
+        setupNewConversationButton()
+//        contactsButton()
+        setupTableView()
+        emptyListView = EmptyListView(nil, self, false)
+       setupBlankView(blankLoadingView) //skeleton view
+        Friends.convVC = self
+
+        
         ConversationsNetworking()
         
         //tableView.backgroundColor = .white
@@ -63,6 +71,8 @@ class ConversationsVC: UIViewController {
             Friends.list = []
             conversationBug.convoVC = self
              conversationBug.observeFriendList()
+            
+            
             DispatchQueue.main.async { [weak self] in
                 self?.loadConversations()
                 self?.setupUI()
@@ -95,9 +105,8 @@ class ConversationsVC: UIViewController {
     private func setupUI(){
         setupNewConversationButton()
 //        contactsButton()
-        setupTableView()
-        emptyListView = EmptyListView(nil, self, false)
-       setupBlankView(blankLoadingView)
+        setupTableView()        
+       setupBlankView(blankLoadingView) //skeleton view
         Friends.convVC = self
     }
     
