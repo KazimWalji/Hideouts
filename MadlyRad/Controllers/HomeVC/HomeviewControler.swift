@@ -45,7 +45,7 @@ class HomeViewController: UIViewController {
         var star1 = createStar(x: 100, y: 75)
         view.addSubview(star1)
         
-        var bell = setupBell(x: 350, y: 750)
+        var bell = createbell(x: 350, y: 750)
         view.addSubview(bell)
 
     }
@@ -250,11 +250,26 @@ class HomeViewController: UIViewController {
     
     }
     
-    private func setupBell(x: Int, y: Int) -> UIButton {
+    private func createbell(x: Int, y: Int) -> UIButton {
         let bellButton = UIButton(frame: CGRect(x: x, y: y, width: 50, height: 50))
         bellButton.setBackgroundImage(UIImage(named: "bell icon (google)"), for: .normal)
-    
+        bellButton.addTarget(self, action: #selector(bellButtonAction), for: .touchUpInside)
+
         return bellButton
+    }
+    
+    @objc func bellButtonAction(sender: UIButton!) {
+        print("\nBell Clicked!\n")
+        var notifView = createNotificationView()
+        view.addSubview(notifView)
+    }
+    
+    private func createNotificationView() -> UIView {
+        var rect = CGRect()
+        let notifView = UIView(frame: CGRect(origin: view.center, size: CGSize(width: 300, height: 600)))
+        notifView.center = view.center
+        notifView.backgroundColor = .red
+        return notifView
     }
     
     
