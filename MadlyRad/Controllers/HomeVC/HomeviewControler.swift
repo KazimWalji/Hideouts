@@ -44,6 +44,10 @@ class HomeViewController: UIViewController {
         
         var star1 = createStar(x: 100, y: 75)
         view.addSubview(star1)
+        
+        var bell = setupBell(x: 350, y: 750)
+        view.addSubview(bell)
+
     }
     
     private func setupBackground() {
@@ -244,6 +248,13 @@ class HomeViewController: UIViewController {
       print("\nStar Clicked!\n")
         tabBarController?.selectedIndex = 1
     
+    }
+    
+    private func setupBell(x: Int, y: Int) -> UIButton {
+        let bellButton = UIButton(frame: CGRect(x: x, y: y, width: 50, height: 50))
+        bellButton.setBackgroundImage(UIImage(named: "bell icon (google)"), for: .normal)
+    
+        return bellButton
     }
     
     
