@@ -269,7 +269,17 @@ class HomeViewController: UIViewController {
         let notifView = UIView(frame: CGRect(origin: view.center, size: CGSize(width: 300, height: 600)))
         notifView.center = view.center
         notifView.backgroundColor = .red
+        
+        
         return notifView
+    }
+    
+    private func setupNotificationViewUI(NotifView: UIView) -> UIView {
+        var scrollView = UIScrollView{
+            
+        }
+        
+        return NotifView
     }
     
     
