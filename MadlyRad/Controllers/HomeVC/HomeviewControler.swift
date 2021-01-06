@@ -260,7 +260,7 @@ class HomeViewController: UIViewController {
     
     @objc func bellButtonAction(sender: UIButton!) {
         print("\nBell Clicked!\n")
-        var notifView = createNotificationView()
+        var notifView = setupNotificationViewUI(notifView: createNotificationView())
         view.addSubview(notifView)
     }
     
@@ -274,15 +274,23 @@ class HomeViewController: UIViewController {
         return notifView
     }
     
-    private func setupNotificationViewUI(NotifView: UIView) -> UIView {
-        var scrollView = UIScrollView{
-            
-        }
+    private func setupNotificationViewUI(notifView: UIView) -> UIView {
+        var titleField = UITextField(frame: CGRect(x: notifView.bounds.minX, y: notifView.bounds.minY, width: notifView.frame.width, height: 50))
+        titleField.text = "Notifications"
+        titleField.textAlignment = .center
         
-        return NotifView
+        var tableView = UITableView(frame: CGRect(x: notifView.bounds.minX, y: notifView.bounds.minY + 50, width: notifView.frame.width, height: notifView.frame.height - 70))
+        
+        
+        //tableView.translatesAutoresizingMaskIntoConstraints = false
+        
+        notifView.addSubview(titleField)
+        notifView.addSubview(tableView)
+        return notifView
     }
+        
+}
     
     
     
     
- }
