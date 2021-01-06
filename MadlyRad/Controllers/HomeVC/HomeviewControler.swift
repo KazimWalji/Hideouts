@@ -9,25 +9,50 @@
 import Foundation
 import UIKit
 class HomeViewController: UIViewController {
-
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-      warningLabel()
-       //background
-        view.backgroundColor = .white
-      //  view.addGestureRecognizer(edgePan)
-        addInfluencersButton()
-       // starsButton()
-        navigationItem.title = "Home"
+        
+        setupUI()
         NotificationCenter.default.addObserver(
-               forName: UIApplication.userDidTakeScreenshotNotification,
-               object: nil, queue: nil) { _ in
-                 print("I see what you did there")
-             }
- 
-
+            forName: UIApplication.userDidTakeScreenshotNotification,
+            object: nil, queue: nil) { _ in
+            print("I see what you did there")
+        }
     }
-    private func addInfluencersButton() {
+    
+    private func setupUI() {
+        setupBackgroundImage()
+        
+        view.backgroundColor = .white
+//        setupInfluencersButton()
+        // starsButton()
+    }
+    
+    private func setupBackgroundImage() {
+        let imageView = UIImageView(frame: .zero)
+        layoutBackgroundImageView(imageView: imageView)
+        configureBackgroundImageView(imageView: imageView)
+    }
+    
+    private func layoutBackgroundImageView(imageView: UIImageView) {
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(imageView)
+        NSLayoutConstraint.activate([
+            imageView.topAnchor.constraint(equalTo: view.safeTopAnchor),
+            imageView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            imageView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            imageView.bottomAnchor.constraint(equalTo: view.safeBottomAnchor),
+        ])
+    }
+    
+    private func configureBackgroundImageView(imageView: UIImageView) {
+        imageView.image = #imageLiteral(resourceName: "girl_standing_on_rock")
+    }
+    
+    private func setupInfluencersButton() {
         let button = UIButton(type: .system)
         view.addSubview(button)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -97,17 +122,5 @@ class HomeViewController: UIViewController {
         }
         
     }*/
-    private func warningLabel(){
-        let label: UILabel = UILabel()
-        label.frame = CGRect(x: self.view.center.x, y: self.view.center.y, width: 250, height: 100)
-        label.center.x = self.view.center.x
-        label.center.y = self.view.center.y
-        label.textColor = UIColor.black
-        label.textAlignment = NSTextAlignment.center
-        label.text = "More coming soon!"
-        label.numberOfLines = 0
-        self.view.addSubview(label)
-
-    }
-
+    
  }
