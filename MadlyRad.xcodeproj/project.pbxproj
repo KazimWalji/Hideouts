@@ -1239,14 +1239,14 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 50;
-				DEVELOPMENT_TEAM = 647BCL2NMU;
+				DEVELOPMENT_TEAM = 7Z64AR52G7;
 				INFOPLIST_FILE = MadlyRad/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.02;
-				PRODUCT_BUNDLE_IDENTIFIER = com.RobRoe.Hideouts1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.RobRoe.Hideouts;
 				PRODUCT_NAME = Hideouts;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_ENABLE_BATCH_MODE = NO;
@@ -1264,14 +1264,14 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 50;
-				DEVELOPMENT_TEAM = 647BCL2NMU;
+				DEVELOPMENT_TEAM = 7Z64AR52G7;
 				INFOPLIST_FILE = MadlyRad/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.02;
-				PRODUCT_BUNDLE_IDENTIFIER = com.RobRoe.Hideouts1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.RobRoe.Hideouts;
 				PRODUCT_NAME = Hideouts;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_ENABLE_BATCH_MODE = NO;
