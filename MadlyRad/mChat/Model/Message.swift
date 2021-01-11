@@ -25,9 +25,9 @@ struct Message {
     let audioURL: String
     let timeSent: Date
     let imageURLs: [String]
-    let usersWithoutAccess: [User]
+    let usersWithoutAccess: [MRUser]
 
-    init?(firestoreDocumentSnapshot: DocumentSnapshot, imageURLs: [String], usersWithoutAccess: [User]) {
+    init?(firestoreDocumentSnapshot: DocumentSnapshot, imageURLs: [String], usersWithoutAccess: [MRUser]) {
         guard let messageID = firestoreDocumentSnapshot.get(.messageID) as? String,
               let precipitatingMessageID = firestoreDocumentSnapshot.get(.precipitatingMessageID) as? String,
               let senderID = firestoreDocumentSnapshot.get(.senderID) as? String,

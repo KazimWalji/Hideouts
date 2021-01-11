@@ -37,6 +37,8 @@ enum FirestorePath: String {
     case timeSent
     case imageURLs
     case usersWithoutAccess
+    
+    case url
 }
 
 

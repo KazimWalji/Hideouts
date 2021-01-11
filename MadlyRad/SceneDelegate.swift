@@ -19,17 +19,23 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.makeKeyAndVisible()
         FirebaseApp.configure()
         getAppColors()
-        if Auth.auth().currentUser != nil{
+        if Auth.auth().currentUser != nil {
             let authNetworking = AuthNetworking(nil)
             let uid = Auth.auth().currentUser!.uid
-            authNetworking.setupUserInfo(uid) { (isActive) in
-                if isActive {
+            authNetworking.fetchUser(uid) { (didSucceed) in
+                if didSucceed {
+                    UserActivity.observe(isOnline: true)
                     self.window?.rootViewController = ChatTabBar()
                     self.window?.makeKeyAndVisible()
-                }else{
+                } else {
                     let controller = SignInVC()
                     self.window?.rootViewController = controller
                     self.window?.makeKeyAndVisible()
+                    do {
+                        try Auth.auth().signOut()
+                    } catch {
+                        // TODO: back out to initial page if sign out fails
+                    }
                 }
             }
         }else{

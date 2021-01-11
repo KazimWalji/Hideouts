@@ -193,7 +193,7 @@ class SignUpVC: UIViewController, UITextFieldDelegate, SFSafariViewControllerDel
                 return
             
             
-        }
+            }
         }
         let UserID = signUpView.UserIDTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
         authNetworking = AuthNetworking(self)
@@ -201,9 +201,8 @@ class SignUpVC: UIViewController, UITextFieldDelegate, SFSafariViewControllerDel
             guard errorMessage == nil else {
                 self.signUpView.errorLabel.text = errorMessage
                 return
-
-        self.goToNextController()
-}
+            }
+            self.goToNextController()
         }
     }
 

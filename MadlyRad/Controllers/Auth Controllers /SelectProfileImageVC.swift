@@ -126,13 +126,27 @@ class SelectProfileImageVC: UIViewController, UIImagePickerControllerDelegate, U
       //   let nextViewController = storyBoard.instantiateViewController(withIdentifier: "DatePicker") as! DatePicker
          //nextViewController.modalPresentationStyle = .fullScreen
         // let controller = DatePicker()
-         //controller.modalPresentationStyle = .fullScreen
-         //self.mainController.present(nextViewController, animated: false, completion: nil)
+        //controller.modalPresentationStyle = .fullScreen
+        //self.mainController.present(nextViewController, animated: false, completion: nil)
         authNetworking = AuthNetworking(self)
-        authNetworking.registerUser(name, email, password, profileImage.image, UserID, pronoun){ (error) in
-            self.authNetworking.networkingLoadingIndicator.endLoadingAnimation()
-            self.showAlert(title: "Error", message: error)
+        authNetworking.registerUser(name, email, password, profileImage.image, UserID, pronoun) { (error) in
+            
+            if let error = error {
+                self.authNetworking.networkingLoadingIndicator.endLoadingAnimation()
+                self.showAlert(title: "Error", message: error)
+            } else {
+                self.goToDatePicker()
+            }
         }
+    }
+    
+    private func goToDatePicker() {
+            let storyBoard : UIStoryboard = UIStoryboard(name: "HomeVC", bundle:nil)
+            let nextViewController = storyBoard.instantiateViewController(withIdentifier: "DatePicker") as! DatePicker
+            nextViewController.modalPresentationStyle = .fullScreen
+            //     let controller = WelcomeVC()
+            //controller.modalPresentationStyle = .fullScreen
+            self.mainController.present(nextViewController, animated: false, completion: nil)
     }
     
     // ---------------------------------------------------------------------------------------------------------------------------------------------------- //

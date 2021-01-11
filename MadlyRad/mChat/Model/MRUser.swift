@@ -8,9 +8,9 @@
 
 import Foundation
 
-struct User {
+struct MRUser {
     
-    static var current: User?
+    static var current: MRUser?
     
     let userID: String
     let email: String
