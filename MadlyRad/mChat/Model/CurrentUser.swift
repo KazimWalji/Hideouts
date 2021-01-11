@@ -19,10 +19,8 @@ class CurrentUser {
     
     static var pronoun: String!
     
-   static var registration_token: String!
+    static var registration_token: String!
     
-
-        
 }
 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------- //

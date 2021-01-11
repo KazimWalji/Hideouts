@@ -6,6 +6,7 @@ import FirebaseAuth
 import FirebaseStorage
 import FirebaseDatabase
 import FirebaseMessaging
+import FirebaseFirestore
 
 class AuthNetworking {
     
@@ -60,6 +61,62 @@ class AuthNetworking {
     // MARK: SETUP USER INFO METHOD
     
     func setupUserInfo(_ uid: String, completion: @escaping (_ isActive: Bool) -> Void) {
+        let currentUserDocumentReference = Firestore.firestore().collection(.dev1).document(.users).collection(.users).document()
+        
+        currentUserDocumentReference.getDocument { currentUserDocumentSnapshot, error in
+            guard let snapshot = currentUserDocumentSnapshot,
+                  let userID = snapshot.get(.userID),
+                  let email = snapshot.get(.email),
+                  let isOnline = snapshot.get(.isOnline),
+                  let isTyping = snapshot.get(.isTyping),
+                  let lastLogin = snapshot.get(.lastLogin),
+                  let deviceToken = Messaging.messaging().fcmToken,
+                  let firstName = snapshot.get(.firstName),
+                  let lastName = snapshot.get(.lastName),
+                  let pronouns = snapshot.get(.pronouns),
+                  let profileImageURL = snapshot.get(.profileImageURL),
+                  let friendRequestCode = snapshot.get(.friendRequestCode),
+                  error == nil else {
+                // TODO: present error message to user
+                return
+            }
+            
+            let smileNotes = currentUserDocumentReference.collection(.smileNotes).getDocuments(completion: { (querySnapshot, error) in
+                guard let smileNoteIDs = querySnapshot?.documents.compactMap({documentSnapshot -> String? in
+                    return documentSnapshot.get(.messageID) as? String
+                }) else { return }
+                
+                var smileNotes = [Message]()
+                let smileNotePopulationOperations = smileNoteIDs.map { smileNoteID -> Operation in
+                    return BlockOperation {
+                        Firestore.firestore().collection(.messages).whereField(.messageID, isEqualTo: smileNoteID).getDocuments { (querySnapshot, error) in
+                            guard let querySnapshot = querySnapshot, error == nil else { return }
+                            smileNotes.append()
+                        }
+                    }
+                }
+                
+                Firestore.firestore().collection(.messages)
+                
+                User.current = User(userID: userID,
+                                    email: email,
+                                    isOnline: isOnline,
+                                    isTyping: isTyping,
+                                    lastLogin: lastLogin,
+                                    deviceToken: deviceToken,
+                                    firstName: firstName,
+                                    lastName: lastName,
+                                    pronouns: pronouns,
+                                    profileImageURL: profileImageURL,
+                                    friendRequestCode: friendRequestCode,
+                                    smileNotes: smileNotes)
+            })
+            
+            let message = Message()
+            
+            
+        }
+        
         Database.database().reference().child("users").child(uid).observeSingleEvent(of: .value) { (snapshot) in
             guard let snap = snapshot.value as? [String: AnyObject] else { return }
             CurrentUser.name = snap["name"] as? String
