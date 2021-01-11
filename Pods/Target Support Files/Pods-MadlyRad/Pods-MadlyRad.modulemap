@@ -1,0 +1,6 @@
+framework module Pods_MadlyRad {
+  umbrella header "Pods-MadlyRad-umbrella.h"
+
+  export *
+  module * { export * }
+}
