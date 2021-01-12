@@ -14,15 +14,10 @@ class HomeViewController: UIViewController {
     
     private var playerLooper: AVPlayerLooper?
     
-    //temporary definitons for 0, 1, 2
-    private static var def_offline = 0;
-    private static var def_inten = 1;
-    private static var def_online = 2;
-    
     //temporary data for NotificationView
     private var names = ["Timmy", "John", "Kyle", "Ana"]
     private var ages = [17, 15, 16, 17]
-    private var status = [def_online, def_inten, def_offline, def_online]
+    private var status = [2, 1, 0, 2]
     private var images = ["Dinosaur", "hammer", "normalGopher", "Dinosaur"]
     
 //    private var girlWithWaterImageTopConstraint: NSLayoutConstraint?
@@ -278,7 +273,8 @@ class HomeViewController: UIViewController {
         var rect = CGRect()
         let notifView = UIView(frame: CGRect(origin: view.center, size: CGSize(width: 300, height: 600)))
         notifView.center = view.center
-        notifView.backgroundColor = .red
+        notifView.backgroundColor = #colorLiteral(red: 0.1215686277, green: 0.01176470611, blue: 0.4235294163, alpha: 1)
+        notifView.layer.cornerRadius = notifView.frame.height/30
         
         
         return notifView
@@ -287,12 +283,14 @@ class HomeViewController: UIViewController {
     private func setupNotificationViewUI(notifView: UIView) -> UIView {
         var titleField = UITextField(frame: CGRect(x: notifView.bounds.minX, y: notifView.bounds.minY, width: notifView.frame.width, height: 50))
         titleField.text = "Notifications"
+        titleField.textColor = #colorLiteral(red: 0.5568627715, green: 0.3529411852, blue: 0.9686274529, alpha: 1)
         titleField.textAlignment = .center
         
         var tableView = UITableView(frame: CGRect(x: notifView.bounds.minX, y: notifView.bounds.minY + 50, width: notifView.frame.width, height: notifView.frame.height - 70))
         
         tableView.dataSource = self
-        tableView.rowHeight = 100
+        tableView.rowHeight = 70
+        tableView.backgroundColor = #colorLiteral(red: 0.1215686277, green: 0.01176470611, blue: 0.4235294163, alpha: 1)
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         
         
@@ -327,9 +325,33 @@ extension HomeViewController: UITableViewDataSource {
         
         let nameView = UITextField(frame: CGRect(x: 70, y: 10, width: cell.frame.width - 80, height: 20))
         nameView.text = names[indexPath.row]
+        nameView.font = UIFont(name: nameView.font!.fontName, size: 20)
+        
+        let statusView = UITextField(frame: CGRect(x: 70, y: 40, width: cell.frame.width - 80, height: 12))
+        
+        switch status[indexPath.row] {
+        case 0:
+            statusView.text = "I will not be on for a while."
+            cell.backgroundColor = .red
+            break
+        case 1:
+            statusView.text = "I will be on in 10 minutes."
+            cell.backgroundColor = .yellow
+            break
+        case 2:
+            statusView.text = "I am online and ready to chat!"
+            cell.backgroundColor = .green
+            break
+        default:
+            statusView.text = "Error getting status"
+            break;
+        }
+        
+        statusView.font = UIFont(name: statusView.font!.fontName, size: 12)
         
         cell.addSubview(imageView)
         cell.addSubview(nameView)
+        cell.addSubview(statusView)
         return cell
     }
     
