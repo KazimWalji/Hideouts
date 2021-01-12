@@ -329,7 +329,7 @@ extension HomeViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return names.count
+        return friends.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -337,7 +337,7 @@ extension HomeViewController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         
         let imageView = UIImageView(frame: CGRect(x: 10, y: 10, width: 50, height: 50))
-        imageView.image = UIImage(named: images[indexPath.row])
+        imageView.image = UIImage(named: friends[indexPath.row].image)
         imageView.layer.borderWidth = 1
         imageView.layer.borderColor = UIColor.black.cgColor
         imageView.layer.masksToBounds = false
@@ -345,12 +345,12 @@ extension HomeViewController: UITableViewDataSource {
         imageView.clipsToBounds = true
         
         let nameView = UITextField(frame: CGRect(x: 70, y: 10, width: cell.frame.width - 80, height: 20))
-        nameView.text = names[indexPath.row]
+        nameView.text = friends[indexPath.row].name
         nameView.font = UIFont(name: nameView.font!.fontName, size: 20)
         
         let statusView = UITextField(frame: CGRect(x: 70, y: 40, width: cell.frame.width - 80, height: 12))
         
-        switch status[indexPath.row] {
+        switch friends[indexPath.row].status {
         case 0:
             statusView.text = "I will not be on for a while."
             cell.backgroundColor = .red
