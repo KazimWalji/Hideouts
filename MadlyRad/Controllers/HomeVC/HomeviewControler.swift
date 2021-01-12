@@ -23,6 +23,7 @@ class HomeViewController: UIViewController {
     private var names = ["Timmy", "John", "Kyle", "Ana"]
     private var ages = [17, 15, 16, 17]
     private var status = [def_online, def_inten, def_offline, def_online]
+    private var images = ["Dinosaur", "hammer", "normalGopher", "Dinosaur"]
     
 //    private var girlWithWaterImageTopConstraint: NSLayoutConstraint?
 //    private var girlWithWaterImageHeightConstraint: NSLayoutConstraint?
@@ -249,7 +250,6 @@ class HomeViewController: UIViewController {
     private func createStar(x: Int, y: Int) -> UIButton {
         let starButton = UIButton(frame: CGRect(x: x, y: y, width: 30, height: 30))
         starButton.setBackgroundImage(#imageLiteral(resourceName: "redstar"), for: .normal)
-        starButton.setTitle("A", for: .normal)
         starButton.addTarget(self, action: #selector(starButtonAction), for: .touchUpInside)
         return starButton
     }
@@ -292,7 +292,7 @@ class HomeViewController: UIViewController {
         var tableView = UITableView(frame: CGRect(x: notifView.bounds.minX, y: notifView.bounds.minY + 50, width: notifView.frame.width, height: notifView.frame.height - 70))
         
         tableView.dataSource = self
-        
+        tableView.rowHeight = 100
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         
         
@@ -316,7 +316,20 @@ extension HomeViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        cell.textLabel?.text = names[indexPath.row]
+        
+        let imageView = UIImageView(frame: CGRect(x: 10, y: 10, width: 50, height: 50))
+        imageView.image = UIImage(named: images[indexPath.row])
+        imageView.layer.borderWidth = 1
+        imageView.layer.borderColor = UIColor.black.cgColor
+        imageView.layer.masksToBounds = false
+        imageView.layer.cornerRadius = imageView.frame.height/2
+        imageView.clipsToBounds = true
+        
+        let nameView = UITextField(frame: CGRect(x: 70, y: 10, width: cell.frame.width - 80, height: 20))
+        nameView.text = names[indexPath.row]
+        
+        cell.addSubview(imageView)
+        cell.addSubview(nameView)
         return cell
     }
     
