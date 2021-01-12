@@ -15,20 +15,23 @@ class HomeViewController: UIViewController {
     private var playerLooper: AVPlayerLooper?
     private var starPlayerLoopers: [AVPlayerLooper] = []
     
+    private var friends: [Friend] = []
+    private var currentFriend: Friend?
+    
     //temporary data for NotificationView
-    private var names = ["Timmy", "John", "Kyle", "Ana"]
-    private var ages = [17, 15, 16, 17]
-    private var status = [2, 1, 0, 2]
-    private var images = ["Dinosaur", "hammer", "normalGopher", "Dinosaur"]
+    private var names = ["Timmy", "John", "Kyle", "Ana", "Rachel"]
+    private var ages = [17, 15, 16, 17, 16]
+    private var listNumbers = [1, 2, 3, 4, 5]
+    private var status = [2, 1, 0, 2, 0]
+    private var images = ["Dinosaur", "hammer", "normalGopher", "Dinosaur", "Dinosaur"]
     
     //temporary data for Stars
     private var starCoords: [[Int]] = [ [200, 75], [70,120], [180,230], [350, 250], [50,350] ]
     
-//    private var girlWithWaterImageTopConstraint: NSLayoutConstraint?
-//    private var girlWithWaterImageHeightConstraint: NSLayoutConstraint?
-    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        setupFriends()
         
         setupUI()
         
@@ -39,7 +42,15 @@ class HomeViewController: UIViewController {
         }
     }
     
+    private func setupFriends() {
+        for i in 0...names.count - 1 {
+            var friend = Friend(name: names[i], age: ages[i], friendListNumber: listNumbers[i], status: status[i], image: images[i], starCoords: starCoords[i])
+            friends.append(friend)
+        }
+    }
+    
     private func setupUI() {
+        
         setupBackground()
         
         navigationController?.navigationBar.isHidden = true
@@ -47,10 +58,6 @@ class HomeViewController: UIViewController {
         navigationController?.tabBarController?.tabBar.backgroundImage = UIImage()
         navigationController?.tabBarController?.tabBar.shadowImage = UIImage()
         navigationController?.tabBarController?.tabBar.bounds = tabBarBounds!
-
-
-//        setupInfluencersButton()
-
         
         createStars()
         
@@ -124,21 +131,7 @@ class HomeViewController: UIViewController {
     
     private func configureGirlAndWaterImageView(_ imageView: UIImageView) {
         imageView.image = #imageLiteral(resourceName: "girl_and_water")
-//        imageView.contentMode = .scaleAspectFit
-        
-//        view.layoutIfNeeded()
-        
-//        guard let imageSize = imageView.image?.size else { return }
-//        let ratio = (imageSize.height / imageSize.width)
-//
-//        let imageViewHieght = view.bounds.width * ratio
-        
-        
-//        girlWithWaterImageHeightConstraint = imageView.heightAnchor.constraint(equalToConstant: imageViewHieght)
-//        girlWithWaterImageTopConstraint?.constant = 170
-//        girlWithWaterImageTopConstraint?.isActive = true
-//        girlWithWaterImageHeightConstraint?.isActive = true
-//        imageView.layoutIfNeeded()
+
     }
     
     private func setupFullBackgroundImage() {
@@ -240,8 +233,10 @@ class HomeViewController: UIViewController {
     */
     
     private func createStars() {
-        for coord in starCoords {
-            createStar(x: coord[0], y: coord[1])
+        for friend in friends {
+            currentFriend = friend
+            createStar(x: friend.starCoords[0], y: friend.starCoords[1])
+            friends[friend.friendListNumber - 1] = currentFriend!
         }
     }
     
@@ -249,6 +244,7 @@ class HomeViewController: UIViewController {
         let starButton = UIButton(frame: CGRect(x: x, y: y, width: 60, height: 60))
         starButton.addTarget(self, action: #selector(starButtonAction), for: .touchUpInside)
         createStarVideo(frame: starButton.frame)
+        currentFriend?.starButton = starButton
         view.addSubview(starButton)
     }
     
@@ -262,6 +258,7 @@ class HomeViewController: UIViewController {
         let queuePlayer = AVQueuePlayer(playerItem: playerItem)
         var starPlayerLooper = AVPlayerLooper(player: queuePlayer, templateItem: playerItem)
         starPlayerLoopers.append(starPlayerLooper)
+        currentFriend?.starVideoLooper = starPlayerLooper
                 
         let playerLayer = AVPlayerLayer(player: queuePlayer)
         playerLayer.frame = frame

@@ -13,6 +13,7 @@
 		0FD9A3F5255CCCE700877373 /* ScreenShieldKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0FD9A2B1255390D600877373 /* ScreenShieldKit.xcframework */; };
 		0FD9A3F6255CCCE700877373 /* ScreenShieldKit.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0FD9A2B1255390D600877373 /* ScreenShieldKit.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		7A1F2A6825AE144E0054DBB9 /* Star Animation.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 7A1F2A6725AE144E0054DBB9 /* Star Animation.mp4 */; };
+		7A1F2A6A25AE3B980054DBB9 /* Friend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A1F2A6925AE3B980054DBB9 /* Friend.swift */; };
 		8F11A5A52565803900F5ECD9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F11A5A42565803900F5ECD9 /* AppDelegate.swift */; };
 		8F11A5A72565808D00F5ECD9 /* ChatVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F11A5A62565808D00F5ECD9 /* ChatVC.swift */; };
 		8F11A5A9256580A100F5ECD9 /* ConverstaionsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F11A5A8256580A100F5ECD9 /* ConverstaionsCell.swift */; };
@@ -186,6 +187,7 @@
 		13A6FEA61B719E28D3D00C6A /* Pods-MadlyRad.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MadlyRad.release.xcconfig"; path = "Target Support Files/Pods-MadlyRad/Pods-MadlyRad.release.xcconfig"; sourceTree = "<group>"; };
 		4AE685ADFD2349864470B8A3 /* Pods_MadlyRad.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MadlyRad.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7A1F2A6725AE144E0054DBB9 /* Star Animation.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Star Animation.mp4"; path = "../../../../../../Downloads/Star Animation.mp4"; sourceTree = "<group>"; };
+		7A1F2A6925AE3B980054DBB9 /* Friend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Friend.swift; sourceTree = "<group>"; };
 		8F11A5A42565803900F5ECD9 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8F11A5A62565808D00F5ECD9 /* ChatVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatVC.swift; sourceTree = "<group>"; };
 		8F11A5A8256580A100F5ECD9 /* ConverstaionsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConverstaionsCell.swift; sourceTree = "<group>"; };
@@ -604,6 +606,7 @@
 				EB3A63B924E1469900F82E93 /* stars.swift */,
 				EBD1A53124E1FFD900A120F2 /* HomeVC.storyboard */,
 				EB61439025074F6100FF9456 /* HomeviewControler.swift */,
+				7A1F2A6925AE3B980054DBB9 /* Friend.swift */,
 				EBD1A54324E201D900A120F2 /* Penguin.swift */,
 				EBD1A54424E201D900A120F2 /* ResultVC.swift */,
 				EBD1A54024E201D800A120F2 /* ViewController.swift */,
@@ -1014,6 +1017,7 @@
 				EB3A641624E1469A00F82E93 /* LogoVC.swift in Sources */,
 				EB3A644F24E1469A00F82E93 /* ContactsNetworking.swift in Sources */,
 				8F11A5AF2565810C00F5ECD9 /* ResponseView + Extension.swift in Sources */,
+				7A1F2A6A25AE3B980054DBB9 /* Friend.swift in Sources */,
 				EB3A642924E1469A00F82E93 /* ProfileCell.swift in Sources */,
 				FAB28F972583DA88009AE1C3 /* SignUpVC.swift in Sources */,
 				EB3042D62504C68500FAD748 /* paidStickersCell.swift in Sources */,
