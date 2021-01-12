@@ -13,6 +13,7 @@ import AVKit
 class HomeViewController: UIViewController {
     
     private var playerLooper: AVPlayerLooper?
+    private var starPlayerLooper: AVPlayerLooper?
     
     //temporary data for NotificationView
     private var names = ["Timmy", "John", "Kyle", "Ana"]
@@ -48,8 +49,18 @@ class HomeViewController: UIViewController {
 //        setupInfluencersButton()
         // starsButton()
         
-        var star1 = createStar(x: 100, y: 75)
+        var star1 = createStar(x: 200, y: 75)
+        var star2 = createStar(x: 70, y: 120)
+        var star3 = createStar(x: 180, y: 230)
+        var star4 = createStar(x: 350, y: 250)
+        var star5 = createStar(x: 50, y: 350)
+
         view.addSubview(star1)
+        view.addSubview(star2)
+        view.addSubview(star3)
+        view.addSubview(star4)
+        view.addSubview(star5)
+
         
         var bell = createbell(x: 350, y: 750)
         view.addSubview(bell)
@@ -237,10 +248,32 @@ class HomeViewController: UIViewController {
     */
     
     private func createStar(x: Int, y: Int) -> UIButton {
-        let starButton = UIButton(frame: CGRect(x: x, y: y, width: 30, height: 30))
-        starButton.setBackgroundImage(#imageLiteral(resourceName: "redstar"), for: .normal)
+        let starButton = UIButton(frame: CGRect(x: x, y: y, width: 40, height: 40))
+        starButton.setBackgroundImage(#imageLiteral(resourceName: "Star2"), for: .normal)
         starButton.addTarget(self, action: #selector(starButtonAction), for: .touchUpInside)
         return starButton
+    }
+    
+    private func createStarVideo() {
+        let starVideo = UIView(frame: CGRect(x: 100, y: 200, width: 150, height: 150))
+        
+        guard let animationPath = Bundle.main.path(forResource: "Star Animation", ofType: "mp4") else { return }
+        let animationURL = URL(fileURLWithPath: animationPath)
+        var videoAsset = AVAsset(url: animationURL)
+
+        let playerItem = AVPlayerItem(asset: videoAsset)
+        let queuePlayer = AVQueuePlayer(playerItem: playerItem)
+        starPlayerLooper = AVPlayerLooper(player: queuePlayer, templateItem: playerItem)
+        
+                
+        let playerLayer = AVPlayerLayer(player: queuePlayer)
+        playerLayer.frame = starVideo.frame
+        playerLayer.videoGravity = .resizeAspectFill
+        starVideo.layer.addSublayer(playerLayer)
+        queuePlayer.play()
+        
+        print("added star video")
+        view.addSubview(starVideo)
     }
     
     @objc func starButtonAction(sender: UIButton!) {
