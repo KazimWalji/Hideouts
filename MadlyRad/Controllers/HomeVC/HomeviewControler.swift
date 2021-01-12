@@ -50,19 +50,7 @@ class HomeViewController: UIViewController {
 
 
 //        setupInfluencersButton()
-        // starsButton()
-        
-//        var star1 = createStar(x: 200, y: 75)
-//        var star2 = createStar(x: 70, y: 120)
-//        var star3 = createStar(x: 180, y: 230)
-//        var star4 = createStar(x: 350, y: 250)
-//        var star5 = createStar(x: 50, y: 350)
-//
-//        view.addSubview(star1)
-//        view.addSubview(star2)
-//        view.addSubview(star3)
-//        view.addSubview(star4)
-//        view.addSubview(star5)
+
         
         createStars()
         
