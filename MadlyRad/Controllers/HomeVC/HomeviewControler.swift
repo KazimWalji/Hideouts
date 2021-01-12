@@ -240,10 +240,29 @@ class HomeViewController: UIViewController {
         }
     }
     
+    @objc func starHeldDown(_ gestureRecognizer: UILongPressGestureRecognizer) {
+        if gestureRecognizer.state == .began {
+            print("Star is held down")
+        }
+        if gestureRecognizer.state == .ended {
+            print("Star is released")
+        }
+        
+    }
+    
+    private func showNameLabel() {
+        
+    }
+    
     private func createStar(x: Int, y: Int) {
         let starButton = UIButton(frame: CGRect(x: x, y: y, width: 60, height: 60))
         starButton.addTarget(self, action: #selector(starButtonAction), for: .touchUpInside)
         createStarVideo(frame: starButton.frame)
+        
+        let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(self.starHeldDown))
+        longPressRecognizer.minimumPressDuration = 0.5
+        starButton.addGestureRecognizer(longPressRecognizer)
+        
         currentFriend?.starButton = starButton
         view.addSubview(starButton)
     }
