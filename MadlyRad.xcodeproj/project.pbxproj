@@ -7,12 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0F742BCD258550E60022C33D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F742BCC258550E60022C33D /* SceneDelegate.swift */; };
-		0F742BCF258550FD0022C33D /* EmptyListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F742BCE258550FC0022C33D /* EmptyListView.swift */; };
+		0798438325A2972E004BBAC8 /* Star Fractal Noise.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 0798438225A2972E004BBAC8 /* Star Fractal Noise.mp4 */; };
 		0FD9A3632558F83500877373 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB5E972524F760CE00FAEA6B /* StoreKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		0FD9A3652558F83C00877373 /* Pods_MadlyRad.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4AE685ADFD2349864470B8A3 /* Pods_MadlyRad.framework */; };
 		0FD9A3F5255CCCE700877373 /* ScreenShieldKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0FD9A2B1255390D600877373 /* ScreenShieldKit.xcframework */; };
 		0FD9A3F6255CCCE700877373 /* ScreenShieldKit.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0FD9A2B1255390D600877373 /* ScreenShieldKit.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		7A1F2A6825AE144E0054DBB9 /* Star Animation.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 7A1F2A6725AE144E0054DBB9 /* Star Animation.mp4 */; };
 		8F11A5A52565803900F5ECD9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F11A5A42565803900F5ECD9 /* AppDelegate.swift */; };
 		8F11A5A72565808D00F5ECD9 /* ChatVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F11A5A62565808D00F5ECD9 /* ChatVC.swift */; };
 		8F11A5A9256580A100F5ECD9 /* ConverstaionsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F11A5A8256580A100F5ECD9 /* ConverstaionsCell.swift */; };
@@ -24,6 +24,8 @@
 		8FF0133F25409903000B8A93 /* gifVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FF0133E25409903000B8A93 /* gifVC.swift */; };
 		8FF0134125409A38000B8A93 /* gifCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FF0134025409A38000B8A93 /* gifCell.swift */; };
 		8FF013482540A13E000B8A93 /* mChat.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8FF013462540A13D000B8A93 /* mChat.xcdatamodeld */; };
+		D61A2D4025A24FDD0093F708 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D61A2D3F25A24FDD0093F708 /* SceneDelegate.swift */; };
+		D61A2D4225A250270093F708 /* EmptyListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D61A2D4125A250270093F708 /* EmptyListView.swift */; };
 		EB04711F24E5CE1B0015BDA8 /* conversationsBugFix.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB04711E24E5CE1B0015BDA8 /* conversationsBugFix.swift */; };
 		EB04712124E5F0720015BDA8 /* SmilesNotesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB04712024E5F0720015BDA8 /* SmilesNotesViewController.swift */; };
 		EB04713124E9C5D80015BDA8 /* DOB.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB04713024E9C5D80015BDA8 /* DOB.swift */; };
@@ -179,11 +181,11 @@
 
 /* Begin PBXFileReference section */
 		0046A90C4A3E19B903C95D5D /* Pods-MadlyRad.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MadlyRad.debug.xcconfig"; path = "Target Support Files/Pods-MadlyRad/Pods-MadlyRad.debug.xcconfig"; sourceTree = "<group>"; };
-		0F742BCC258550E60022C33D /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SceneDelegate.swift; path = ../../../Desktop/SceneDelegate.swift; sourceTree = "<group>"; };
-		0F742BCE258550FC0022C33D /* EmptyListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EmptyListView.swift; path = ../../../../Desktop/EmptyListView.swift; sourceTree = "<group>"; };
+		0798438225A2972E004BBAC8 /* Star Fractal Noise.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Star Fractal Noise.mp4"; sourceTree = "<group>"; };
 		0FD9A2B1255390D600877373 /* ScreenShieldKit.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = ScreenShieldKit.xcframework; path = MadlyRad/ScreenShieldKit.xcframework; sourceTree = "<group>"; };
 		13A6FEA61B719E28D3D00C6A /* Pods-MadlyRad.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MadlyRad.release.xcconfig"; path = "Target Support Files/Pods-MadlyRad/Pods-MadlyRad.release.xcconfig"; sourceTree = "<group>"; };
 		4AE685ADFD2349864470B8A3 /* Pods_MadlyRad.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MadlyRad.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7A1F2A6725AE144E0054DBB9 /* Star Animation.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Star Animation.mp4"; path = "../../../../../../Downloads/Star Animation.mp4"; sourceTree = "<group>"; };
 		8F11A5A42565803900F5ECD9 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8F11A5A62565808D00F5ECD9 /* ChatVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatVC.swift; sourceTree = "<group>"; };
 		8F11A5A8256580A100F5ECD9 /* ConverstaionsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConverstaionsCell.swift; sourceTree = "<group>"; };
@@ -196,6 +198,8 @@
 		8FF0134025409A38000B8A93 /* gifCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = gifCell.swift; sourceTree = "<group>"; };
 		8FF013472540A13D000B8A93 /* mChat.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = mChat.xcdatamodel; sourceTree = "<group>"; };
 		CDDB6EB9256F4BD200D5A69B /* Configuration.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = Configuration.storekit; sourceTree = "<group>"; };
+		D61A2D3F25A24FDD0093F708 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		D61A2D4125A250270093F708 /* EmptyListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyListView.swift; sourceTree = "<group>"; };
 		EB04711E24E5CE1B0015BDA8 /* conversationsBugFix.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = conversationsBugFix.swift; sourceTree = "<group>"; };
 		EB04712024E5F0720015BDA8 /* SmilesNotesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmilesNotesViewController.swift; sourceTree = "<group>"; };
 		EB04713024E9C5D80015BDA8 /* DOB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DOB.swift; sourceTree = "<group>"; };
@@ -353,6 +357,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0798437D25A265AD004BBAC8 /* Videos */ = {
+			isa = PBXGroup;
+			children = (
+				0798438225A2972E004BBAC8 /* Star Fractal Noise.mp4 */,
+				7A1F2A6725AE144E0054DBB9 /* Star Animation.mp4 */,
+			);
+			path = Videos;
+			sourceTree = "<group>";
+		};
 		89EB6148CE255F41224D50EE /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -443,10 +456,10 @@
 		EB3A637224E1469800F82E93 /* App Design Helpers + CoreData model */ = {
 			isa = PBXGroup;
 			children = (
-				0F742BCE258550FC0022C33D /* EmptyListView.swift */,
 				8FF013462540A13D000B8A93 /* mChat.xcdatamodeld */,
 				EB3A637524E1469800F82E93 /* ThemeColors.swift */,
 				EB3A637724E1469800F82E93 /* GradientLogoView.swift */,
+				D61A2D4125A250270093F708 /* EmptyListView.swift */,
 			);
 			path = "App Design Helpers + CoreData model";
 			sourceTree = "<group>";
@@ -753,6 +766,7 @@
 		EB3A63F524E1469900F82E93 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				0798437D25A265AD004BBAC8 /* Videos */,
 				EB3A63F624E1469900F82E93 /* Assets.xcassets */,
 				EB3A63F724E1469900F82E93 /* Fonts */,
 				EB3A63F924E1469900F82E93 /* Animations */,
@@ -807,8 +821,8 @@
 		EBCD2AB824C410F900EC5F97 /* MadlyRad */ = {
 			isa = PBXGroup;
 			children = (
-				0F742BCC258550E60022C33D /* SceneDelegate.swift */,
 				8F11A5A42565803900F5ECD9 /* AppDelegate.swift */,
+				D61A2D3F25A24FDD0093F708 /* SceneDelegate.swift */,
 				EBCD2AD724C5141D00EC5F97 /* Certificates.p12 */,
 				EB3A640324E1469A00F82E93 /* Info.plist */,
 				EBCD2AD024C4BF0600EC5F97 /* MadlyRad.entitlements */,
@@ -896,11 +910,13 @@
 				EB288C142535070000F150B0 /* UploadPhotosPopup.xib in Resources */,
 				EB3A647A24E1469A00F82E93 /* changeInfo_anim.json in Resources */,
 				EB3A636124E1405D00F82E93 /* GoogleService-Info.plist in Resources */,
+				7A1F2A6825AE144E0054DBB9 /* Star Animation.mp4 in Resources */,
 				EB3A648024E1469A00F82E93 /* chatTyping.json in Resources */,
 				EBCD2AD824C5141E00EC5F97 /* Certificates.p12 in Resources */,
 				EB3A647624E1469A00F82E93 /* Assets.xcassets in Resources */,
 				EB288C0D253505A500F150B0 /* InfluencerDetailViewController.xib in Resources */,
 				EB288C0F253505A500F150B0 /* Influencers.xcassets in Resources */,
+				0798438325A2972E004BBAC8 /* Star Fractal Noise.mp4 in Resources */,
 				EB3A647B24E1469A00F82E93 /* loadingAnimation.json in Resources */,
 				EB288C0B253505A500F150B0 /* InfluencersPopupViewController.xib in Resources */,
 				EBD1A53224E1FFDA00A120F2 /* HomeVC.storyboard in Resources */,
@@ -1011,7 +1027,7 @@
 				EB3A645D24E1469A00F82E93 /* NewConversationVC.swift in Sources */,
 				EB61439125074F6100FF9456 /* HomeviewControler.swift in Sources */,
 				EB3A640D24E1469A00F82E93 /* Helpers.swift in Sources */,
-				0F742BCF258550FD0022C33D /* EmptyListView.swift in Sources */,
+				D61A2D4225A250270093F708 /* EmptyListView.swift in Sources */,
 				EB3A645924E1469A00F82E93 /* ConvTableView + Extension.swift in Sources */,
 				EB3A647524E1469A00F82E93 /* ChatTabBar.swift in Sources */,
 				EB26C3F824F6D2EA002D6674 /* StickerImageCell.swift in Sources */,
@@ -1078,8 +1094,8 @@
 				EB3A646324E1469A00F82E93 /* ImageGalleryView.swift in Sources */,
 				EB3A645324E1469A00F82E93 /* RequestButtonView.swift in Sources */,
 				FA7739C6256D7E830000DA93 /* RestoreDefaultColorsCell.swift in Sources */,
+				D61A2D4025A24FDD0093F708 /* SceneDelegate.swift in Sources */,
 				EB9E7C6824E4697F005DC5BB /* Designable.swift in Sources */,
-				0F742BCD258550E60022C33D /* SceneDelegate.swift in Sources */,
 				8FF013482540A13E000B8A93 /* mChat.xcdatamodeld in Sources */,
 				EB3A643624E1469A00F82E93 /* CurrentUserNetworking.swift in Sources */,
 				EB3A643824E1469A00F82E93 /* AboutViewController.swift in Sources */,
@@ -1130,6 +1146,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				"EXCLUDED_ARCHS[sdk=*]" = arm64;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -1194,6 +1211,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				"EXCLUDED_ARCHS[sdk=*]" = arm64;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -1225,14 +1243,14 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 50;
-				DEVELOPMENT_TEAM = 647BCL2NMU;
+				DEVELOPMENT_TEAM = 7Z64AR52G7;
 				INFOPLIST_FILE = MadlyRad/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.02;
-				PRODUCT_BUNDLE_IDENTIFIER = com.RobRoe.Hideouts1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.RobRoe.Hideouts;
 				PRODUCT_NAME = Hideouts;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_ENABLE_BATCH_MODE = NO;
@@ -1250,14 +1268,14 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 50;
-				DEVELOPMENT_TEAM = 647BCL2NMU;
+				DEVELOPMENT_TEAM = 7Z64AR52G7;
 				INFOPLIST_FILE = MadlyRad/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.02;
-				PRODUCT_BUNDLE_IDENTIFIER = com.RobRoe.Hideouts1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.RobRoe.Hideouts;
 				PRODUCT_NAME = Hideouts;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_ENABLE_BATCH_MODE = NO;
