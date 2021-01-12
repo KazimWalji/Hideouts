@@ -15,20 +15,25 @@ class HomeViewController: UIViewController {
     private var playerLooper: AVPlayerLooper?
     private var starPlayerLoopers: [AVPlayerLooper] = []
     
+    private var nameLabel: UILabel?
+    
+    private var friends: [Friend] = []
+    private var currentFriend: Friend?
+    
     //temporary data for NotificationView
-    private var names = ["Timmy", "John", "Kyle", "Ana"]
-    private var ages = [17, 15, 16, 17]
-    private var status = [2, 1, 0, 2]
-    private var images = ["Dinosaur", "hammer", "normalGopher", "Dinosaur"]
+    private var names = ["Timmy", "John", "Kyle", "Ana", "Rachel"]
+    private var ages = [17, 15, 16, 17, 16]
+    private var listNumbers = [1, 2, 3, 4, 5]
+    private var status = [2, 1, 0, 2, 0]
+    private var images = ["Dinosaur", "hammer", "normalGopher", "Dinosaur", "Dinosaur"]
     
     //temporary data for Stars
     private var starCoords: [[Int]] = [ [200, 75], [70,120], [180,230], [350, 250], [50,350] ]
     
-//    private var girlWithWaterImageTopConstraint: NSLayoutConstraint?
-//    private var girlWithWaterImageHeightConstraint: NSLayoutConstraint?
-    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        setupFriends()
         
         setupUI()
         
@@ -39,7 +44,15 @@ class HomeViewController: UIViewController {
         }
     }
     
+    private func setupFriends() {
+        for i in 0...names.count - 1 {
+            var friend = Friend(name: names[i], age: ages[i], friendListNumber: listNumbers[i], status: status[i], image: images[i], starCoords: starCoords[i])
+            friends.append(friend)
+        }
+    }
+    
     private func setupUI() {
+        
         setupBackground()
         
         navigationController?.navigationBar.isHidden = true
@@ -47,15 +60,16 @@ class HomeViewController: UIViewController {
         navigationController?.tabBarController?.tabBar.backgroundImage = UIImage()
         navigationController?.tabBarController?.tabBar.shadowImage = UIImage()
         navigationController?.tabBarController?.tabBar.bounds = tabBarBounds!
-
-
-//        setupInfluencersButton()
-
         
         createStars()
         
         var bell = createbell(x: 350, y: 750)
         view.addSubview(bell)
+        nameLabel = UILabel(frame: CGRect(x: view.frame.width/2-50, y: 50, width: 100, height: 40))
+        nameLabel?.textAlignment = .center
+        nameLabel?.textColor = #colorLiteral(red: 0.5568627715, green: 0.3529411852, blue: 0.9686274529, alpha: 1)
+        nameLabel?.alpha = 0
+        view.addSubview(nameLabel!)
 
     }
     
@@ -124,21 +138,7 @@ class HomeViewController: UIViewController {
     
     private func configureGirlAndWaterImageView(_ imageView: UIImageView) {
         imageView.image = #imageLiteral(resourceName: "girl_and_water")
-//        imageView.contentMode = .scaleAspectFit
-        
-//        view.layoutIfNeeded()
-        
-//        guard let imageSize = imageView.image?.size else { return }
-//        let ratio = (imageSize.height / imageSize.width)
-//
-//        let imageViewHieght = view.bounds.width * ratio
-        
-        
-//        girlWithWaterImageHeightConstraint = imageView.heightAnchor.constraint(equalToConstant: imageViewHieght)
-//        girlWithWaterImageTopConstraint?.constant = 170
-//        girlWithWaterImageTopConstraint?.isActive = true
-//        girlWithWaterImageHeightConstraint?.isActive = true
-//        imageView.layoutIfNeeded()
+
     }
     
     private func setupFullBackgroundImage() {
@@ -240,15 +240,61 @@ class HomeViewController: UIViewController {
     */
     
     private func createStars() {
-        for coord in starCoords {
-            createStar(x: coord[0], y: coord[1])
+        for friend in friends {
+            currentFriend = friend
+            createStar(x: friend.starCoords[0], y: friend.starCoords[1])
+            friends[friend.friendListNumber - 1] = currentFriend!
         }
+    }
+    
+    @objc func starHeldDown(_ gestureRecognizer: UILongPressGestureRecognizer) {
+        
+        if gestureRecognizer.state == .began {
+            
+            guard let button: UIButton? = gestureRecognizer.view as! UIButton else { return }
+            for friend in friends {
+                if friend.starButton == button {
+                    nameLabel?.text = friend.name
+                }
+            }
+            showNameLabel()
+        }
+        
+        if gestureRecognizer.state == .ended {
+            
+            hideNameLabel()
+        }
+        
+    }
+    
+    private func showNameLabel() {
+        let animationDuration = 0.25
+        
+        UIView.animate(withDuration: animationDuration, animations: { () -> Void in
+            self.nameLabel?.alpha = 1
+        })
+        
+    }
+    
+    private func hideNameLabel() {
+        let animationDuration = 0.25
+        
+        UIView.animate(withDuration: animationDuration, animations: { () -> Void in
+            self.nameLabel?.alpha = 0
+        })
+        
     }
     
     private func createStar(x: Int, y: Int) {
         let starButton = UIButton(frame: CGRect(x: x, y: y, width: 60, height: 60))
         starButton.addTarget(self, action: #selector(starButtonAction), for: .touchUpInside)
         createStarVideo(frame: starButton.frame)
+        
+        let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(self.starHeldDown))
+        longPressRecognizer.minimumPressDuration = 0.5
+        starButton.addGestureRecognizer(longPressRecognizer)
+        
+        currentFriend?.starButton = starButton
         view.addSubview(starButton)
     }
     
@@ -262,6 +308,7 @@ class HomeViewController: UIViewController {
         let queuePlayer = AVQueuePlayer(playerItem: playerItem)
         var starPlayerLooper = AVPlayerLooper(player: queuePlayer, templateItem: playerItem)
         starPlayerLoopers.append(starPlayerLooper)
+        currentFriend?.starVideoLooper = starPlayerLooper
                 
         let playerLayer = AVPlayerLayer(player: queuePlayer)
         playerLayer.frame = frame
@@ -332,7 +379,7 @@ extension HomeViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return names.count
+        return friends.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -340,7 +387,7 @@ extension HomeViewController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         
         let imageView = UIImageView(frame: CGRect(x: 10, y: 10, width: 50, height: 50))
-        imageView.image = UIImage(named: images[indexPath.row])
+        imageView.image = UIImage(named: friends[indexPath.row].image)
         imageView.layer.borderWidth = 1
         imageView.layer.borderColor = UIColor.black.cgColor
         imageView.layer.masksToBounds = false
@@ -348,12 +395,12 @@ extension HomeViewController: UITableViewDataSource {
         imageView.clipsToBounds = true
         
         let nameView = UITextField(frame: CGRect(x: 70, y: 10, width: cell.frame.width - 80, height: 20))
-        nameView.text = names[indexPath.row]
+        nameView.text = friends[indexPath.row].name
         nameView.font = UIFont(name: nameView.font!.fontName, size: 20)
         
         let statusView = UITextField(frame: CGRect(x: 70, y: 40, width: cell.frame.width - 80, height: 12))
         
-        switch status[indexPath.row] {
+        switch friends[indexPath.row].status {
         case 0:
             statusView.text = "I will not be on for a while."
             cell.backgroundColor = .red
