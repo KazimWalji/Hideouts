@@ -65,8 +65,9 @@ class HomeViewController: UIViewController {
         
         var bell = createbell(x: 350, y: 750)
         view.addSubview(bell)
-        nameLabel = UILabel(frame: CGRect(x: view.frame.width/2-50, y: 100, width: 100, height: 40))
-        nameLabel?.backgroundColor = .red
+        nameLabel = UILabel(frame: CGRect(x: view.frame.width/2-50, y: 50, width: 100, height: 40))
+        nameLabel?.textAlignment = .center
+        nameLabel?.textColor = #colorLiteral(red: 0.5568627715, green: 0.3529411852, blue: 0.9686274529, alpha: 1)
         nameLabel?.alpha = 0
         view.addSubview(nameLabel!)
 
@@ -247,12 +248,20 @@ class HomeViewController: UIViewController {
     }
     
     @objc func starHeldDown(_ gestureRecognizer: UILongPressGestureRecognizer) {
+        
         if gestureRecognizer.state == .began {
-            print("Star is held down")
+            
+            guard let button: UIButton? = gestureRecognizer.view as! UIButton else { return }
+            for friend in friends {
+                if friend.starButton == button {
+                    nameLabel?.text = friend.name
+                }
+            }
             showNameLabel()
         }
+        
         if gestureRecognizer.state == .ended {
-            print("Star is released")
+            
             hideNameLabel()
         }
         
