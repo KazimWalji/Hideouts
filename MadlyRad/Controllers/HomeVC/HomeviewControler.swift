@@ -15,6 +15,8 @@ class HomeViewController: UIViewController {
     private var playerLooper: AVPlayerLooper?
     private var starPlayerLoopers: [AVPlayerLooper] = []
     
+    private var nameLabel: UILabel?
+    
     private var friends: [Friend] = []
     private var currentFriend: Friend?
     
@@ -63,6 +65,10 @@ class HomeViewController: UIViewController {
         
         var bell = createbell(x: 350, y: 750)
         view.addSubview(bell)
+        nameLabel = UILabel(frame: CGRect(x: view.frame.width/2-50, y: 100, width: 100, height: 40))
+        nameLabel?.backgroundColor = .red
+        nameLabel?.alpha = 0
+        view.addSubview(nameLabel!)
 
     }
     
@@ -243,14 +249,30 @@ class HomeViewController: UIViewController {
     @objc func starHeldDown(_ gestureRecognizer: UILongPressGestureRecognizer) {
         if gestureRecognizer.state == .began {
             print("Star is held down")
+            showNameLabel()
         }
         if gestureRecognizer.state == .ended {
             print("Star is released")
+            hideNameLabel()
         }
         
     }
     
     private func showNameLabel() {
+        let animationDuration = 0.25
+        
+        UIView.animate(withDuration: animationDuration, animations: { () -> Void in
+            self.nameLabel?.alpha = 1
+        })
+        
+    }
+    
+    private func hideNameLabel() {
+        let animationDuration = 0.25
+        
+        UIView.animate(withDuration: animationDuration, animations: { () -> Void in
+            self.nameLabel?.alpha = 0
+        })
         
     }
     
