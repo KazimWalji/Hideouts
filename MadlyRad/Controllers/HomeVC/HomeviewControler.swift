@@ -14,6 +14,16 @@ class HomeViewController: UIViewController {
     
     private var playerLooper: AVPlayerLooper?
     
+    //temporary definitons for 0, 1, 2
+    private static var def_offline = 0;
+    private static var def_inten = 1;
+    private static var def_online = 2;
+    
+    //temporary data for NotificationView
+    private var names = ["Timmy", "John", "Kyle", "Ana"]
+    private var ages = [17, 15, 16, 17]
+    private var status = [def_online, def_inten, def_offline, def_online]
+    
 //    private var girlWithWaterImageTopConstraint: NSLayoutConstraint?
 //    private var girlWithWaterImageHeightConstraint: NSLayoutConstraint?
     
@@ -281,6 +291,10 @@ class HomeViewController: UIViewController {
         
         var tableView = UITableView(frame: CGRect(x: notifView.bounds.minX, y: notifView.bounds.minY + 50, width: notifView.frame.width, height: notifView.frame.height - 70))
         
+        tableView.dataSource = self
+        
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        
         
         //tableView.translatesAutoresizingMaskIntoConstraints = false
         
@@ -289,6 +303,23 @@ class HomeViewController: UIViewController {
         return notifView
     }
         
+}
+
+//extend the class to allow tableview to get data from HVC
+extension HomeViewController: UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        return names.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        cell.textLabel?.text = names[indexPath.row]
+        return cell
+    }
+    
 }
     
     
