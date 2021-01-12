@@ -92,7 +92,7 @@ class HomeViewController: UIViewController {
             videoView.topAnchor.constraint(equalTo: view.topAnchor),
             videoView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             videoView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            videoView.bottomAnchor.constraint(equalTo: view.centerYAnchor, constant: 10),
+            videoView.bottomAnchor.constraint(equalTo: view.centerYAnchor, constant: 65),
         ])
     }
     
@@ -111,25 +111,19 @@ class HomeViewController: UIViewController {
     private func layoutGirlAndWaterImageView(_ imageView: UIImageView) {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(imageView)
-        
-//        girlWithWaterImageTopConstraint = imageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 100)
-        
-//        guard let girlWithWaterImageTopConstraint = girlWithWaterImageTopConstraint else { return }
-        
-        view.addSubview(imageView)
         NSLayoutConstraint.activate([
-            imageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 105),
-            imageView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            imageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 193),
             imageView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             imageView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            imageView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
         ])
     }
     
     private func configureGirlAndWaterImageView(_ imageView: UIImageView) {
         imageView.image = #imageLiteral(resourceName: "girl_and_water")
-        imageView.contentMode = .scaleToFill
+//        imageView.contentMode = .scaleAspectFit
         
-        view.layoutIfNeeded()
+//        view.layoutIfNeeded()
         
 //        guard let imageSize = imageView.image?.size else { return }
 //        let ratio = (imageSize.height / imageSize.width)
@@ -141,7 +135,7 @@ class HomeViewController: UIViewController {
 //        girlWithWaterImageTopConstraint?.constant = 170
 //        girlWithWaterImageTopConstraint?.isActive = true
 //        girlWithWaterImageHeightConstraint?.isActive = true
-        imageView.layoutIfNeeded()
+//        imageView.layoutIfNeeded()
     }
     
     private func setupFullBackgroundImage() {
@@ -157,7 +151,7 @@ class HomeViewController: UIViewController {
             imageView.topAnchor.constraint(equalTo: view.topAnchor),
             imageView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             imageView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            imageView.bottomAnchor.constraint(equalTo: view.safeBottomAnchor),
+            imageView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
         ])
     }
     
@@ -166,44 +160,44 @@ class HomeViewController: UIViewController {
         imageView.layer.compositingFilter = "screenBlendMode"
     }
     
-    private func setupInfluencersButton() {
-        let button = UIButton(type: .system)
-        view.addSubview(button)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.setBackgroundImage(UIImage(systemName: "person.3"), for: .normal)
-        
-        button.addTarget(self, action: #selector(showImagesPopup), for: .touchUpInside)
-        button.tintColor = .purple
-        self.view.addSubview(button)
-        let constraints = [
-            button.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            button.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
-            button.widthAnchor.constraint(equalToConstant: 52),
-            button.heightAnchor.constraint(equalToConstant: 32)
-        ]
-        NSLayoutConstraint.activate(constraints)
-    }
-     private var influencersPopup: InfluencersPopupViewController?
-        @objc
-        func showImagesPopup() {
-            influencersPopup = InfluencersPopupViewController()
-            guard influencersPopup != nil else { return }
-            influencersPopup!.modalPresentationStyle = .overFullScreen
-    //        influencersPopup!.onShowDetail = { [weak self] data in
-    //            let vc = InfluencerDetailViewController()
-    //            vc.data = data
-    //            self?.navigationController?.pushViewController(vc, animated: true)
-    //        }
-            self.present(influencersPopup!, animated: true, completion: nil)
-        }
+//    private func setupInfluencersButton() {
+//        let button = UIButton(type: .system)
+//        view.addSubview(button)
+//        button.translatesAutoresizingMaskIntoConstraints = false
+//        button.setBackgroundImage(UIImage(systemName: "person.3"), for: .normal)
+//
+//        button.addTarget(self, action: #selector(showImagesPopup), for: .touchUpInside)
+//        button.tintColor = .purple
+//        self.view.addSubview(button)
+//        let constraints = [
+//            button.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+//            button.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
+//            button.widthAnchor.constraint(equalToConstant: 52),
+//            button.heightAnchor.constraint(equalToConstant: 32)
+//        ]
+//        NSLayoutConstraint.activate(constraints)
+//    }
+//     private var influencersPopup: InfluencersPopupViewController?
+//        @objc
+//        func showImagesPopup() {
+//            influencersPopup = InfluencersPopupViewController()
+//            guard influencersPopup != nil else { return }
+//            influencersPopup!.modalPresentationStyle = .overFullScreen
+//    //        influencersPopup!.onShowDetail = { [weak self] data in
+//    //            let vc = InfluencerDetailViewController()
+//    //            vc.data = data
+//    //            self?.navigationController?.pushViewController(vc, animated: true)
+//    //        }
+//            self.present(influencersPopup!, animated: true, completion: nil)
+//        }
 
     
-
-    @objc func buttonAction(sender: UIButton!) {
-      let storyboard = UIStoryboard(name: "HomeVC", bundle: nil)
-      let controller = storyboard.instantiateViewController(withIdentifier: "WelcomeVC")
-      self.present(controller, animated: false, completion: nil);
-    }
+//
+//    @objc func buttonAction(sender: UIButton!) {
+//      let storyboard = UIStoryboard(name: "HomeVC", bundle: nil)
+//      let controller = storyboard.instantiateViewController(withIdentifier: "WelcomeVC")
+//      self.present(controller, animated: false, completion: nil);
+//    }
         /*private func starsButton(){
             let button = UIButton(type: .system)
         view.addSubview(button)
