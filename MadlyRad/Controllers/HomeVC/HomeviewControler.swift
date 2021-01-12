@@ -13,13 +13,16 @@ import AVKit
 class HomeViewController: UIViewController {
     
     private var playerLooper: AVPlayerLooper?
-    private var starPlayerLooper: AVPlayerLooper?
+    private var starPlayerLoopers: [AVPlayerLooper] = []
     
     //temporary data for NotificationView
     private var names = ["Timmy", "John", "Kyle", "Ana"]
     private var ages = [17, 15, 16, 17]
     private var status = [2, 1, 0, 2]
     private var images = ["Dinosaur", "hammer", "normalGopher", "Dinosaur"]
+    
+    //temporary data for Stars
+    private var starCoords: [[Int]] = [ [200, 75], [70,120], [180,230], [350, 250], [50,350] ]
     
 //    private var girlWithWaterImageTopConstraint: NSLayoutConstraint?
 //    private var girlWithWaterImageHeightConstraint: NSLayoutConstraint?
@@ -49,18 +52,19 @@ class HomeViewController: UIViewController {
 //        setupInfluencersButton()
         // starsButton()
         
-        var star1 = createStar(x: 200, y: 75)
-        var star2 = createStar(x: 70, y: 120)
-        var star3 = createStar(x: 180, y: 230)
-        var star4 = createStar(x: 350, y: 250)
-        var star5 = createStar(x: 50, y: 350)
-
-        view.addSubview(star1)
-        view.addSubview(star2)
-        view.addSubview(star3)
-        view.addSubview(star4)
-        view.addSubview(star5)
-
+//        var star1 = createStar(x: 200, y: 75)
+//        var star2 = createStar(x: 70, y: 120)
+//        var star3 = createStar(x: 180, y: 230)
+//        var star4 = createStar(x: 350, y: 250)
+//        var star5 = createStar(x: 50, y: 350)
+//
+//        view.addSubview(star1)
+//        view.addSubview(star2)
+//        view.addSubview(star3)
+//        view.addSubview(star4)
+//        view.addSubview(star5)
+        
+        createStars()
         
         var bell = createbell(x: 350, y: 750)
         view.addSubview(bell)
@@ -247,15 +251,20 @@ class HomeViewController: UIViewController {
     --------------------- Star Buttons Code ---------------------
     */
     
-    private func createStar(x: Int, y: Int) -> UIButton {
-        let starButton = UIButton(frame: CGRect(x: x, y: y, width: 40, height: 40))
-        starButton.setBackgroundImage(#imageLiteral(resourceName: "Star2"), for: .normal)
-        starButton.addTarget(self, action: #selector(starButtonAction), for: .touchUpInside)
-        return starButton
+    private func createStars() {
+        for coord in starCoords {
+            createStar(x: coord[0], y: coord[1])
+        }
     }
     
-    private func createStarVideo() {
-        let starVideo = UIView(frame: CGRect(x: 100, y: 200, width: 150, height: 150))
+    private func createStar(x: Int, y: Int) {
+        let starButton = UIButton(frame: CGRect(x: x, y: y, width: 60, height: 60))
+        starButton.addTarget(self, action: #selector(starButtonAction), for: .touchUpInside)
+        createStarVideo(frame: starButton.frame)
+        view.addSubview(starButton)
+    }
+    
+    private func createStarVideo(frame: CGRect) {
         
         guard let animationPath = Bundle.main.path(forResource: "Star Animation", ofType: "mp4") else { return }
         let animationURL = URL(fileURLWithPath: animationPath)
@@ -263,17 +272,17 @@ class HomeViewController: UIViewController {
 
         let playerItem = AVPlayerItem(asset: videoAsset)
         let queuePlayer = AVQueuePlayer(playerItem: playerItem)
-        starPlayerLooper = AVPlayerLooper(player: queuePlayer, templateItem: playerItem)
-        
+        var starPlayerLooper = AVPlayerLooper(player: queuePlayer, templateItem: playerItem)
+        starPlayerLoopers.append(starPlayerLooper)
                 
         let playerLayer = AVPlayerLayer(player: queuePlayer)
-        playerLayer.frame = starVideo.frame
+        playerLayer.frame = frame
         playerLayer.videoGravity = .resizeAspectFill
-        starVideo.layer.addSublayer(playerLayer)
+        playerLayer.compositingFilter = "screenBlendMode"
         queuePlayer.play()
         
-        print("added star video")
-        view.addSubview(starVideo)
+        view.layer.addSublayer(playerLayer)
+
     }
     
     @objc func starButtonAction(sender: UIButton!) {
