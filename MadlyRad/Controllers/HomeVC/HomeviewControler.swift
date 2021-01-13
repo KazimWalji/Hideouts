@@ -16,6 +16,7 @@ class HomeViewController: UIViewController {
     private var starPlayerLoopers: [AVPlayerLooper] = []
     
     private var nameLabel: UILabel?
+    private var bellClicked: Bool = false
     
     private var friends: [Friend] = []
     private var currentFriend: Friend?
@@ -29,6 +30,8 @@ class HomeViewController: UIViewController {
     
     //temporary data for Stars
     private var starCoords: [[Int]] = [ [200, 75], [70,120], [180,230], [350, 250], [50,350] ]
+    
+    private var stackView: UIStackView = UIStackView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -63,19 +66,24 @@ class HomeViewController: UIViewController {
         
         createStars()
         
-        var bell = createbell(x: 350, y: 750)
+        var bell = createbell(x: 10, y: 50)
         view.addSubview(bell)
-        nameLabel = UILabel(frame: CGRect(x: view.frame.width/2-50, y: 50, width: 100, height: 40))
-        nameLabel?.textAlignment = .center
-        nameLabel?.textColor = #colorLiteral(red: 0.5568627715, green: 0.3529411852, blue: 0.9686274529, alpha: 1)
-        nameLabel?.alpha = 0
-        view.addSubview(nameLabel!)
+        
+        createNameLabel()
 
     }
     
     private func setupBackground() {
         setupBackgroundAnimation()
         setupBackgroundImage()
+    }
+    
+    private func createNameLabel() {
+        nameLabel = UILabel(frame: CGRect(x: view.frame.width/2-50, y: 50, width: 100, height: 40))
+        nameLabel?.textAlignment = .center
+        nameLabel?.textColor = #colorLiteral(red: 0.5568627715, green: 0.3529411852, blue: 0.9686274529, alpha: 1)
+        nameLabel?.alpha = 0
+        view.addSubview(nameLabel!)
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -336,8 +344,15 @@ class HomeViewController: UIViewController {
     
     @objc func bellButtonAction(sender: UIButton!) {
         print("\nBell Clicked!\n")
-        var notifView = setupNotificationViewUI(notifView: createNotificationView())
-        view.addSubview(notifView)
+        bellClicked = !bellClicked
+        print(bellClicked)
+//        var notifView = setupNotificationViewUI(notifView: createNotificationView())
+//        view.addSubview(notifView)
+        if bellClicked {
+            createStackView()
+        } else {
+            stackView.removeFromSuperview()
+        }
     }
     
     private func createNotificationView() -> UIView {
@@ -371,6 +386,79 @@ class HomeViewController: UIViewController {
         notifView.addSubview(tableView)
         return notifView
     }
+    
+    
+    
+    
+    
+    
+    private func createStackView() {
+        
+        stackView = UIStackView()
+        
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.distribution = .fillEqually
+        
+        view.addSubview(stackView)
+        
+        
+        stackView.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        stackView.widthAnchor.constraint(equalToConstant: CGFloat((friends.count * 50) + (friends.count - 1) * 10)).isActive = true
+        stackView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        stackView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -380).isActive = true
+        
+        view.addSubview(stackView)
+
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.spacing = 10
+        stackView.distribution = .fillEqually
+
+
+
+        for friend in friends {
+            do {
+                var image = try UIImage(named: friend.image)
+                var imageView = UIImageView(frame: CGRect(x: 50, y: 50, width: 40, height: 40))
+                imageView.image = image
+                imageView.layer.masksToBounds = false
+                imageView.clipsToBounds = true
+                imageView.backgroundColor = .red
+                imageView.layer.borderWidth = 1.5
+                imageView.layer.cornerRadius = imageView.frame.height/2
+                switch friend.status {
+                case 0:
+                    imageView.layer.borderColor = UIColor.red.cgColor
+                case 1:
+                    imageView.layer.borderColor = UIColor.yellow.cgColor
+                case 2:
+                    imageView.layer.borderColor = UIColor.green.cgColor
+                default:
+                    imageView.layer.borderColor = UIColor.white.cgColor
+                }
+                
+                stackView.addArrangedSubview(imageView)
+                
+                
+            } catch {
+                print("Profile image not found for " + friend.name + " when the bell was pressed")
+            }
+
+        }
+        
+
+       
+        
+        
+        
+        
+        
+        
+        
+    }
+    
+    
+    
+    
         
 }
 
@@ -425,8 +513,15 @@ extension HomeViewController: UITableViewDataSource {
         cell.addSubview(statusView)
         return cell
     }
-    
 }
+    
+    
+    
+    
+    
+    
+    
+
     
     
     
