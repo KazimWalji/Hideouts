@@ -172,78 +172,6 @@ class HomeViewController: UIViewController {
         imageView.layer.compositingFilter = "screenBlendMode"
     }
     
-//    private func setupInfluencersButton() {
-//        let button = UIButton(type: .system)
-//        view.addSubview(button)
-//        button.translatesAutoresizingMaskIntoConstraints = false
-//        button.setBackgroundImage(UIImage(systemName: "person.3"), for: .normal)
-//
-//        button.addTarget(self, action: #selector(showImagesPopup), for: .touchUpInside)
-//        button.tintColor = .purple
-//        self.view.addSubview(button)
-//        let constraints = [
-//            button.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-//            button.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
-//            button.widthAnchor.constraint(equalToConstant: 52),
-//            button.heightAnchor.constraint(equalToConstant: 32)
-//        ]
-//        NSLayoutConstraint.activate(constraints)
-//    }
-//     private var influencersPopup: InfluencersPopupViewController?
-//        @objc
-//        func showImagesPopup() {
-//            influencersPopup = InfluencersPopupViewController()
-//            guard influencersPopup != nil else { return }
-//            influencersPopup!.modalPresentationStyle = .overFullScreen
-//    //        influencersPopup!.onShowDetail = { [weak self] data in
-//    //            let vc = InfluencerDetailViewController()
-//    //            vc.data = data
-//    //            self?.navigationController?.pushViewController(vc, animated: true)
-//    //        }
-//            self.present(influencersPopup!, animated: true, completion: nil)
-//        }
-
-    
-//
-//    @objc func buttonAction(sender: UIButton!) {
-//      let storyboard = UIStoryboard(name: "HomeVC", bundle: nil)
-//      let controller = storyboard.instantiateViewController(withIdentifier: "WelcomeVC")
-//      self.present(controller, animated: false, completion: nil);
-//    }
-        /*private func starsButton(){
-            let button = UIButton(type: .system)
-        view.addSubview(button)
-            button.translatesAutoresizingMaskIntoConstraints = false
-    button.setBackgroundImage(UIImage(systemName: "gamecontroller"), for: .normal)
-
-          button.addTarget(self, action: #selector(starButtonPressed), for: .touchUpInside)
-            button.tintColor = .purple
-          self.view.addSubview(button)
-        let constraints = [
-            button.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            button.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 60),
-            button.widthAnchor.constraint(equalToConstant: 50),
-            button.heightAnchor.constraint(equalToConstant: 50)
-        ]
-        NSLayoutConstraint.activate(constraints)
-        }
-    
-    @objc func starButtonPressed(sender: UIButton) {
-      let storyboard = UIStoryboard(name: "HomeVC", bundle: nil)
-      let controller = storyboard.instantiateViewController(withIdentifier: "GameViewController")
-      self.present(controller, animated: false, completion: nil);
-    }*/
-
-    /*@objc func screenEdgeSwiped(_ recognizer: UIScreenEdgePanGestureRecognizer) {
-        if recognizer.state == .recognized {
-            let storyboard = UIStoryboard(name: "HomeVC", bundle: nil)
-            let controller = storyboard.instantiateViewController(withIdentifier: "WelcomeVC")
-            self.present(controller, animated: false, completion: nil);
-        }
-        
-    }*/
-    
-    
     /*
     --------------------- Star Buttons Code ---------------------
     */
@@ -337,6 +265,11 @@ class HomeViewController: UIViewController {
     
     }
     
+    
+    /*
+     --------------------- Bell Button Code ---------------------
+    */
+    
     private func createbell(x: Int, y: Int) -> UIButton {
         let bellButton = UIButton(frame: CGRect(x: x, y: y, width: 50, height: 50))
         bellButton.setBackgroundImage(UIImage(named: "bell icon (google)"), for: .normal)
@@ -346,11 +279,8 @@ class HomeViewController: UIViewController {
     }
     
     @objc func bellButtonAction(sender: UIButton!) {
-        print("\nBell Clicked!\n")
         bellClicked = !bellClicked
-        print(bellClicked)
-//        var notifView = setupNotificationViewUI(notifView: createNotificationView())
-//        view.addSubview(notifView)
+    
         if bellClicked {
             createStackView()
         } else {
@@ -358,65 +288,17 @@ class HomeViewController: UIViewController {
         }
     }
     
-    private func createNotificationView() -> UIView {
-        var rect = CGRect()
-        let notifView = UIView(frame: CGRect(origin: view.center, size: CGSize(width: 300, height: 600)))
-        notifView.center = view.center
-        notifView.backgroundColor = #colorLiteral(red: 0.1215686277, green: 0.01176470611, blue: 0.4235294163, alpha: 1)
-        notifView.layer.cornerRadius = notifView.frame.height/30
-        
-        
-        return notifView
-    }
-    
-    private func setupNotificationViewUI(notifView: UIView) -> UIView {
-        var titleField = UITextField(frame: CGRect(x: notifView.bounds.minX, y: notifView.bounds.minY, width: notifView.frame.width, height: 50))
-        titleField.text = "Notifications"
-        titleField.textColor = #colorLiteral(red: 0.5568627715, green: 0.3529411852, blue: 0.9686274529, alpha: 1)
-        titleField.textAlignment = .center
-        
-        var tableView = UITableView(frame: CGRect(x: notifView.bounds.minX, y: notifView.bounds.minY + 50, width: notifView.frame.width, height: notifView.frame.height - 70))
-        
-        tableView.dataSource = self
-        tableView.rowHeight = 70
-        tableView.backgroundColor = #colorLiteral(red: 0.1215686277, green: 0.01176470611, blue: 0.4235294163, alpha: 1)
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
-        
-        
-        //tableView.translatesAutoresizingMaskIntoConstraints = false
-        
-        notifView.addSubview(titleField)
-        notifView.addSubview(tableView)
-        return notifView
-    }
-    
-    
-    
-    
-    
-    
     private func createStackView() {
         
         stackView = UIStackView()
-        
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.distribution = .fillEqually
-        
         view.addSubview(stackView)
-        
-        
         stackView.heightAnchor.constraint(equalToConstant: 50).isActive = true
         stackView.widthAnchor.constraint(equalToConstant: CGFloat((friends.count * 50) + (friends.count - 1) * 10)).isActive = true
         stackView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         stackView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -380).isActive = true
-        
-        view.addSubview(stackView)
-
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.spacing = 10
         stackView.distribution = .fillEqually
-
-
 
         for friend in friends {
             do {
@@ -438,31 +320,15 @@ class HomeViewController: UIViewController {
                 default:
                     imageView.layer.borderColor = UIColor.white.cgColor
                 }
-                
                 stackView.addArrangedSubview(imageView)
-                
                 
             } catch {
                 print("Profile image not found for " + friend.name + " when the bell was pressed")
             }
-
         }
-        
-
-       
-        
-        
-        
-        
-        
-        
-        
     }
     
-    
-    
-    
-        
+    //End of class
 }
 
 //extend the class to allow tableview to get data from HVC
