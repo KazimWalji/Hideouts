@@ -81,7 +81,8 @@ class HomeViewController: UIViewController {
     private func createNameLabel() {
         nameLabel = UILabel(frame: CGRect(x: view.frame.width/2-50, y: 50, width: 100, height: 40))
         nameLabel?.textAlignment = .center
-        nameLabel?.textColor = #colorLiteral(red: 0.5568627715, green: 0.3529411852, blue: 0.9686274529, alpha: 1)
+        nameLabel?.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        nameLabel?.font = UIFont.boldSystemFont(ofSize: 16)
         nameLabel?.alpha = 0
         view.addSubview(nameLabel!)
     }
@@ -263,6 +264,8 @@ class HomeViewController: UIViewController {
             for friend in friends {
                 if friend.starButton == button {
                     nameLabel?.text = friend.name
+                    nameLabel?.center.x = (button?.center.x)!
+                    nameLabel?.center.y = (button?.center.y)! - 30
                 }
             }
             showNameLabel()
