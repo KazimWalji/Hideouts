@@ -272,13 +272,26 @@ class HomeViewController: UIViewController {
         return starButton
     }
     
+    
+    
     @objc func starButtonAction(sender: UIButton!) {
       print("\nStar Clicked!\n")
-        tabBarController?.selectedIndex = 1
+        navigationController?.navigationBar.isHidden = false
+        let friends = Friends.list
+        let chat = conversationVC.messages[1]
+        for usr in Friends.list {
+            if usr.id == chat.determineUser() {
+                let controller = ChatVC()
+                controller.modalPresentationStyle = .fullScreen
+                controller.friend = friends[1]
+                convNetwork.removeConvObservers()
+                show(controller, sender: nil)
+                break
+            }
+        }
+        
+        }
     
-    }
-    
-    
-    
+ 
     
  }
