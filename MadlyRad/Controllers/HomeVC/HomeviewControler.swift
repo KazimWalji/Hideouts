@@ -32,8 +32,19 @@ class HomeViewController: UIViewController {
         
         
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        tabBarController?.tabBar.isHidden = false
         setupUI()
         
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupNetworking()
+        setupUI()
+       
         NotificationCenter.default.addObserver(
             forName: UIApplication.userDidTakeScreenshotNotification,
             object: nil, queue: nil) { _ in
