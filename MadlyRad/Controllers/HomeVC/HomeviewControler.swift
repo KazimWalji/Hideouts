@@ -74,6 +74,15 @@ class HomeViewController: UIViewController {
         setupBackgroundImage()
     }
     
+    private func fetchFriendData() {
+        
+        Friends.list = []
+        conversationBug.convoVC = conversationVC
+        conversationBug.observeFriendList()
+        conversationVC.handleReload(Friends.list)
+        
+    }
+    
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
