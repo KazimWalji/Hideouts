@@ -14,12 +14,24 @@ class HomeViewController: UIViewController {
     
     private var playerLooper: AVPlayerLooper?
     
+    var conversationVC = ConversationsVC()
+    var convNetwork = ConversationsNetworking()
+    private var conversationBug = Converstationsbug()
+    
 //    private var girlWithWaterImageTopConstraint: NSLayoutConstraint?
 //    private var girlWithWaterImageHeightConstraint: NSLayoutConstraint?
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    
+    func setupNetworking() {
+        var emptyList = EmptyListView(nil, conversationVC, false)
+        fetchFriendData()
+        convNetwork.convVC = conversationVC
+        conversationVC.emptyListView = emptyList
+
         
+        
+        
+    }
         setupUI()
         
         NotificationCenter.default.addObserver(
