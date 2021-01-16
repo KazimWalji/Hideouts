@@ -327,28 +327,7 @@ class HomeViewController: UIViewController, UIGestureRecognizerDelegate {
             stackView.removeFromSuperview()
         }
     }
-    
-    @objc func userAvatarTapped(gesture: UITapGestureRecognizer) {
-        
-        if (gesture.view as? UIImageView) != nil {
-                    print("Image Tapped")
-                    //Here you can initiate your new ViewController
 
-        let currentFriends = Friends.list
-        let chat = conversationVC.messages[1]
-        for usr in currentFriends {
-            if usr.id == chat.determineUser() {
-                let controller = ChatVC()
-                controller.modalPresentationStyle = .fullScreen
-                controller.friend = currentFriends[1]
-                convNetwork.removeConvObservers()
-                show(controller, sender: nil)
-                break
-            }
-        }
-    }
-        
-    }
     
     private func createStackView() {
         
@@ -370,7 +349,8 @@ class HomeViewController: UIViewController, UIGestureRecognizerDelegate {
                 var image = try UIImage(named: friend.image)
                 var imageView = UIImageView(frame: CGRect(x: 50, y: 50, width: 40, height: 40))
                 imageView.image = image
-                let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.userAvatarTapped(gesture:)))
+                //Adds gesture recognizer to each stackview item to navigate to chat of the first person
+                let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.userAvatarTapped))
                 tapGesture.delegate = self
                 tapGesture.numberOfTapsRequired = 1
                 imageView.addGestureRecognizer(tapGesture)
@@ -392,7 +372,7 @@ class HomeViewController: UIViewController, UIGestureRecognizerDelegate {
                     imageView.layer.borderColor = UIColor.white.cgColor
                 }
                 stackView.addArrangedSubview(imageView)
-                
+                counter += 1
                 
                 //Connects ChatVC
             
@@ -405,6 +385,24 @@ class HomeViewController: UIViewController, UIGestureRecognizerDelegate {
         }
     }
     
+    
+    @objc func userAvatarTapped() {
+        
+        //Navigates to the first person on chat list
+        let currentFriends = Friends.list
+        let chat = conversationVC.messages[0]
+        for usr in currentFriends {
+            if usr.id == chat.determineUser() {
+                let controller = ChatVC()
+                controller.modalPresentationStyle = .fullScreen
+                controller.friend = currentFriends[0]
+                convNetwork.removeConvObservers()
+                show(controller, sender: nil)
+                break
+            }
+        }
+        
+    }
     
     
     //End of class
