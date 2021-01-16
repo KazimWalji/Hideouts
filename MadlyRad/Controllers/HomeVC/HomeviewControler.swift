@@ -52,7 +52,13 @@ class HomeViewController: UIViewController, UIGestureRecognizerDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         tabBarController?.tabBar.isHidden = false
-        setupFriends()
+        
+        //Stops the duplications of the friends array
+        if friends.count > 0 {
+        } else {
+            setupFriends()
+        }
+        
         setupUI()
         
     }
