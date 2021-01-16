@@ -9,7 +9,6 @@ import GiphyCoreSDK
 
 class Messages {
     
-    
     var message: String!
     var sender: String!
     var recipient: String!
@@ -40,3 +39,4 @@ class Messages {
 // ---------------------------------------------------------------------------------------------------------------------------------------------------- //
     
 }
+
