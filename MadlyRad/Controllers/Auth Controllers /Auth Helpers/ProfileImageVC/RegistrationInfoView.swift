@@ -76,7 +76,7 @@ class RegistrationInfoView: UIView {
         changeImageButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
         changeImageButton.layer.masksToBounds = true
         changeImageButton.tintColor = .white
-        let gradient = controller.setupGradientLayer()
+        let gradient = UIViewController.setupGradientLayer()
         gradient.frame = changeImageButton.frame
         gradient.startPoint = CGPoint(x: 0, y: 1)
         gradient.endPoint = CGPoint(x: 1, y: 1)

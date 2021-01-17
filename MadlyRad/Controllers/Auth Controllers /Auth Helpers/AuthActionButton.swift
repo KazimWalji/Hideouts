@@ -4,16 +4,8 @@ import UIKit
 
 class AuthActionButton: UIButton {
     
-    // ---------------------------------------------------------------------------------------------------------------------------------------------------- //
-    
-    var controller: UIViewController!
-    
-    // ---------------------------------------------------------------------------------------------------------------------------------------------------- //
-    
-    
-    init(_ title: String, _ controller: UIViewController) {
+    init(_ title: String) {
         super.init(frame: .zero)
-        self.controller = controller
         setupContinueButton(title)
     }
     
@@ -31,7 +23,7 @@ class AuthActionButton: UIButton {
         tintColor = .white
         layer.cornerRadius = 18
         layer.masksToBounds = true
-        let gradient = controller.setupGradientLayer()
+        let gradient = UIViewController.setupGradientLayer()
         gradient.frame = bounds
         gradient.startPoint = CGPoint(x: 0, y: 1)
         gradient.endPoint = CGPoint(x: 1, y: 1)

@@ -6,7 +6,7 @@ class ChatBubblesAppearanceCell: UICollectionViewCell {
     
     // ---------------------------------------------------------------------------------------------------------------------------------------------------- //
     
-    let gradient = UIViewController.init().setupGradientLayer()
+    let gradient = UIViewController.setupGradientLayer()
     let incomingView = UIView()
     let incomingLabel = UILabel()
     let outcomingView = UIView()

@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "FirebaseStorage/Sources/Public/FIRStorageTask.h"
+#import "FirebaseStorage/Sources/Public/FirebaseStorage/FIRStorageTask.h"
 
-#import "FirebaseStorage/Sources/Public/FIRStorage.h"
-#import "FirebaseStorage/Sources/Public/FIRStorageReference.h"
-#import "FirebaseStorage/Sources/Public/FIRStorageTaskSnapshot.h"
+#import "FirebaseStorage/Sources/Public/FirebaseStorage/FIRStorage.h"
+#import "FirebaseStorage/Sources/Public/FirebaseStorage/FIRStorageReference.h"
+#import "FirebaseStorage/Sources/Public/FirebaseStorage/FIRStorageTaskSnapshot.h"
 
 #import "FirebaseStorage/Sources/FIRStorageReference_Private.h"
 #import "FirebaseStorage/Sources/FIRStorageTaskSnapshot_Private.h"
@@ -45,7 +45,7 @@
     _reference = reference;
     _baseRequest = [FIRStorageUtils defaultRequestForPath:reference.path];
     _fetcherService = service;
-    _fetcherService.maxRetryInterval = _reference.storage.maxOperationRetryTime;
+    _fetcherService.maxRetryInterval = _reference.storage.maxOperationRetryInterval;
     _dispatchQueue = queue;
   }
   return self;

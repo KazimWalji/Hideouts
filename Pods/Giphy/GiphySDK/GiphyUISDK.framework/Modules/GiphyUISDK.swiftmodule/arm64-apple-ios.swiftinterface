@@ -1,7 +1,8 @@
 // swift-interface-format-version: 1.0
-// swift-compiler-version: Apple Swift version 5.1 (swiftlang-1100.0.270.13 clang-1100.0.33.7)
+// swift-compiler-version: Apple Swift version 5.3.1 (swiftlang-1200.0.41 clang-1200.0.32.8)
 // swift-module-flags: -target arm64-apple-ios10.0 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name GiphyUISDK
 import AVFoundation
+import CommonCrypto
 import DeepDiff
 import Foundation
 import GiphyCoreSDK
@@ -21,7 +22,7 @@ import UIKit
     get
   }
 }
-@objc @objcMembers open class GPHTheme : ObjectiveC.NSObject {
+@objc @_inheritsConvenienceInitializers @objcMembers open class GPHTheme : ObjectiveC.NSObject {
   @objc convenience public init(type: GiphyUISDK.GPHThemeType)
   @objc public var type: GiphyUISDK.GPHThemeType
   @objc open var searchBarActiveBackgroundColor: UIKit.UIColor {
@@ -63,6 +64,9 @@ import UIKit
   @objc open var backgroundColorForLoadingCells: UIKit.UIColor {
     @objc get
   }
+  @objc open var showSuggestionsBar: Swift.Bool {
+    @objc get
+  }
   @objc open var buttonIcon: UIKit.UIImage? {
     @objc get
   }
@@ -102,8 +106,8 @@ import UIKit
   @objc open var blurStyle: UIKit.UIBlurEffect.Style {
     @objc get
   }
-  @objc override dynamic public init()
   @objc deinit
+  @objc override dynamic public init()
 }
 extension GiphyViewController : UIKit.UIViewControllerAnimatedTransitioning {
   @objc dynamic public func transitionDuration(using transitionContext: UIKit.UIViewControllerContextTransitioning?) -> Foundation.TimeInterval
@@ -129,7 +133,7 @@ extension GPHMedia {
     get
   }
 }
-@objc public class GPHAttributionView : UIKit.UIButton {
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class GPHAttributionView : UIKit.UIButton {
   public var theme: GiphyUISDK.GPHTheme {
     get
     set
@@ -141,27 +145,56 @@ extension GPHMedia {
   @objc required dynamic public init?(coder aDecoder: Foundation.NSCoder)
   @objc deinit
 }
-@objc public class GPHTextField : UIKit.UITextField {
+@objc @_inheritsConvenienceInitializers public class GPHTextField : UIKit.UITextField {
   @objc override dynamic public var next: UIKit.UIResponder? {
     @objc get
   }
   @objc override dynamic public func canPerformAction(_ action: ObjectiveC.Selector, withSender sender: Any?) -> Swift.Bool
   @objc override dynamic public func textRect(forBounds bounds: CoreGraphics.CGRect) -> CoreGraphics.CGRect
   @objc override dynamic public func editingRect(forBounds bounds: CoreGraphics.CGRect) -> CoreGraphics.CGRect
+  @objc deinit
   @objc override dynamic public init(frame: CoreGraphics.CGRect)
   @objc required dynamic public init?(coder: Foundation.NSCoder)
+}
+@objc @_inheritsConvenienceInitializers public class GPHSuggestion : ObjectiveC.NSObject {
+  convenience public init(type: GiphyUISDK.GPHSearchSuggestionType, term: Swift.String)
   @objc deinit
+  @objc override dynamic public init()
+}
+public enum GPHSearchSuggestionType {
+  case trending
+  case autocomplete
+  case recents
+  case channels
+  case text
+  case none
+  public var hashValue: Swift.Int {
+    get
+  }
+  public func hash(into hasher: inout Swift.Hasher)
+}
+extension GPHSearchSuggestionType : Swift.Equatable {
+  public static func == (lhs: GiphyUISDK.GPHSearchSuggestionType, rhs: GiphyUISDK.GPHSearchSuggestionType) -> Swift.Bool
 }
 extension GiphyViewController {
   @objc public static var trayHeightMultiplier: CoreGraphics.CGFloat
   @objc override dynamic public func viewWillTransition(to size: CoreGraphics.CGSize, with coordinator: UIKit.UIViewControllerTransitionCoordinator)
 }
-@objc @objcMembers public class GiphyViewController : UIKit.UIViewController {
+@objc @_inheritsConvenienceInitializers @objcMembers public class GiphyViewController : UIKit.UIViewController {
   @objc public func setAPIKey(_ apiKey: Swift.String, verificationMode: Swift.Bool = false)
   @objc convenience dynamic public init()
   @objc override dynamic public init(nibName nibNameOrNil: Swift.String?, bundle nibBundleOrNil: Foundation.Bundle?)
   @objc required dynamic public init?(coder aDecoder: Foundation.NSCoder)
   @objc weak public var delegate: GiphyUISDK.GiphyDelegate? {
+    @objc get
+    @objc set
+  }
+  @objc public var placeholderText: Swift.String {
+    @objc get
+    @objc set
+  }
+  @objc public static var noResultsText: Swift.String?
+  @objc public var enableDynamicText: Swift.Bool {
     @objc get
     @objc set
   }
@@ -174,10 +207,6 @@ extension GiphyViewController {
     @objc set
   }
   @objc public var stickerColumnCount: GiphyUISDK.GPHStickerColumnCount {
-    @objc get
-    @objc set
-  }
-  @objc public var showViewOnGiphy: Swift.Bool {
     @objc get
     @objc set
   }
@@ -210,6 +239,10 @@ extension GiphyViewController {
     @objc get
     @objc set
   }
+  @objc public var fileExtension: GiphyUISDK.GPHFileExtension {
+    @objc get
+    @objc set
+  }
   @objc override dynamic public func viewDidLoad()
   @objc override dynamic public var prefersStatusBarHidden: Swift.Bool {
     @objc get
@@ -219,14 +252,15 @@ extension GiphyViewController {
 public protocol GPHSearchBarDelegate : AnyObject {
   func searchBarTextDidChange(_ searchBarView: GiphyUISDK.GPHSearchBar, query: Swift.String)
   func searchBarFocusDidChange(_ searchBarView: GiphyUISDK.GPHSearchBar, focused: Swift.Bool, text: Swift.String)
+  func searchBarBackButtonTapped()
 }
-@objc public class GPHSearchBar : UIKit.UIView {
+@objc @_inheritsConvenienceInitializers public class GPHSearchBar : UIKit.UIView {
   public func beginEditing()
   public func endEditing()
   public func setText(_ text: Swift.String)
+  @objc deinit
   @objc override dynamic public init(frame: CoreGraphics.CGRect)
   @objc required dynamic public init?(coder: Foundation.NSCoder)
-  @objc deinit
 }
 extension GPHSearchBar : UIKit.UITextFieldDelegate {
   @objc dynamic public func textFieldShouldEndEditing(_ textField: UIKit.UITextField) -> Swift.Bool
@@ -234,9 +268,10 @@ extension GPHSearchBar : UIKit.UITextFieldDelegate {
 @objc public protocol GPHGridDelegate : AnyObject {
   @objc func contentDidUpdate(resultCount: Swift.Int)
   @objc func didSelectMedia(media: GiphyCoreSDK.GPHMedia, cell: UIKit.UICollectionViewCell)
+  @objc func didSelectMoreByYou(query: Swift.String)
   @objc optional func didScroll(offset: CoreGraphics.CGFloat)
 }
-@objc @objcMembers public class GiphyGridController : UIKit.UIViewController {
+@objc @_inheritsConvenienceInitializers @objcMembers public class GiphyGridController : UIKit.UIViewController {
   @objc weak public var delegate: GiphyUISDK.GPHGridDelegate?
   @objc public var direction: UIKit.UICollectionView.ScrollDirection
   @objc public var theme: GiphyUISDK.GPHTheme {
@@ -258,20 +293,20 @@ extension GPHSearchBar : UIKit.UITextFieldDelegate {
   }
   @objc public func setNumberOfTracks(_ tracks: Swift.Int)
   @objc public var fixedSizeCells: Swift.Bool
-  @objc public var imageType: GiphyUISDK.GPHFileExtension
+  @objc public var imageFileExtensionForDynamicAssets: GiphyUISDK.GPHFileExtension
   @objc public func setAPIKey(_ apiKey: Swift.String, verificationMode: Swift.Bool = false)
   @objc convenience dynamic public init()
-  @objc public var showViewOnGiphy: Swift.Bool
   @objc override dynamic public func viewDidAppear(_ animated: Swift.Bool)
   @objc override dynamic public func viewDidLoad()
   @objc public var renditionType: GiphyCoreSDK.GPHRenditionType
+  @objc public var enableDynamicResultsInTextSearch: Swift.Bool
   @objc public func update()
   @objc public func scrollViewDidScroll(_ scrollView: UIKit.UIScrollView)
   @objc override dynamic public func viewWillAppear(_ animated: Swift.Bool)
   @objc override dynamic public func viewWillTransition(to size: CoreGraphics.CGSize, with coordinator: UIKit.UIViewControllerTransitionCoordinator)
+  @objc deinit
   @objc override dynamic public init(nibName nibNameOrNil: Swift.String?, bundle nibBundleOrNil: Foundation.Bundle?)
   @objc required dynamic public init?(coder: Foundation.NSCoder)
-  @objc deinit
 }
 extension GiphyGridController : UIKit.UICollectionViewDataSource {
   @objc dynamic public func collectionView(_ collectionView: UIKit.UICollectionView, numberOfItemsInSection section: Swift.Int) -> Swift.Int
@@ -290,26 +325,25 @@ extension GiphyGridController : GiphyCoreSDK.GPHTrackingDelegate {
   @objc dynamic public func mediaForIndexPath(_ item: Foundation.IndexPath) -> GiphyCoreSDK.GPHMedia?
   @objc dynamic public func mediaIsLoadedAtIndexPath(_ item: Foundation.IndexPath) -> Swift.Bool
 }
-extension GiphyGridController : UIKit.UICollectionViewDelegateFlowLayout {
-  @objc dynamic public func collectionView(_ collectionView: UIKit.UICollectionView, layout collectionViewLayout: UIKit.UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Swift.Int) -> CoreGraphics.CGFloat
-  @objc dynamic public func collectionView(_ collectionView: UIKit.UICollectionView, layout collectionViewLayout: UIKit.UICollectionViewLayout, sizeForItemAt indexPath: Foundation.IndexPath) -> CoreGraphics.CGSize
-}
 extension GiphySearchController : GiphyUISDK.GPHSearchBarDelegate {
+  @objc dynamic public func searchBarBackButtonTapped()
   @objc dynamic public func searchBarFocusDidChange(_ searchBarView: GiphyUISDK.GPHSearchBar, focused: Swift.Bool, text: Swift.String)
   @objc dynamic public func searchBarTextDidChange(_ searchBarView: GiphyUISDK.GPHSearchBar, query: Swift.String)
 }
-@objc public class Giphy : ObjectiveC.NSObject {
+@_inheritsConvenienceInitializers @objc public class Giphy : ObjectiveC.NSObject {
   @objc public class func configure(apiKey: Swift.String, verificationMode: Swift.Bool = false)
-  @objc override dynamic public init()
   @objc deinit
+  @objc override dynamic public init()
 }
 @objc public protocol GiphyDelegate : AnyObject {
   @objc optional func didSearch(for term: Swift.String)
-  @objc func didSelectMedia(giphyViewController: GiphyUISDK.GiphyViewController, media: GiphyCoreSDK.GPHMedia)
+  @objc optional func didCreate(for term: Swift.String)
+  @objc optional func didSelectMedia(giphyViewController: GiphyUISDK.GiphyViewController, media: GiphyCoreSDK.GPHMedia)
+  @objc optional func didSelectMedia(giphyViewController: GiphyUISDK.GiphyViewController, media: GiphyCoreSDK.GPHMedia, contentType: GiphyUISDK.GPHContentType)
   @objc func didDismiss(controller: GiphyUISDK.GiphyViewController?)
+  @objc optional func didTapSuggestion(_ suggestion: GiphyUISDK.GPHSuggestion)
 }
-@objc @objcMembers public class GiphySearchController : UIKit.UIViewController {
-  @objc public var showViewOnGiphy: Swift.Bool
+@objc @_inheritsConvenienceInitializers @objcMembers public class GiphySearchController : UIKit.UIViewController {
   @objc public var showConfirmationScreen: Swift.Bool
   @objc public var shouldLocalizeSearch: Swift.Bool
   @objc public var theme: GiphyUISDK.GPHTheme {
@@ -342,11 +376,16 @@ extension GiphySearchController {
   @objc dynamic public func didLongPressCell(_ cell: GiphyUISDK.GPHMediaCell?)
 }
 extension GiphySearchController : GiphyUISDK.GPHGridDelegate {
+  @objc dynamic public func didSelectMoreByYou(query: Swift.String)
   @objc dynamic public func contentDidUpdate(resultCount: Swift.Int)
   @objc dynamic public func didScroll(offset: CoreGraphics.CGFloat)
   @objc dynamic public func didSelectMedia(media: GiphyCoreSDK.GPHMedia, cell: UIKit.UICollectionViewCell)
 }
-@objc public class GPHMediaCell : UIKit.UICollectionViewCell {
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class GPHTextLoadingView : UIKit.UIView {
+  @objc override dynamic public init(frame: CoreGraphics.CGRect)
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class GPHMediaCell : UIKit.UICollectionViewCell {
   @objc override dynamic public init(frame: CoreGraphics.CGRect)
   @objc override dynamic public var canBecomeFirstResponder: Swift.Bool {
     @objc get
@@ -400,7 +439,7 @@ extension GiphySearchController : GiphyUISDK.GPHGridDelegate {
 @objc public protocol GPHMediaViewDelegate : AnyObject {
   @objc func didPressMoreByUser(_ user: Swift.String)
 }
-@objc @objcMembers public class GPHMediaView : GiphyUISDK.GiphyYYAnimatedImageView {
+@objc @_inheritsConvenienceInitializers @objcMembers public class GPHMediaView : GiphyUISDK.GiphyYYAnimatedImageView {
   @objc weak public var delegate: GiphyUISDK.GPHMediaViewDelegate?
   @objc public var media: GiphyCoreSDK.GPHMedia? {
     @objc get
@@ -423,30 +462,13 @@ extension GiphySearchController : GiphyUISDK.GPHGridDelegate {
 extension GPHMediaView {
   @objc dynamic public func setMedia(_ media: GiphyCoreSDK.GPHMedia, rendition: GiphyCoreSDK.GPHRenditionType = .fixedWidth, shouldQueueOriginalRendition: Swift.Bool = false)
 }
-public protocol GPHSuggestionCellDelegate : AnyObject {
-  func suggestionSelected(term: Swift.String)
-}
-public enum GPHCacheSetting : Swift.Int {
-  case memoryOnly
-  case diskOnly
-  case memoryAndDisk
-  public static var defaultSetting: GiphyUISDK.GPHCacheSetting {
-    get
-  }
-  public typealias RawValue = Swift.Int
-  public init?(rawValue: Swift.Int)
-  public var rawValue: Swift.Int {
-    get
-  }
-}
-public class GPHCache {
+@_hasMissingDesignatedInitializers public class GPHCache {
   public static let shared: GiphyUISDK.GPHCache
-  public var setting: GiphyUISDK.GPHCacheSetting
-  public func clear(_ cacheType: GiphyUISDK.GPHCacheSetting? = nil)
+  public func clear()
   @discardableResult
   public func downloadAssetData(_ urlString: Swift.String, completion: ((Foundation.NSData?, Swift.Error?) -> Swift.Void)?) -> Foundation.URLSessionDataTask?
   @discardableResult
-  public func downloadAsset(_ urlString: Swift.String, completion: ((GiphyUISDK.GiphyYYImage?, Swift.Error?) -> Swift.Void)?) -> Foundation.URLSessionDataTask?
+  public func downloadAsset(_ urlString: Swift.String, key: Swift.String? = nil, completion: ((GiphyUISDK.GiphyYYImage?, Swift.Error?) -> Swift.Void)?) -> Foundation.URLSessionDataTask?
   @objc deinit
 }
 extension GPHCache {
@@ -467,10 +489,19 @@ extension GPHCache {
     set
   }
 }
-extension GPHMedia {
-  public func nonAdVersion() -> GiphyCoreSDK.GPHMedia
+public enum GPHRequestType : Swift.Int {
+  case trending
+  case search
+  case emoji
+  case recents
+  case animate
+  public typealias RawValue = Swift.Int
+  public init?(rawValue: Swift.Int)
+  public var rawValue: Swift.Int {
+    get
+  }
 }
-@objc @objcMembers public class GPHContent : ObjectiveC.NSObject {
+@objc @_inheritsConvenienceInitializers @objcMembers public class GPHContent : ObjectiveC.NSObject {
   @objc public var contentCopy: GiphyUISDK.GPHContent {
     @objc get
   }
@@ -489,23 +520,17 @@ extension GPHMedia {
   @objc public class var recents: GiphyUISDK.GPHContent {
     @objc get
   }
-  @objc public class func search(withQuery queryString: Swift.String, mediaType: GiphyCoreSDK.GPHMediaType, language: GiphyCoreSDK.GPHLanguageType) -> GiphyUISDK.GPHContent
+  @objc public class func search(withQuery queryString: Swift.String, mediaType: GiphyCoreSDK.GPHMediaType, language: GiphyCoreSDK.GPHLanguageType, includeDynamicResults: Swift.Bool = false) -> GiphyUISDK.GPHContent
+  @objc public class func animate(_ input: Swift.String) -> GiphyUISDK.GPHContent
   @objc public class func trending(mediaType: GiphyCoreSDK.GPHMediaType) -> GiphyUISDK.GPHContent
-  @objc override dynamic public init()
+  @objc override dynamic public func isEqual(_ object: Any?) -> Swift.Bool
   @objc deinit
+  @objc override dynamic public init()
 }
-extension GPHClient {
-  @discardableResult
-  public func channelsSearch(_ query: Swift.String, offset: Swift.Int = 0, limit: Swift.Int = 25, completionHandler: @escaping (GiphyCoreSDK.GPHListChannelResponse?, Swift.Error?) -> Swift.Void) -> Foundation.Operation
-}
-@objc public class GPHIcons : ObjectiveC.NSObject {
+@objc @_inheritsConvenienceInitializers public class GPHIcons : ObjectiveC.NSObject {
   public class func giphyLogo() -> UIKit.UIImage
+  @objc deinit
   @objc override dynamic public init()
-  @objc deinit
-}
-@objc public class GPHNoResults : UIKit.UIView {
-  @objc override dynamic public init(frame: CoreGraphics.CGRect)
-  @objc deinit
 }
 extension UIView {
   public var safeTopAnchor: UIKit.NSLayoutYAxisAnchor {
@@ -536,7 +561,7 @@ extension UIView {
 public protocol GPHTabBarDelegate : AnyObject {
   func selectedContentTypeDidChange(_ contentType: GiphyUISDK.GPHContentType)
 }
-@objc public class GPHTabBar : UIKit.UIView {
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class GPHTabBar : UIKit.UIView {
   weak public var delegate: GiphyUISDK.GPHTabBarDelegate?
   public var mediaTypeConfig: [GiphyUISDK.GPHContentType] {
     get
@@ -549,11 +574,11 @@ public protocol GPHTabBarDelegate : AnyObject {
   @objc func numberOfColumns(forItemAt index: Swift.Int) -> Swift.Int
   @objc func scrollDirection() -> UIKit.UICollectionView.ScrollDirection
 }
-@objc public class GPHWaterfallLayoutAttributes : UIKit.UICollectionViewLayoutAttributes {
+@objc @_inheritsConvenienceInitializers public class GPHWaterfallLayoutAttributes : UIKit.UICollectionViewLayoutAttributes {
   @objc override dynamic public func copy(with zone: ObjectiveC.NSZone? = nil) -> Any
   @objc override dynamic public func isEqual(_ object: Any?) -> Swift.Bool
-  @objc override dynamic public init()
   @objc deinit
+  @objc override dynamic public init()
 }
 extension GiphyUISDK.GPHThemeType : Swift.Equatable {}
 extension GiphyUISDK.GPHThemeType : Swift.Hashable {}
@@ -561,13 +586,15 @@ extension GiphyUISDK.GPHThemeType : Swift.RawRepresentable {}
 extension GiphyUISDK.GPHFileExtension : Swift.Equatable {}
 extension GiphyUISDK.GPHFileExtension : Swift.Hashable {}
 extension GiphyUISDK.GPHFileExtension : Swift.RawRepresentable {}
+extension GiphyUISDK.GPHSearchSuggestionType : Swift.Hashable {}
 extension GiphyUISDK.GPHStickerColumnCount : Swift.Equatable {}
 extension GiphyUISDK.GPHStickerColumnCount : Swift.Hashable {}
 extension GiphyUISDK.GPHStickerColumnCount : Swift.RawRepresentable {}
+extension GiphyUISDK.GPHContentType : Swift.Equatable {}
 extension GiphyUISDK.GPHContentType : Swift.Hashable {}
 extension GiphyUISDK.GPHGifButtonColor : Swift.Equatable {}
 extension GiphyUISDK.GPHGifButtonColor : Swift.Hashable {}
 extension GiphyUISDK.GPHGifButtonColor : Swift.RawRepresentable {}
-extension GiphyUISDK.GPHCacheSetting : Swift.Equatable {}
-extension GiphyUISDK.GPHCacheSetting : Swift.Hashable {}
-extension GiphyUISDK.GPHCacheSetting : Swift.RawRepresentable {}
+extension GiphyUISDK.GPHRequestType : Swift.Equatable {}
+extension GiphyUISDK.GPHRequestType : Swift.Hashable {}
+extension GiphyUISDK.GPHRequestType : Swift.RawRepresentable {}

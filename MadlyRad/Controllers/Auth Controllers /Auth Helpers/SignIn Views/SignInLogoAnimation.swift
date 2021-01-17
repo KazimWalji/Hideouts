@@ -58,7 +58,7 @@ class SignInLogoAnimation: UIImageView {
     
     private func setupLogoTransitionView(){
         logoTransitionView.frame = controller.view.frame
-        let gradient = controller.setupGradientLayer()
+        let gradient = UIViewController.setupGradientLayer()
         gradient.frame = controller.view.frame
         logoTransitionView.layer.addSublayer(gradient)
         controller.view.addSubview(logoTransitionView)

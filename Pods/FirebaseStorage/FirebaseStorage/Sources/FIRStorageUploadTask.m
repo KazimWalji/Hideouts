@@ -12,13 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "FirebaseStorage/Sources/Public/FIRStorageUploadTask.h"
+#import "FirebaseStorage/Sources/Public/FirebaseStorage/FIRStorageUploadTask.h"
 
 #import "FirebaseStorage/Sources/FIRStorageConstants_Private.h"
 #import "FirebaseStorage/Sources/FIRStorageMetadata_Private.h"
 #import "FirebaseStorage/Sources/FIRStorageObservableTask_Private.h"
 #import "FirebaseStorage/Sources/FIRStorageTask_Private.h"
 #import "FirebaseStorage/Sources/FIRStorageUploadTask_Private.h"
+#import "FirebaseStorage/Sources/FIRStorage_Private.h"
 
 #if SWIFT_PACKAGE
 @import GTMSessionFetcherCore;
@@ -128,7 +129,7 @@
       uploadFetcher.comment = @"File UploadTask";
     }
 
-    uploadFetcher.maxRetryInterval = self.reference.storage.maxUploadRetryTime;
+    uploadFetcher.maxRetryInterval = self.reference.storage.maxUploadRetryInterval;
 
     [uploadFetcher setSendProgressBlock:^(int64_t bytesSent, int64_t totalBytesSent,
                                           int64_t totalBytesExpectedToSend) {
@@ -177,8 +178,9 @@
 
     [strongSelf->_uploadFetcher
         beginFetchWithCompletionHandler:^(NSData *_Nullable data, NSError *_Nullable error) {
-          if (weakSelf.fetcherCompletion != nil) {
-            weakSelf.fetcherCompletion(data, error);
+          FIRStorageUploadTask *strongSelf = weakSelf;
+          if (strongSelf.fetcherCompletion) {
+            strongSelf.fetcherCompletion(data, error);
           }
         }];
   }];
