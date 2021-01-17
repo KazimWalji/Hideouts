@@ -9,9 +9,7 @@ class SignUpVC: UIViewController, UITextFieldDelegate, SFSafariViewControllerDel
     
     var signInVC: SignInVC!
     var backButton: AuthBackButton!
-    var continueButton: AuthActionButton!
-    var signUpView: SignUpView!
-    var nameTextView: NameTextField!
+    private let signUpView = SignUpView(frame: CGRect(x: 0, y: 0, width: 200, height: 200))
     var authNetworking: AuthNetworking!
     var authKeyboardHandler = AuthKeyboardHandler()
     
@@ -20,7 +18,6 @@ class SignUpVC: UIViewController, UITextFieldDelegate, SFSafariViewControllerDel
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        signUpView.isHidden = true
        //background
         view.backgroundColor = .white
         authKeyboardHandler.view = view
@@ -39,7 +36,6 @@ class SignUpVC: UIViewController, UITextFieldDelegate, SFSafariViewControllerDel
         view.backgroundColor = .white
         //setupGradientView()
         setupRegisterView()
-        setupNameView()
         setupContinueButton()
         setupBackButton()
         UserProtectionsButton()
@@ -63,11 +59,17 @@ class SignUpVC: UIViewController, UITextFieldDelegate, SFSafariViewControllerDel
     // ---------------------------------------------------------------------------------------------------------------------------------------------------- //
     
     private func setupRegisterView() {
-        signUpView = SignUpView(self)
-    }
-    private func setupNameView() {
-        nameTextView = NameTextField(self)
-        (self)
+        signUpView.translatesAutoresizingMaskIntoConstraints = false
+        
+        view.addSubview(signUpView)
+        
+        NSLayoutConstraint.activate([
+            signUpView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            signUpView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            signUpView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+        ])
+        
+        signUpView.textFieldDelegate = self
     }
     
     // ---------------------------------------------------------------------------------------------------------------------------------------------------- //
@@ -85,7 +87,7 @@ class SignUpVC: UIViewController, UITextFieldDelegate, SFSafariViewControllerDel
         caution.addTarget(self, action: #selector(termsAndCondtions), for: .touchUpInside)
         let constraints = [
             caution.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            caution.topAnchor.constraint(equalTo: continueButton.bottomAnchor, constant: 50),
+            caution.bottomAnchor.constraint(equalTo: view.safeBottomAnchor, constant: -50),
             caution.heightAnchor.constraint(equalToConstant: 50),
             caution.widthAnchor.constraint(equalToConstant: 350)
         ]
@@ -94,17 +96,7 @@ class SignUpVC: UIViewController, UITextFieldDelegate, SFSafariViewControllerDel
     }
 
     private func setupContinueButton() {
-        continueButton = AuthActionButton("CONTINUE", self)
-        view.addSubview(continueButton)
-        continueButton.addTarget(self, action: #selector(continueButtonPressed), for: .touchUpInside)
-        continueButton.alpha = 0
-        let constraints = [
-            continueButton.centerXAnchor.constraint(equalTo: signUpView.centerXAnchor),
-            continueButton.centerYAnchor.constraint(equalTo: signUpView.bottomAnchor),
-            continueButton.heightAnchor.constraint(equalToConstant: 40),
-            continueButton.widthAnchor.constraint(equalToConstant: 200)
-        ]
-        NSLayoutConstraint.activate(constraints)
+        signUpView.continueButton.addTarget(self, action: #selector(continueButtonPressed), for: .touchUpInside)
     }
     
     // ---------------------------------------------------------------------------------------------------------------------------------------------------- //
@@ -127,16 +119,18 @@ class SignUpVC: UIViewController, UITextFieldDelegate, SFSafariViewControllerDel
     // ---------------------------------------------------------------------------------------------------------------------------------------------------- //
     // MARK: TEXTFIELD VALIDATION
     
-    private func validateTF() -> String?{
-        if nameTextView.nameTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) == "" || signUpView.emailTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) == "" || signUpView.passwordTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) == "" ||
-        signUpView.UserIDTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) == ""{
+    private func validateTF() -> String? {
+        if signUpView.nameTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) == ""
+            || signUpView.emailTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) == ""
+            || signUpView.passwordTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) == ""
+            || signUpView.userIDTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) == "" {
             return "Make sure you fill in all fields."
         }
         
         let password = signUpView.passwordTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
-        let name = nameTextView.nameTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
+        let name = signUpView.nameTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
         let email = signUpView.emailTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
-        let UserID = signUpView.UserIDTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
+        let UserID = signUpView.userIDTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
         if password.count < 6 {
             return "Password should be at least 6 characters long."
         }
@@ -175,7 +169,7 @@ class SignUpVC: UIViewController, UITextFieldDelegate, SFSafariViewControllerDel
     @objc private func continueButtonPressed() {
         if signUpView.isHidden == true{
             signUpView.isHidden = false
-            nameTextView.isHidden = true
+            signUpView.nameTextField.isHidden = true
             return
         }
         
@@ -195,7 +189,7 @@ class SignUpVC: UIViewController, UITextFieldDelegate, SFSafariViewControllerDel
             
             }
         }
-        let UserID = signUpView.UserIDTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
+        let UserID = signUpView.userIDTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
         authNetworking = AuthNetworking(self)
         authNetworking.checkForExistingUserID(with: UserID) { (errorMessage) in
             guard errorMessage == nil else {
@@ -214,7 +208,7 @@ class SignUpVC: UIViewController, UITextFieldDelegate, SFSafariViewControllerDel
         guard let name = signUpView.nameTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines),
               let email = signUpView.emailTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines),
               let password = signUpView.passwordTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines),
-              let UserID = signUpView.UserIDTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines),
+              let UserID = signUpView.userIDTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines),
               let pronoun = signUpView.pronounTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) else {
             // TODO: warn user
             return
@@ -228,7 +222,4 @@ class SignUpVC: UIViewController, UITextFieldDelegate, SFSafariViewControllerDel
         controller.pronoun = pronoun
         self.show(controller, sender: nil)
     }
-    
-    // ---------------------------------------------------------------------------------------------------------------------------------------------------- //
-    
 }

@@ -5,66 +5,122 @@ import SkyFloatingLabelTextField
 
 class SignUpView: UIView {
     
+    private let backgroundView = UIView(frame: .zero)
+    let continueButton = AuthActionButton("CONTINUE")
+    let nameTextField = SkyFloatingLabelTextField()
+    let emailTextField = SkyFloatingLabelTextField()
+    let passwordTextField = SkyFloatingLabelTextField()
+    let pronounTextField = SkyFloatingLabelTextField()
+    let userIDTextField = SkyFloatingLabelTextField()
+    let errorLabel = UILabel()
+    
+    private let textFieldsStackView = UIStackView(frame: .zero)
+    
+    var textFieldDelegate: UITextFieldDelegate? {
+        get {
+            return nameTextField.delegate
+        }
+        
+        set {
+            [nameTextField,
+             emailTextField,
+             passwordTextField,
+             userIDTextField,
+             pronounTextField].forEach { $0.delegate = newValue}
+        }
+    }
+    
     // ---------------------------------------------------------------------------------------------------------------------------------------------------- //
     
-    var controller: SignUpVC!
-    var nameTextField = SkyFloatingLabelTextField()
-    var emailTextField = SkyFloatingLabelTextField()
-    var passwordTextField = SkyFloatingLabelTextField()
-    var pronounTextField = SkyFloatingLabelTextField()
-    var UserIDTextField = SkyFloatingLabelTextField()
-    var errorLabel = UILabel()
-    
-    
-    // ---------------------------------------------------------------------------------------------------------------------------------------------------- //
-    
-    init(_ controller: SignUpVC) {
-        super.init(frame: .zero)
-        self.controller = controller
-        setupRegisterView()
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setupUI()
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: coder)
+        setupUI()
     }
     
     // ---------------------------------------------------------------------------------------------------------------------------------------------------- //
     
-    func setupRegisterView() {
-        controller.view.addSubview(self)
-        backgroundColor = .white
+    func setupUI() {
         translatesAutoresizingMaskIntoConstraints = false
-        layer.cornerRadius = 8
-        layer.shadowRadius = 10
-        layer.shadowOpacity = 0.3
-        var height: CGFloat = 350 //hurrr: added 50 for pronoun text field
-        if controller.view.frame.height > 1000 { height = 692 } //added 50 for pronoun text field
-        let constraints = [
-            bottomAnchor.constraint(equalTo: controller.view.bottomAnchor, constant: -150),
-            leadingAnchor.constraint(equalTo: controller.view.leadingAnchor, constant: 32),
-            trailingAnchor.constraint(equalTo: controller.view.trailingAnchor, constant: -32),
-            heightAnchor.constraint(equalToConstant: height)
-        ]
-        NSLayoutConstraint.activate(constraints)
-        //hurrr: commented
-//        let timer = Timer(timeInterval: 0.2, target: self, selector: #selector(animateSignUpViews), userInfo: nil, repeats: false)
-//        RunLoop.current.add(timer, forMode: .default)
-        setupSignUpLabel()
+        setupContinueButton()
+        setupBackgroundView()
+        
         setupNameTextField()
         setupEmailTextField()
         setupPasswordTextField()
         setupUserIDTextField()
         setupPronounTextField()
-        setupErrorLabel()
         
+        setupFieldsStackView(fieldViews: [nameTextField,
+                                          userIDTextField,
+                                          pronounTextField,
+                                          emailTextField,
+                                          passwordTextField,
+        ])
+        //hurrr: commented
+//        let timer = Timer(timeInterval: 0.2, target: self, selector: #selector(animateSignUpViews), userInfo: nil, repeats: false)
+//        RunLoop.current.add(timer, forMode: .default)
+        setupSignUpLabel()
+        setupErrorLabel()
     }
     
-    // ---------------------------------------------------------------------------------------------------------------------------------------------------- //
+    private func setupFieldsStackView(fieldViews: [UIView]) {
+        textFieldsStackView.translatesAutoresizingMaskIntoConstraints = false
+        
+        let verticalMargin = CGFloat(48)
+        let horizontalMargin = CGFloat(28)
+        
+        addSubview(textFieldsStackView)
+        NSLayoutConstraint.activate([
+            textFieldsStackView.topAnchor.constraint(equalTo: backgroundView.topAnchor, constant: verticalMargin),
+            textFieldsStackView.bottomAnchor.constraint(equalTo: backgroundView.bottomAnchor, constant: -verticalMargin),
+            textFieldsStackView.leadingAnchor.constraint(equalTo: backgroundView.leadingAnchor, constant: horizontalMargin),
+            textFieldsStackView.trailingAnchor.constraint(equalTo: backgroundView.trailingAnchor, constant: -horizontalMargin),
+        ])
+        
+        textFieldsStackView.axis = .vertical
+        fieldViews.forEach {
+            textFieldsStackView.addArrangedSubview($0)
+        }
+    }
+    
+    private func setupContinueButton() {
+        continueButton.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(continueButton)
+        let constraints = NSLayoutConstraint.activate([
+            continueButton.centerXAnchor.constraint(equalTo: centerXAnchor),
+            continueButton.bottomAnchor.constraint(equalTo: bottomAnchor),
+            continueButton.heightAnchor.constraint(equalToConstant: 40),
+            continueButton.widthAnchor.constraint(equalToConstant: 200),
+        ])
+    }
+    
+    private func setupBackgroundView() {
+        backgroundView.translatesAutoresizingMaskIntoConstraints = false
+        backgroundView.backgroundColor = .white
+        
+        let shadowRadius = CGFloat(10)
+        backgroundView.layer.cornerRadius = 8
+        backgroundView.layer.shadowRadius = shadowRadius
+        backgroundView.layer.shadowOpacity = 0.3
+        
+        insertSubview(backgroundView, at: 0)
+        NSLayoutConstraint.activate([
+            backgroundView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 32),
+            backgroundView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -32),
+            backgroundView.bottomAnchor.constraint(equalTo: continueButton.centerYAnchor),
+            backgroundView.topAnchor.constraint(equalTo: topAnchor, constant: shadowRadius),
+        ])
+    }
     
     func setupSignUpLabel() {
         let signUpLabel = UILabel()
-        addSubview(signUpLabel)
         signUpLabel.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(signUpLabel)
         signUpLabel.text = "SIGN UP"
         signUpLabel.textAlignment = .center
         signUpLabel.font = UIFont.boldSystemFont(ofSize: 18)
@@ -77,75 +133,46 @@ class SignUpView: UIView {
         signUpLabel.alpha = 1
     }
     
-    // ---------------------------------------------------------------------------------------------------------------------------------------------------- //
-    
     func setupNameTextField() {
-        addSubview(nameTextField)
         nameTextField.translatesAutoresizingMaskIntoConstraints = false
+        
         nameTextField.placeholder = "Name"
-        nameTextField.delegate = controller
         nameTextField.font = UIFont(name: "Alata", size: 18)
         nameTextField.selectedLineColor = ThemeColors.mainColor
         nameTextField.lineColor = .lightGray
         nameTextField.autocorrectionType = .no
         nameTextField.textContentType = .oneTimeCode
-        let constraints = [
-            nameTextField.centerXAnchor.constraint(equalTo: centerXAnchor),
-            nameTextField.topAnchor.constraint(equalTo: topAnchor, constant: 48),
-            nameTextField.widthAnchor.constraint(equalToConstant: controller.view.frame.width - 120)
-        ]
-        NSLayoutConstraint.activate(constraints)
         nameTextField.alpha = 1
     }
     
-    // ---------------------------------------------------------------------------------------------------------------------------------------------------- //
-    
     func setupEmailTextField() {
-        addSubview(emailTextField)
-        emailTextField.translatesAutoresizingMaskIntoConstraints = false
+//        emailTextField.translatesAutoresizingMaskIntoConstraints = false
         emailTextField.placeholder = "Email"
-        emailTextField.delegate = controller
         emailTextField.font = UIFont(name: "Alata", size: 18)
         emailTextField.selectedLineColor = ThemeColors.mainColor
         emailTextField.lineColor = .lightGray
         emailTextField.autocapitalizationType = .none
         emailTextField.autocorrectionType = .no
         emailTextField.textContentType = .oneTimeCode
-        let constraints = [
-            emailTextField.centerXAnchor.constraint(equalTo: centerXAnchor),
-            emailTextField.topAnchor.constraint(equalTo: nameTextField.bottomAnchor, constant: 5),
-            emailTextField.widthAnchor.constraint(equalToConstant: controller.view.frame.width - 120)
-        ]
-        NSLayoutConstraint.activate(constraints)
         emailTextField.alpha = 1
     }
     
     // ---------------------------------------------------------------------------------------------------------------------------------------------------- //
     func setupUserIDTextField() {
-        addSubview(UserIDTextField)
-        UserIDTextField.translatesAutoresizingMaskIntoConstraints = false
-        UserIDTextField.placeholder = "User Name"
-        UserIDTextField.delegate = controller
-        UserIDTextField.font = UIFont(name: "Alata", size: 18)
-        UserIDTextField.selectedLineColor = ThemeColors.mainColor
-        UserIDTextField.lineColor = .lightGray
-        UserIDTextField.autocapitalizationType = .none
-        UserIDTextField.autocorrectionType = .no
-        UserIDTextField.textContentType = .oneTimeCode
-        let constraints = [
-            UserIDTextField.centerXAnchor.constraint(equalTo: centerXAnchor),
-            UserIDTextField.topAnchor.constraint(equalTo: passwordTextField.bottomAnchor, constant: 5),
-            UserIDTextField.widthAnchor.constraint(equalToConstant: controller.view.frame.width - 120)
-        ]
-        NSLayoutConstraint.activate(constraints)
+//        userIDTextField.translatesAutoresizingMaskIntoConstraints = false
+        userIDTextField.placeholder = "User Name"
+        userIDTextField.font = UIFont(name: "Alata", size: 18)
+        userIDTextField.selectedLineColor = ThemeColors.mainColor
+        userIDTextField.lineColor = .lightGray
+        userIDTextField.autocapitalizationType = .none
+        userIDTextField.autocorrectionType = .no
+        userIDTextField.textContentType = .oneTimeCode
         emailTextField.alpha = 1
     }
     
-    func setupPronounTextField(){
-        addSubview(pronounTextField)
-        pronounTextField.translatesAutoresizingMaskIntoConstraints = false
-        pronounTextField.placeholder = "Pronoun"
-        pronounTextField.delegate = controller
+    func setupPronounTextField() {
+//        pronounTextField.translatesAutoresizingMaskIntoConstraints = false
+        pronounTextField.placeholder = "Pronouns"
         pronounTextField.font = UIFont(name: "Alata", size: 18)
         pronounTextField.selectedLineColor = ThemeColors.mainColor
         pronounTextField.lineColor = .lightGray
@@ -153,20 +180,12 @@ class SignUpView: UIView {
         pronounTextField.autocapitalizationType = .none
         pronounTextField.isSecureTextEntry = false
         pronounTextField.textContentType = .name
-        let constraints = [
-            pronounTextField.centerXAnchor.constraint(equalTo: centerXAnchor),
-            pronounTextField.topAnchor.constraint(equalTo: UserIDTextField.bottomAnchor, constant: 5),
-            pronounTextField.widthAnchor.constraint(equalToConstant: controller.view.frame.width - 120)
-        ]
-        NSLayoutConstraint.activate(constraints)
         pronounTextField.alpha = 1
     }
     
     func setupPasswordTextField() {
-        addSubview(passwordTextField)
-        passwordTextField.translatesAutoresizingMaskIntoConstraints = false
+//        passwordTextField.translatesAutoresizingMaskIntoConstraints = false
         passwordTextField.placeholder = "Password"
-        passwordTextField.delegate = controller
         passwordTextField.font = UIFont(name: "Alata", size: 18)
         passwordTextField.selectedLineColor = ThemeColors.mainColor
         passwordTextField.lineColor = .lightGray
@@ -174,35 +193,29 @@ class SignUpView: UIView {
         passwordTextField.autocapitalizationType = .none
         passwordTextField.isSecureTextEntry = true
         passwordTextField.textContentType = .oneTimeCode
-        let constraints = [
-            passwordTextField.centerXAnchor.constraint(equalTo: centerXAnchor),
-            passwordTextField.topAnchor.constraint(equalTo: emailTextField.bottomAnchor, constant: 5),
-            passwordTextField.widthAnchor.constraint(equalToConstant: controller.view.frame.width - 120)
-        ]
-        NSLayoutConstraint.activate(constraints)
         passwordTextField.alpha = 1 //hurrr: changed from 0 to 1
     }
     
     // ---------------------------------------------------------------------------------------------------------------------------------------------------- //
     
     func setupErrorLabel() {
-        addSubview(errorLabel)
         errorLabel.translatesAutoresizingMaskIntoConstraints = false
         errorLabel.textColor = .red
         errorLabel.textAlignment = .center
         errorLabel.numberOfLines = 0
         errorLabel.font = UIFont(name: "Helvetica Neue", size: 12)
+        addSubview(errorLabel)
         let constraints = [
             errorLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
             errorLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
             errorLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
-            errorLabel.topAnchor.constraint(equalTo: pronounTextField.bottomAnchor, constant: 10)
+            errorLabel.topAnchor.constraint(equalTo: textFieldsStackView.bottomAnchor, constant: 10)
         ]
         NSLayoutConstraint.activate(constraints)
     }
     
-    // ---------------------------------------------------------------------------------------------------------------------------------------------------- //
-    
+// TODO: integrate animation
+/*
     @objc func animateSignUpViews() {
         for registerView in subviews {
             registerView.transform = CGAffineTransform(scaleX: 0.5, y: 0.5)
@@ -220,6 +233,7 @@ class SignUpView: UIView {
             self.controller.continueButton.alpha = 1
         })
     }
+ */
     
     // ---------------------------------------------------------------------------------------------------------------------------------------------------- //
     var setupNameshit: String?{

@@ -76,7 +76,7 @@ class SignInVC: UIViewController, UITextFieldDelegate {
     // ---------------------------------------------------------------------------------------------------------------------------------------------------- //
     
     private func setupLoginButton() {
-        loginButton = AuthActionButton("SIGN IN", self)
+        loginButton = AuthActionButton("SIGN IN")
         view.addSubview(loginButton)
         loginButton.addTarget(self, action: #selector(loginButtonPressed), for: .touchUpInside)
         let constraints = [

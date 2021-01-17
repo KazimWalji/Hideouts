@@ -1,7 +1,7 @@
 
 import UIKit
 
-class EmptyListView: UIView{
+class EmptyListView: UIView {
     
     // ---------------------------------------------------------------------------------------------------------------------------------------------------- //
     
@@ -96,7 +96,7 @@ class EmptyListView: UIView{
         emptyButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
         emptyButton.layer.cornerRadius = 16
         emptyButton.layer.masksToBounds = true
-        let gradient = controller.setupGradientLayer()
+        let gradient = UIViewController.setupGradientLayer()
         gradient.frame = CGRect(x: 0, y: 0, width: 200, height: 35)
         gradient.startPoint = CGPoint(x: 0, y: 1)
         gradient.endPoint = CGPoint(x: 1, y: 1)

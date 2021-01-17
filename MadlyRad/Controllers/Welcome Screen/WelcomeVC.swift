@@ -131,7 +131,7 @@ class WelcomeVC: UIViewController {
         view.addSubview(transitionView)
         transitionView.layer.cornerRadius = 50
         transitionView.layer.masksToBounds = true
-        let gradient = setupGradientLayer()
+        let gradient = UIViewController.setupGradientLayer()
         gradient.frame = view.bounds
         transitionView.layer.insertSublayer(gradient, at: 0)
         let timer = Timer(timeInterval: 0.3, target: self, selector: #selector(self.animateLogo), userInfo: nil, repeats: false)
