@@ -283,8 +283,8 @@ class HomeViewController: UIViewController {
     */
     
     private func createbell(x: Int, y: Int) -> UIButton {
-        let bellButton = UIButton(frame: CGRect(x: x, y: y, width: 50, height: 50))
-        bellButton.setBackgroundImage(UIImage(named: "bell icon (google)"), for: .normal)
+        let bellButton = UIButton(frame: CGRect(x: x, y: y, width: 50, height: 70))
+        bellButton.setBackgroundImage(UIImage(named: "redBellPepper"), for: .normal)
         bellButton.addTarget(self, action: #selector(bellButtonAction), for: .touchUpInside)
 
         return bellButton
@@ -364,8 +364,6 @@ class HomeViewController: UIViewController {
                 var imageView = UIImageView(frame: CGRect(x: offsetX, y: 0, width: 40, height: 40))
                 let button = UIButton(frame: imageView.frame)
                 button.backgroundColor = .clear
-                button.addTarget(self, action: #selector(notificationButtonAction), for: .touchUpInside)
-                scrollViewButtons.append(button)
 
                 imageView.image = image
                 imageView.layer.masksToBounds = false
@@ -381,13 +379,16 @@ class HomeViewController: UIViewController {
                     imageView.layer.borderColor = UIColor.red.cgColor
                 case 1:
                     imageView.layer.borderColor = UIColor.yellow.cgColor
+                    button.addTarget(self, action: #selector(notificationButtonAction), for: .touchUpInside)
                 case 2:
                     imageView.layer.borderColor = UIColor.green.cgColor
+                    button.addTarget(self, action: #selector(starButtonAction), for: .touchUpInside)
                 default:
                     imageView.layer.borderColor = UIColor.white.cgColor
                 }
                 scrollView.addSubview(imageView)
                 scrollView.addSubview(button)
+                scrollViewButtons.append(button)
                 notificationImageViews.append(imageView)
                 
             } catch {
