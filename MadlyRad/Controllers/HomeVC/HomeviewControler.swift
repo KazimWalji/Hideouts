@@ -28,6 +28,11 @@ class HomeViewController: UIViewController {
     private var status = [2, 1, 0, 2, 0]
     private var images = ["Dinosaur", "hammer", "normalGopher", "Dinosaur", "Dinosaur"]
     
+    private var notificationTimer = Timer()
+    private var notificationImageViews: [UIImageView] = []
+    private var yellowNotificationImageViews: [UIImageView] = []
+
+    
     //temporary data for Stars
     private var starCoords: [[Int]] = [ [200, 75], [70,120], [180,230], [350, 250], [50,350] ]
     
@@ -290,6 +295,7 @@ class HomeViewController: UIViewController {
     
         if bellClicked {
             createScrollView()
+            scheduledNotificationTimerWithTimeInterval()
         } else {
             scrollView.removeFromSuperview()
         }
@@ -300,6 +306,23 @@ class HomeViewController: UIViewController {
             if scrollViewButtons[i] == sender {
                 print("Sending the notification to: ", friends[i].name)
             }
+        }
+    }
+    
+    func scheduledNotificationTimerWithTimeInterval(){
+        // Scheduling timer to Call the function "updateCounting" with the interval of 1 seconds
+        for imageView in notificationImageViews {
+            if imageView.layer.borderColor == UIColor.yellow.cgColor {
+                yellowNotificationImageViews.append(imageView)
+            }
+        }
+        notificationTimer = Timer.scheduledTimer(timeInterval: 0.2, target: self, selector: #selector(changeImageAlpha), userInfo: nil, repeats: true)
+        
+    }
+
+    @objc func changeImageAlpha(){
+        for imageView in yellowNotificationImageViews {
+            imageView.isHidden = !imageView.isHidden
         }
     }
     
@@ -350,6 +373,9 @@ class HomeViewController: UIViewController {
                 imageView.backgroundColor = .clear
                 imageView.layer.borderWidth = 4
                 imageView.layer.cornerRadius = imageView.frame.height/2
+                
+                
+                
                 switch friend.status {
                 case 0:
                     imageView.layer.borderColor = UIColor.red.cgColor
@@ -362,6 +388,7 @@ class HomeViewController: UIViewController {
                 }
                 scrollView.addSubview(imageView)
                 scrollView.addSubview(button)
+                notificationImageViews.append(imageView)
                 
             } catch {
                 print("Profile image not found for " + friend.name + " when the bell was pressed")
