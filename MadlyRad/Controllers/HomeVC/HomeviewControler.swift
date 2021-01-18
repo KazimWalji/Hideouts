@@ -285,55 +285,22 @@ class HomeViewController: UIViewController {
         bellClicked = !bellClicked
     
         if bellClicked {
-            createStackView()
+            createScrollView()
         } else {
             stackView.removeFromSuperview()
         }
     }
     
-    private func createStackView() {
+    private func createScrollView() {
         
-        scrollView = UIScrollView()
-        stackView = UIStackView()
+        scrollView = UIScrollView(frame: CGRect(x: 40, y: 40, width: 200, height: 40))
         
         view.addSubview(scrollView)
-//        scrollView.addSubview(stackView)
+        
+        scrollView.contentSize = CGSize(width: 1000, height: 40)
 
-        
-        
-        
-        scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        scrollView.topAnchor.constraint(equalTo: view.topAnchor, constant: 50).isActive = true
-        scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -750).isActive = true
-        
         scrollView.backgroundColor = .red
-//        scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50)
-//        scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
-//        scrollView.topAnchor.constraint(equalTo: view.topAnchor, constant: 50)
-//        scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -350)
-
         scrollView.translatesAutoresizingMaskIntoConstraints = false
-        
-        scrollView.layoutIfNeeded()
-        
-//        stackView.heightAnchor.constraint(equalTo: scrollView.heightAnchor).isActive = true
-//        stackView.widthAnchor.constraint(equalTo: scrollView.widthAnchor).isActive = true
-//        stackView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true
-//        stackView.centerYAnchor.constraint(equalTo: scrollView.centerYAnchor).isActive = true
-//        stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50)
-//        stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
-//        stackView.topAnchor.constraint(equalTo: view.topAnchor, constant: 50)
-//        stackView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -350)
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.spacing = 10
-        stackView.distribution = .fillEqually
-        
-        
-        
-        
-        
-
 
         var friendsRed: [Friend] = []
         var friendsYellow: [Friend] = []
@@ -352,12 +319,13 @@ class HomeViewController: UIViewController {
             }
         }
         
-        friends = friendsGreen + friendsYellow + friendsRed + friendsGreen + friendsYellow + friendsRed
-
+        friends = friendsGreen + friendsYellow + friendsRed
+        var offsetX: Int = 5
         for friend in friends {
             do {
                 var image = try UIImage(named: friend.image)
-                var imageView = UIImageView(frame: CGRect(x: 50, y: 50, width: 40, height: 40))
+                var imageView = UIImageView(frame: CGRect(x: offsetX, y: 0, width: 40, height: 40))
+                
                 imageView.image = image
                 imageView.layer.masksToBounds = false
                 imageView.clipsToBounds = true
@@ -374,11 +342,13 @@ class HomeViewController: UIViewController {
                 default:
                     imageView.layer.borderColor = UIColor.white.cgColor
                 }
-                stackView.addArrangedSubview(imageView)
+                scrollView.addSubview(imageView)
                 
             } catch {
                 print("Profile image not found for " + friend.name + " when the bell was pressed")
             }
+            
+            offsetX += 50
         }
 
     }
