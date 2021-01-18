@@ -32,12 +32,15 @@ class HomeViewController: UIViewController {
     private var starCoords: [[Int]] = [ [200, 75], [70,120], [180,230], [350, 250], [50,350] ]
     
     private var stackView: UIStackView = UIStackView()
+    private var stackView2: UIStackView = UIStackView()
+    
+    private var scrollView: UIScrollView = UIScrollView()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupFriends()
-        
         setupUI()
         
         NotificationCenter.default.addObserver(
@@ -290,15 +293,66 @@ class HomeViewController: UIViewController {
     
     private func createStackView() {
         
+        scrollView = UIScrollView()
         stackView = UIStackView()
-        view.addSubview(stackView)
-        stackView.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        stackView.widthAnchor.constraint(equalToConstant: CGFloat((friends.count * 50) + (friends.count - 1) * 10)).isActive = true
-        stackView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        stackView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -380).isActive = true
+        
+        view.addSubview(scrollView)
+//        scrollView.addSubview(stackView)
+
+        
+        
+        
+        scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        scrollView.topAnchor.constraint(equalTo: view.topAnchor, constant: 50).isActive = true
+        scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -750).isActive = true
+        
+        scrollView.backgroundColor = .red
+//        scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50)
+//        scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+//        scrollView.topAnchor.constraint(equalTo: view.topAnchor, constant: 50)
+//        scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -350)
+
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        
+        scrollView.layoutIfNeeded()
+        
+//        stackView.heightAnchor.constraint(equalTo: scrollView.heightAnchor).isActive = true
+//        stackView.widthAnchor.constraint(equalTo: scrollView.widthAnchor).isActive = true
+//        stackView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true
+//        stackView.centerYAnchor.constraint(equalTo: scrollView.centerYAnchor).isActive = true
+//        stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50)
+//        stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+//        stackView.topAnchor.constraint(equalTo: view.topAnchor, constant: 50)
+//        stackView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -350)
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.spacing = 10
         stackView.distribution = .fillEqually
+        
+        
+        
+        
+        
+
+
+        var friendsRed: [Friend] = []
+        var friendsYellow: [Friend] = []
+        var friendsGreen: [Friend] = []
+        
+        for friend in friends {
+            switch friend.status {
+            case 0:
+                friendsRed.append(friend)
+            case 1:
+                friendsYellow.append(friend)
+            case 2:
+                friendsGreen.append(friend)
+            default:
+                print("Friend's status = ", friend.status)
+            }
+        }
+        
+        friends = friendsGreen + friendsYellow + friendsRed + friendsGreen + friendsYellow + friendsRed
 
         for friend in friends {
             do {
@@ -308,7 +362,7 @@ class HomeViewController: UIViewController {
                 imageView.layer.masksToBounds = false
                 imageView.clipsToBounds = true
                 imageView.backgroundColor = .red
-                imageView.layer.borderWidth = 1.5
+                imageView.layer.borderWidth = 4
                 imageView.layer.cornerRadius = imageView.frame.height/2
                 switch friend.status {
                 case 0:
@@ -326,70 +380,64 @@ class HomeViewController: UIViewController {
                 print("Profile image not found for " + friend.name + " when the bell was pressed")
             }
         }
+
+    }
+    
+    private func createStackView2() {
+        
+        stackView2 = UIStackView()
+        view.addSubview(stackView2)
+        stackView2.heightAnchor.constraint(equalToConstant: 25).isActive = true
+        stackView2.widthAnchor.constraint(equalToConstant: CGFloat((friends.count * 50) + (friends.count - 1) * 10)).isActive = true
+        stackView2.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        stackView2.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -340).isActive = true
+        stackView2.translatesAutoresizingMaskIntoConstraints = false
+        stackView2.spacing = 10
+        stackView2.distribution = .fillEqually
+        
+        var friendsRed: [Friend] = []
+        var friendsYellow: [Friend] = []
+        var friendsGreen: [Friend] = []
+        
+        for friend in friends {
+            switch friend.status {
+            case 0:
+                friendsRed.append(friend)
+            case 1:
+                friendsYellow.append(friend)
+            case 2:
+                friendsGreen.append(friend)
+            default:
+                print("Friend's status = ", friend.status)
+            }
+        }
+        
+        friends = friendsGreen + friendsYellow + friendsRed
+
+        for friend in friends {
+            var textView = UITextView(frame: CGRect(x: 50, y: 50, width: 30, height: 30))
+            textView.text = friend.name
+            textView.backgroundColor = .clear
+            textView.textAlignment = .center
+            textView.layer.masksToBounds = false
+            textView.clipsToBounds = true
+            switch friend.status {
+            case 0:
+                textView.textColor = .red
+            case 1:
+                textView.textColor = .yellow
+            case 2:
+                textView.textColor = .green
+            default:
+                textView.textColor = .white
+            }
+            stackView2.addArrangedSubview(textView)
+        }
+
     }
     
     //End of class
 }
-
-//extend the class to allow tableview to get data from HVC
-extension HomeViewController: UITableViewDataSource {
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-        return friends.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        
-        let imageView = UIImageView(frame: CGRect(x: 10, y: 10, width: 50, height: 50))
-        imageView.image = UIImage(named: friends[indexPath.row].image)
-        imageView.layer.borderWidth = 1
-        imageView.layer.borderColor = UIColor.black.cgColor
-        imageView.layer.masksToBounds = false
-        imageView.layer.cornerRadius = imageView.frame.height/2
-        imageView.clipsToBounds = true
-        
-        let nameView = UITextField(frame: CGRect(x: 70, y: 10, width: cell.frame.width - 80, height: 20))
-        nameView.text = friends[indexPath.row].name
-        nameView.font = UIFont(name: nameView.font!.fontName, size: 20)
-        
-        let statusView = UITextField(frame: CGRect(x: 70, y: 40, width: cell.frame.width - 80, height: 12))
-        
-        switch friends[indexPath.row].status {
-        case 0:
-            statusView.text = "I will not be on for a while."
-            cell.backgroundColor = .red
-            break
-        case 1:
-            statusView.text = "I will be on in 10 minutes."
-            cell.backgroundColor = .yellow
-            break
-        case 2:
-            statusView.text = "I am online and ready to chat!"
-            cell.backgroundColor = .green
-            break
-        default:
-            statusView.text = "Error getting status"
-            break;
-        }
-        
-        statusView.font = UIFont(name: statusView.font!.fontName, size: 12)
-        
-        cell.addSubview(imageView)
-        cell.addSubview(nameView)
-        cell.addSubview(statusView)
-        return cell
-    }
-}
-    
-    
-    
-    
-    
-    
-    
 
     
     
