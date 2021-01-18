@@ -43,6 +43,8 @@ class HomeViewController: UIViewController {
         setupFriends()
         setupUI()
         
+        friends = friends + friends
+        
         NotificationCenter.default.addObserver(
             forName: UIApplication.userDidTakeScreenshotNotification,
             object: nil, queue: nil) { _ in
@@ -287,19 +289,21 @@ class HomeViewController: UIViewController {
         if bellClicked {
             createScrollView()
         } else {
-            stackView.removeFromSuperview()
+            scrollView.removeFromSuperview()
         }
     }
     
     private func createScrollView() {
         
-        scrollView = UIScrollView(frame: CGRect(x: 40, y: 40, width: 200, height: 40))
+        
+        
+        scrollView = UIScrollView(frame: CGRect(x: 60, y: 50, width: 350, height: 40))
         
         view.addSubview(scrollView)
         
-        scrollView.contentSize = CGSize(width: 1000, height: 40)
+        scrollView.contentSize = CGSize(width: friends.count * 50, height: 40)
 
-        scrollView.backgroundColor = .red
+        scrollView.backgroundColor = .clear
         scrollView.translatesAutoresizingMaskIntoConstraints = false
 
         var friendsRed: [Friend] = []
