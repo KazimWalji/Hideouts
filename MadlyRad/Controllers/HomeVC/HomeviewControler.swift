@@ -36,6 +36,8 @@ class HomeViewController: UIViewController {
     
     private var scrollView: UIScrollView = UIScrollView()
     
+    private var scrollViewButtons: [UIButton] = []
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -293,6 +295,14 @@ class HomeViewController: UIViewController {
         }
     }
     
+    @objc func notificationButtonAction(sender: UIButton!) {
+        for i in 0...scrollViewButtons.count - 1 {
+            if scrollViewButtons[i] == sender {
+                print("Sending the notification to: ", friends[i].name)
+            }
+        }
+    }
+    
     private func createScrollView() {
         
         
@@ -329,11 +339,15 @@ class HomeViewController: UIViewController {
             do {
                 var image = try UIImage(named: friend.image)
                 var imageView = UIImageView(frame: CGRect(x: offsetX, y: 0, width: 40, height: 40))
-                
+                let button = UIButton(frame: imageView.frame)
+                button.backgroundColor = .clear
+                button.addTarget(self, action: #selector(notificationButtonAction), for: .touchUpInside)
+                scrollViewButtons.append(button)
+
                 imageView.image = image
                 imageView.layer.masksToBounds = false
                 imageView.clipsToBounds = true
-                imageView.backgroundColor = .red
+                imageView.backgroundColor = .clear
                 imageView.layer.borderWidth = 4
                 imageView.layer.cornerRadius = imageView.frame.height/2
                 switch friend.status {
@@ -347,6 +361,7 @@ class HomeViewController: UIViewController {
                     imageView.layer.borderColor = UIColor.white.cgColor
                 }
                 scrollView.addSubview(imageView)
+                scrollView.addSubview(button)
                 
             } catch {
                 print("Profile image not found for " + friend.name + " when the bell was pressed")
@@ -356,6 +371,8 @@ class HomeViewController: UIViewController {
         }
 
     }
+    
+    
     
     private func createStackView2() {
         
