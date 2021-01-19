@@ -461,12 +461,12 @@ class HomeViewController: UIViewController {
         inviteFriendsCloseButton = UIButton(frame: CGRect(x: 10, y: 10, width: 20, height: 20))
         inviteFriendsView.addSubview(inviteFriendsCloseButton)
         
-        inviteFriendsView.backgroundColor = UIColor(white: 0.05, alpha: 1)
+        inviteFriendsView.backgroundColor = UIColor(white: 0.05, alpha: 0.6)
         inviteFriendsView.layer.cornerRadius = mediaView.frame.height/10
         
         titleTextView.text = "Invite Friends"
         titleTextView.textColor = .white
-        titleTextView.backgroundColor = UIColor(white: 0.05, alpha: 1)
+        titleTextView.backgroundColor = UIColor(white: 0.05, alpha: 0.6)
         titleTextView.textAlignment = .center
         titleTextView.font = UIFont(name: titleTextView.font!.fontName, size: 25)
         titleTextView.isEditable = false
@@ -481,14 +481,14 @@ class HomeViewController: UIViewController {
         inviteFriendsCloseButton.addTarget(self, action: #selector(closeInviteFriendsView), for: .touchUpInside)
 
         
-        inviteFriendsScrollView.backgroundColor = UIColor(white: 0.05, alpha: 1)
+        inviteFriendsScrollView.backgroundColor = UIColor(white: 0.05, alpha: 0.6)
         inviteFriendsScrollView.layer.cornerRadius = mediaView.frame.height/10
         inviteFriendsScrollView.contentSize = CGSize(width: inviteFriendsScrollView.frame.width, height: CGFloat(friends.count * 55))
         
         
         var offsetY = 5
         for friend in friends {
-            let friendView = UIView(frame: CGRect(x: 10, y: offsetY, width: Int(inviteFriendsScrollView.frame.width - 10), height: 50))
+            let friendView = UIView(frame: CGRect(x: 10, y: offsetY, width: Int(inviteFriendsScrollView.frame.width - 20), height: 50))
             inviteFriendsScrollView.addSubview(friendView)
             offsetY += Int(friendView.frame.height + 10)
             
