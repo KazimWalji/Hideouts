@@ -36,12 +36,11 @@ class HomeViewController: UIViewController {
     //temporary data for Stars
     private var starCoords: [[Int]] = [ [200, 75], [70,120], [180,230], [350, 250], [50,350] ]
     
-    private var stackView: UIStackView = UIStackView()
-    private var stackView2: UIStackView = UIStackView()
+    private var mediaView: UIView = UIView()
+    private var mediaViewButtons: [UIButton] = []
     
     private var scrollView: UIScrollView = UIScrollView()
-    
-    private var scrollViewButtons: [UIButton] = []
+        private var scrollViewButtons: [UIButton] = []
     
     
     override func viewDidLoad() {
@@ -82,6 +81,8 @@ class HomeViewController: UIViewController {
         view.addSubview(bell)
         
         createNameLabel()
+        
+        createMediaView()
 
     }
     
@@ -283,8 +284,8 @@ class HomeViewController: UIViewController {
     */
     
     private func createbell(x: Int, y: Int) -> UIButton {
-        let bellButton = UIButton(frame: CGRect(x: x, y: y, width: 50, height: 70))
-        bellButton.setBackgroundImage(UIImage(named: "redBellPepper"), for: .normal)
+        let bellButton = UIButton(frame: CGRect(x: x, y: y, width: 40, height: 40))
+        bellButton.setBackgroundImage(UIImage(named: "white_bell"), for: .normal)
         bellButton.addTarget(self, action: #selector(bellButtonAction), for: .touchUpInside)
 
         return bellButton
@@ -327,8 +328,6 @@ class HomeViewController: UIViewController {
     }
     
     private func createScrollView() {
-        
-        
         
         scrollView = UIScrollView(frame: CGRect(x: 60, y: 50, width: 350, height: 40))
         
@@ -402,58 +401,38 @@ class HomeViewController: UIViewController {
     
     
     
-    private func createStackView2() {
+    //Side buttons
+    private func createMediaView() {
+        mediaView = UIStackView(frame: CGRect(x: 360, y: 350, width: 50, height: 140))
         
-        stackView2 = UIStackView()
-        view.addSubview(stackView2)
-        stackView2.heightAnchor.constraint(equalToConstant: 25).isActive = true
-        stackView2.widthAnchor.constraint(equalToConstant: CGFloat((friends.count * 50) + (friends.count - 1) * 10)).isActive = true
-        stackView2.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        stackView2.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -340).isActive = true
-        stackView2.translatesAutoresizingMaskIntoConstraints = false
-        stackView2.spacing = 10
-        stackView2.distribution = .fillEqually
+        view.addSubview(mediaView)
         
-        var friendsRed: [Friend] = []
-        var friendsYellow: [Friend] = []
-        var friendsGreen: [Friend] = []
+        mediaView.backgroundColor = UIColor(white: 0.05, alpha: 0.7)
+        mediaView.layer.cornerRadius = mediaView.frame.height/10
         
-        for friend in friends {
-            switch friend.status {
-            case 0:
-                friendsRed.append(friend)
-            case 1:
-                friendsYellow.append(friend)
-            case 2:
-                friendsGreen.append(friend)
-            default:
-                print("Friend's status = ", friend.status)
-            }
-        }
+        let appleMusicButton = UIButton(frame: CGRect(x: 5, y: 5, width: 40, height: 40))
+        appleMusicButton.setBackgroundImage(UIImage(named: "AppleMusic"), for: .normal)
+        appleMusicButton.layer.cornerRadius = appleMusicButton.frame.height/4
+        appleMusicButton.layer.masksToBounds = true
         
-        friends = friendsGreen + friendsYellow + friendsRed
+        let netflixButton = UIButton(frame: CGRect(x: 5, y: 50, width: 40, height: 40))
+        netflixButton.setBackgroundImage(UIImage(named: "Netflix"), for: .normal)
+        netflixButton.layer.cornerRadius = netflixButton.frame.height/4
+        netflixButton.layer.masksToBounds = true
+        
+        let spotifyButton = UIButton(frame: CGRect(x: 5, y: 95, width: 40, height: 40))
+        spotifyButton.setBackgroundImage(UIImage(named: "Spotify"), for: .normal)
+        spotifyButton.layer.cornerRadius = spotifyButton.frame.height/4
+        spotifyButton.layer.masksToBounds = true
+        
+        mediaViewButtons = [appleMusicButton, netflixButton, spotifyButton]
 
-        for friend in friends {
-            var textView = UITextView(frame: CGRect(x: 50, y: 50, width: 30, height: 30))
-            textView.text = friend.name
-            textView.backgroundColor = .clear
-            textView.textAlignment = .center
-            textView.layer.masksToBounds = false
-            textView.clipsToBounds = true
-            switch friend.status {
-            case 0:
-                textView.textColor = .red
-            case 1:
-                textView.textColor = .yellow
-            case 2:
-                textView.textColor = .green
-            default:
-                textView.textColor = .white
-            }
-            stackView2.addArrangedSubview(textView)
-        }
+        mediaView.addSubview(appleMusicButton)
+        mediaView.addSubview(netflixButton)
+        mediaView.addSubview(spotifyButton)
 
     }
+    
     
     //End of class
 }
