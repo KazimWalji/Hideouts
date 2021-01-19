@@ -10,18 +10,11 @@ import Foundation
 import UIKit
 import AVKit
 
-class HomeViewController: UIViewController, UIGestureRecognizerDelegate {
+class HomeViewController: UIViewController {
     
     private var playerLooper: AVPlayerLooper?
     private var starPlayerLoopers: [AVPlayerLooper] = []
     
-    var conversationVC = ConversationsVC()
-    var convNetwork = ConversationsNetworking()
-    private var conversationBug = Converstationsbug()
-    
-//    private var girlWithWaterImageTopConstraint: NSLayoutConstraint?
-//    private var girlWithWaterImageHeightConstraint: NSLayoutConstraint?
-
     private var nameLabel: UILabel?
     private var bellClicked: Bool = false
     
@@ -35,50 +28,34 @@ class HomeViewController: UIViewController, UIGestureRecognizerDelegate {
     private var status = [2, 1, 0, 2, 0]
     private var images = ["Dinosaur", "hammer", "normalGopher", "Dinosaur", "Dinosaur"]
     
+    private var notificationTimer = Timer()
+    private var notificationImageViews: [UIImageView] = []
+    private var yellowNotificationImageViews: [UIImageView] = []
+
+    
     //temporary data for Stars
     private var starCoords: [[Int]] = [ [200, 75], [70,120], [180,230], [350, 250], [50,350] ]
     
-    private var stackView: UIStackView = UIStackView()
+    private var mediaView: UIView = UIView()
+    private var mediaViewButtons: [UIButton] = []
     
+    private var scrollView: UIScrollView = UIScrollView()
+        private var scrollViewButtons: [UIButton] = []
     
-    func setupNetworking() {
-        var emptyList = EmptyListView(nil, conversationVC, false)
-        fetchFriendData()
-        convNetwork.convVC = conversationVC
-        conversationVC.emptyListView = emptyList
-
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        tabBarController?.tabBar.isHidden = false
-        
-        //Stops the duplications of the friends array
-        if friends.count > 0 {
-        } else {
-            setupFriends()
-        }
-        
-        setupUI()
-        
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupNetworking()
+        
+        setupFriends()
         setupUI()
-       
+        
+        friends = friends + friends
+        
         NotificationCenter.default.addObserver(
             forName: UIApplication.userDidTakeScreenshotNotification,
             object: nil, queue: nil) { _ in
             print("I see what you did there")
         }
-    }
-    
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        navigationController?.navigationBar.isHidden = false
     }
     
     private func setupFriends() {
@@ -104,6 +81,8 @@ class HomeViewController: UIViewController, UIGestureRecognizerDelegate {
         view.addSubview(bell)
         
         createNameLabel()
+        
+        createMediaView()
 
     }
     
@@ -112,15 +91,6 @@ class HomeViewController: UIViewController, UIGestureRecognizerDelegate {
         setupBackgroundImage()
     }
     
-    private func fetchFriendData() {
-        
-        Friends.list = []
-        conversationBug.convoVC = conversationVC
-        conversationBug.observeFriendList()
-        conversationVC.handleReload(Friends.list)
-    }
-    
-    
     private func createNameLabel() {
         nameLabel = UILabel(frame: CGRect(x: view.frame.width/2-50, y: 50, width: 100, height: 40))
         nameLabel?.textAlignment = .center
@@ -128,7 +98,6 @@ class HomeViewController: UIViewController, UIGestureRecognizerDelegate {
         nameLabel?.font = UIFont.boldSystemFont(ofSize: 16)
         nameLabel?.alpha = 0
         view.addSubview(nameLabel!)
-
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -303,22 +272,20 @@ class HomeViewController: UIViewController, UIGestureRecognizerDelegate {
 
     }
     
-    
-    
-
     @objc func starButtonAction(sender: UIButton!) {
       print("\nStar Clicked!\n")
-        
-        
-        }
-
+        tabBarController?.selectedIndex = 1
+    
+    }
+    
+    
     /*
      --------------------- Bell Button Code ---------------------
     */
     
     private func createbell(x: Int, y: Int) -> UIButton {
-        let bellButton = UIButton(frame: CGRect(x: x, y: y, width: 50, height: 50))
-        bellButton.setBackgroundImage(UIImage(named: "bell icon (google)"), for: .normal)
+        let bellButton = UIButton(frame: CGRect(x: x, y: y, width: 40, height: 40))
+        bellButton.setBackgroundImage(UIImage(named: "white_bell"), for: .normal)
         bellButton.addTarget(self, action: #selector(bellButtonAction), for: .touchUpInside)
 
         return bellButton
@@ -328,161 +295,149 @@ class HomeViewController: UIViewController, UIGestureRecognizerDelegate {
         bellClicked = !bellClicked
     
         if bellClicked {
-            createStackView()
+            createScrollView()
+            scheduledNotificationTimerWithTimeInterval()
         } else {
-            stackView.removeFromSuperview()
+            scrollView.removeFromSuperview()
         }
     }
-
     
-    private func createStackView() {
+    @objc func notificationButtonAction(sender: UIButton!) {
+        for i in 0...scrollViewButtons.count - 1 {
+            if scrollViewButtons[i] == sender {
+                print("Sending the notification to: ", friends[i].name)
+            }
+        }
+    }
+    
+    func scheduledNotificationTimerWithTimeInterval(){
+        // Scheduling timer to Call the function "updateCounting" with the interval of 1 seconds
+        for imageView in notificationImageViews {
+            if imageView.layer.borderColor == UIColor.yellow.cgColor {
+                yellowNotificationImageViews.append(imageView)
+            }
+        }
+        notificationTimer = Timer.scheduledTimer(timeInterval: 0.2, target: self, selector: #selector(changeImageAlpha), userInfo: nil, repeats: true)
         
-        stackView = UIStackView()
-        view.addSubview(stackView)
-        stackView.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        stackView.widthAnchor.constraint(equalToConstant: CGFloat((friends.count * 50) + (friends.count - 1) * 10)).isActive = true
-        stackView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        stackView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -380).isActive = true
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.spacing = 10
-        stackView.distribution = .fillEqually
-        
-        var counter = 0
+    }
 
+    @objc func changeImageAlpha(){
+        for imageView in yellowNotificationImageViews {
+            imageView.isHidden = !imageView.isHidden
+        }
+    }
+    
+    private func createScrollView() {
+        
+        scrollView = UIScrollView(frame: CGRect(x: 60, y: 50, width: 350, height: 40))
+        
+        view.addSubview(scrollView)
+        
+        scrollView.contentSize = CGSize(width: friends.count * 50, height: 40)
+
+        scrollView.backgroundColor = .clear
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+
+        var friendsRed: [Friend] = []
+        var friendsYellow: [Friend] = []
+        var friendsGreen: [Friend] = []
+        
+        for friend in friends {
+            switch friend.status {
+            case 0:
+                friendsRed.append(friend)
+            case 1:
+                friendsYellow.append(friend)
+            case 2:
+                friendsGreen.append(friend)
+            default:
+                print("Friend's status = ", friend.status)
+            }
+        }
+        
+        friends = friendsGreen + friendsYellow + friendsRed
+        var offsetX: Int = 5
         for friend in friends {
             do {
-                
                 var image = try UIImage(named: friend.image)
-                var imageView = UIImageView(frame: CGRect(x: 50, y: 50, width: 40, height: 40))
+                var imageView = UIImageView(frame: CGRect(x: offsetX, y: 0, width: 40, height: 40))
+                let button = UIButton(frame: imageView.frame)
+                button.backgroundColor = .clear
+
                 imageView.image = image
-                //Adds gesture recognizer to each stackview item to navigate to chat of the first person
-                let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.userAvatarTapped))
-                tapGesture.delegate = self
-                tapGesture.numberOfTapsRequired = 1
-                imageView.addGestureRecognizer(tapGesture)
-                imageView.isUserInteractionEnabled = true
                 imageView.layer.masksToBounds = false
                 imageView.clipsToBounds = true
-                imageView.backgroundColor = .red
-                imageView.layer.borderWidth = 1.5
+                imageView.backgroundColor = .clear
+                imageView.layer.borderWidth = 4
                 imageView.layer.cornerRadius = imageView.frame.height/2
+                
+                
                 
                 switch friend.status {
                 case 0:
                     imageView.layer.borderColor = UIColor.red.cgColor
                 case 1:
                     imageView.layer.borderColor = UIColor.yellow.cgColor
+                    button.addTarget(self, action: #selector(notificationButtonAction), for: .touchUpInside)
                 case 2:
                     imageView.layer.borderColor = UIColor.green.cgColor
+                    button.addTarget(self, action: #selector(starButtonAction), for: .touchUpInside)
                 default:
                     imageView.layer.borderColor = UIColor.white.cgColor
                 }
-                stackView.addArrangedSubview(imageView)
-                counter += 1
-                
-                //Connects ChatVC
-            
-                
-                
+                scrollView.addSubview(imageView)
+                scrollView.addSubview(button)
+                scrollViewButtons.append(button)
+                notificationImageViews.append(imageView)
                 
             } catch {
                 print("Profile image not found for " + friend.name + " when the bell was pressed")
             }
+            
+            offsetX += 50
         }
+
     }
     
     
-    @objc func userAvatarTapped() {
+    
+    //Side buttons
+    private func createMediaView() {
+        mediaView = UIStackView(frame: CGRect(x: 360, y: 350, width: 50, height: 140))
         
-        //Navigates to the first person on chat list
-        let currentFriends = Friends.list
-        let chat = conversationVC.messages[0]
-        for usr in currentFriends {
-            if usr.id == chat.determineUser() {
-                let controller = ChatVC()
-                controller.modalPresentationStyle = .fullScreen
-                controller.friend = currentFriends[0]
-                convNetwork.removeConvObservers()
-                show(controller, sender: nil)
-                break
-            }
-        }
+        view.addSubview(mediaView)
         
+        mediaView.backgroundColor = UIColor(white: 0.05, alpha: 0.7)
+        mediaView.layer.cornerRadius = mediaView.frame.height/10
+        
+        let appleMusicButton = UIButton(frame: CGRect(x: 5, y: 5, width: 40, height: 40))
+        appleMusicButton.setBackgroundImage(UIImage(named: "AppleMusic"), for: .normal)
+        appleMusicButton.layer.cornerRadius = appleMusicButton.frame.height/4
+        appleMusicButton.layer.masksToBounds = true
+        
+        let netflixButton = UIButton(frame: CGRect(x: 5, y: 50, width: 40, height: 40))
+        netflixButton.setBackgroundImage(UIImage(named: "Netflix"), for: .normal)
+        netflixButton.layer.cornerRadius = netflixButton.frame.height/4
+        netflixButton.layer.masksToBounds = true
+        
+        let spotifyButton = UIButton(frame: CGRect(x: 5, y: 95, width: 40, height: 40))
+        spotifyButton.setBackgroundImage(UIImage(named: "Spotify"), for: .normal)
+        spotifyButton.layer.cornerRadius = spotifyButton.frame.height/4
+        spotifyButton.layer.masksToBounds = true
+        
+        mediaViewButtons = [appleMusicButton, netflixButton, spotifyButton]
+
+        mediaView.addSubview(appleMusicButton)
+        mediaView.addSubview(netflixButton)
+        mediaView.addSubview(spotifyButton)
+
     }
     
     
     //End of class
 }
 
-//extend the class to allow tableview to get data from HVC
-extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-        return friends.count
-    }
-    
- 
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        
-        let imageView = UIImageView(frame: CGRect(x: 10, y: 10, width: 50, height: 50))
-        imageView.image = UIImage(named: friends[indexPath.row].image)
-        imageView.layer.borderWidth = 1
-        imageView.layer.borderColor = UIColor.black.cgColor
-        imageView.layer.masksToBounds = false
-        imageView.layer.cornerRadius = imageView.frame.height/2
-        imageView.clipsToBounds = true
-        let nameView = UITextField(frame: CGRect(x: 70, y: 10, width: cell.frame.width - 80, height: 20))
-        nameView.text = friends[indexPath.row].name
-        nameView.font = UIFont(name: nameView.font!.fontName, size: 20)
-        
-        let statusView = UITextField(frame: CGRect(x: 70, y: 40, width: cell.frame.width - 80, height: 12))
-        
-
-        
-        switch friends[indexPath.row].status {
-        case 0:
-            statusView.text = "I will not be on for a while."
-            cell.backgroundColor = .red
-            break
-        case 1:
-            statusView.text = "I will be on in 10 minutes."
-            cell.backgroundColor = .yellow
-            break
-        case 2:
-            statusView.text = "I am online and ready to chat!"
-            cell.backgroundColor = .green
-            break
-        default:
-            statusView.text = "Error getting status"
-            break;
-        }
-        
-        statusView.font = UIFont(name: statusView.font!.fontName, size: 12)
-        
-        cell.addSubview(imageView)
-        cell.addSubview(nameView)
-        cell.addSubview(statusView)
-        return cell
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        
-    }
-}
     
     
     
-    
-    
-    
-    
-
-    
-    
- 
     
