@@ -446,7 +446,7 @@ class HomeViewController: UIViewController {
     
     //Invite friends to chat
     @objc func createInviteFriendsScrollView() {
-        inviteFriendsView = UIView(frame: CGRect(x: 10, y: 50, width: view.frame.width - 20, height: 700))
+        inviteFriendsView = UIView(frame: CGRect(x: 220, y: 50, width: view.frame.width - 240, height: 700))
         view.addSubview(inviteFriendsView)
         
         inviteFriendsScrollView = UIScrollView(frame: CGRect(x: 0, y: 40, width: inviteFriendsView.frame.width, height: inviteFriendsView.frame.height - 40 - 50))
@@ -455,18 +455,26 @@ class HomeViewController: UIViewController {
         let titleTextView = UITextView(frame: CGRect(x: 0, y: 0, width: inviteFriendsView.frame.width, height: 40))
         inviteFriendsView.addSubview(titleTextView)
         
-        let inviteFriendsButton = UIButton(frame: CGRect(x: inviteFriendsView.frame.width * 2/5, y: inviteFriendsView.frame.height - 45, width: inviteFriendsView.frame.width / 5, height: 40))
+        let inviteFriendsButton = UIButton(frame: CGRect(x: inviteFriendsView.frame.width / 3, y: inviteFriendsView.frame.height - 45, width: inviteFriendsView.frame.width / 3, height: 40))
         inviteFriendsView.addSubview(inviteFriendsButton)
         
         inviteFriendsCloseButton = UIButton(frame: CGRect(x: 10, y: 10, width: 20, height: 20))
         inviteFriendsView.addSubview(inviteFriendsCloseButton)
         
+<<<<<<< Updated upstream
         inviteFriendsView.backgroundColor = UIColor(white: 0.05, alpha: 0.6)
+=======
+        inviteFriendsView.backgroundColor = UIColor(white: 0.05, alpha: 0)
+>>>>>>> Stashed changes
         inviteFriendsView.layer.cornerRadius = mediaView.frame.height/10
         
         titleTextView.text = "Invite Friends"
         titleTextView.textColor = .white
+<<<<<<< Updated upstream
         titleTextView.backgroundColor = UIColor(white: 0.05, alpha: 0.6)
+=======
+        titleTextView.backgroundColor = UIColor(white: 0.05, alpha: 0)
+>>>>>>> Stashed changes
         titleTextView.textAlignment = .center
         titleTextView.font = UIFont(name: titleTextView.font!.fontName, size: 25)
         titleTextView.isEditable = false
@@ -481,7 +489,11 @@ class HomeViewController: UIViewController {
         inviteFriendsCloseButton.addTarget(self, action: #selector(closeInviteFriendsView), for: .touchUpInside)
 
         
+<<<<<<< Updated upstream
         inviteFriendsScrollView.backgroundColor = UIColor(white: 0.05, alpha: 0.6)
+=======
+        inviteFriendsScrollView.backgroundColor = UIColor(white: 0.05, alpha: 0)
+>>>>>>> Stashed changes
         inviteFriendsScrollView.layer.cornerRadius = mediaView.frame.height/10
         inviteFriendsScrollView.contentSize = CGSize(width: inviteFriendsScrollView.frame.width, height: CGFloat(friends.count * 55))
         
@@ -492,7 +504,7 @@ class HomeViewController: UIViewController {
             inviteFriendsScrollView.addSubview(friendView)
             offsetY += Int(friendView.frame.height + 10)
             
-            friendView.backgroundColor = UIColor(with: "#3B0087")
+            friendView.backgroundColor = UIColor(white: 0.05, alpha: 0.5)
             friendView.layer.cornerRadius = friendView.frame.height/4
             
             var image = try UIImage(named: friend.image)
