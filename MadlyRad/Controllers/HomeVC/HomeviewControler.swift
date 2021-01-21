@@ -334,7 +334,7 @@ class HomeViewController: UIViewController {
                 yellowNotificationImageViews.append(imageView)
             }
         }
-        notificationTimer = Timer.scheduledTimer(timeInterval: 0.2, target: self, selector: #selector(changeImageAlpha), userInfo: nil, repeats: true)
+        notificationTimer = Timer.scheduledTimer(timeInterval: 0.8, target: self, selector: #selector(changeImageAlpha), userInfo: nil, repeats: true)
         
     }
 
