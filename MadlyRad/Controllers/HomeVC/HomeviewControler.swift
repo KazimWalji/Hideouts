@@ -47,16 +47,21 @@ class HomeViewController: UIViewController {
     private var inviteFriendsScrollViewSubviews: [UIView] = []
     private var inviteFriendsCloseButton: UIButton = UIButton()
     private var inviteFriendsUIButton: UIButton = UIButton()
-    private var inviteFriendsUIButtonClicked: Bool = false
+    private var inviteFriendsUIButtonClicked: Bool = true
+    private var inviteFriendsUIPersonalButtons: [UIButton] = []
+    private var inviteFriendsUIPersonalViews: [UIView] = []
+    private var selectedFriends: [Friend] = []
+
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupFriends()
-        setupUI()
         
         friends = friends + friends + friends
+        setupUI()
+
         
         NotificationCenter.default.addObserver(
             forName: UIApplication.userDidTakeScreenshotNotification,
@@ -92,6 +97,8 @@ class HomeViewController: UIViewController {
         createMediaView()
         
         createInviteFriendsUIButton()
+        
+        createInviteFriendsScrollView()
 
     }
     
@@ -446,32 +453,34 @@ class HomeViewController: UIViewController {
     
     //Invite friends to chat
     @objc func createInviteFriendsScrollView() {
-        inviteFriendsView = UIView(frame: CGRect(x: 10, y: 50, width: view.frame.width - 20, height: 700))
+        inviteFriendsView = UIView(frame: CGRect(x: 220, y: 50, width: view.frame.width - 240, height: 700))
         view.addSubview(inviteFriendsView)
         
         inviteFriendsScrollView = UIScrollView(frame: CGRect(x: 0, y: 40, width: inviteFriendsView.frame.width, height: inviteFriendsView.frame.height - 40 - 50))
         inviteFriendsView.addSubview(inviteFriendsScrollView)
         
-        let titleTextView = UITextView(frame: CGRect(x: 0, y: 0, width: inviteFriendsView.frame.width, height: 40))
-        inviteFriendsView.addSubview(titleTextView)
+        let titleTextView = UITextView(frame: CGRect(x: 30, y: 0, width: inviteFriendsView.frame.width - 60, height: 40))
+//        inviteFriendsView.addSubview(titleTextView)
         
-        let inviteFriendsButton = UIButton(frame: CGRect(x: inviteFriendsView.frame.width * 2/5, y: inviteFriendsView.frame.height - 45, width: inviteFriendsView.frame.width / 5, height: 40))
+        let inviteFriendsButton = UIButton(frame: CGRect(x: inviteFriendsView.frame.width / 3, y: inviteFriendsView.frame.height - 45, width: inviteFriendsView.frame.width / 3, height: 40))
         inviteFriendsView.addSubview(inviteFriendsButton)
         
-        inviteFriendsCloseButton = UIButton(frame: CGRect(x: 10, y: 10, width: 20, height: 20))
+        inviteFriendsCloseButton = UIButton(frame: CGRect(x: 15, y: 20, width: 15, height: 15))
         inviteFriendsView.addSubview(inviteFriendsCloseButton)
         
-        inviteFriendsView.backgroundColor = UIColor(white: 0.05, alpha: 1)
+        inviteFriendsView.backgroundColor = UIColor(white: 0.05, alpha: 0.6)
+        inviteFriendsView.backgroundColor = UIColor(white: 0.05, alpha: 0)
         inviteFriendsView.layer.cornerRadius = mediaView.frame.height/10
         
         titleTextView.text = "Invite Friends"
         titleTextView.textColor = .white
-        titleTextView.backgroundColor = UIColor(white: 0.05, alpha: 1)
+        titleTextView.backgroundColor = UIColor(white: 0.05, alpha: 0)
         titleTextView.textAlignment = .center
-        titleTextView.font = UIFont(name: titleTextView.font!.fontName, size: 25)
+        titleTextView.font = UIFont(name: titleTextView.font!.fontName, size: 14)
         titleTextView.isEditable = false
         
-        inviteFriendsButton.backgroundColor = UIColor(with: "#3B0087")
+//        inviteFriendsButton.backgroundColor = UIColor(with: "#3B0087")
+        inviteFriendsButton.backgroundColor = UIColor(white: 0.05, alpha: 0.6)
         inviteFriendsButton.setTitle("Invite", for: .normal)
         inviteFriendsButton.setTitleColor(.white, for: .normal)
         inviteFriendsButton.addTarget(self, action: #selector(inviteFriends), for: .touchUpInside)
@@ -481,18 +490,18 @@ class HomeViewController: UIViewController {
         inviteFriendsCloseButton.addTarget(self, action: #selector(closeInviteFriendsView), for: .touchUpInside)
 
         
-        inviteFriendsScrollView.backgroundColor = UIColor(white: 0.05, alpha: 1)
+        inviteFriendsScrollView.backgroundColor = UIColor(white: 0.05, alpha: 0)
         inviteFriendsScrollView.layer.cornerRadius = mediaView.frame.height/10
         inviteFriendsScrollView.contentSize = CGSize(width: inviteFriendsScrollView.frame.width, height: CGFloat(friends.count * 55))
         
         
         var offsetY = 5
         for friend in friends {
-            let friendView = UIView(frame: CGRect(x: 10, y: offsetY, width: Int(inviteFriendsScrollView.frame.width - 10), height: 50))
+            let friendView = UIView(frame: CGRect(x: 10, y: offsetY, width: Int(inviteFriendsScrollView.frame.width - 20), height: 50))
             inviteFriendsScrollView.addSubview(friendView)
             offsetY += Int(friendView.frame.height + 10)
             
-            friendView.backgroundColor = UIColor(with: "#3B0087")
+            friendView.backgroundColor = UIColor(white: 0.05, alpha: 0.5)
             friendView.layer.cornerRadius = friendView.frame.height/4
             
             var image = try UIImage(named: friend.image)
@@ -510,9 +519,17 @@ class HomeViewController: UIViewController {
             textView.textColor = .white
             textView.backgroundColor = .clear
             textView.font = UIFont(name: textView.font!.fontName, size: 18)
+            textView.isEditable = false
+            
+            var button = UIButton(frame: friendView.frame)
+            button.backgroundColor = .clear
+            button.addTarget(self, action: #selector(friendSelected), for: .touchUpInside)
+            inviteFriendsUIPersonalButtons.append(button)
             
             friendView.addSubview(imageView)
             friendView.addSubview(textView)
+            inviteFriendsScrollView.addSubview(button)
+            inviteFriendsUIPersonalViews.append(friendView)
             
             
         }
@@ -528,12 +545,35 @@ class HomeViewController: UIViewController {
     }
     
     @objc func inviteFriends() {
-        print("Inviting friends")
+        print("Inviting ", selectedFriends.count, " friends!")
+        for friend in selectedFriends {
+            print(friend.name)
+        }
+        closeInviteFriendsView()
     }
     
     @objc func closeInviteFriendsView() {
         print("Closing InviteFriendsView")
         inviteFriendsView.removeFromSuperview()
+    }
+    
+    @objc func friendSelected(sender: UIButton) {
+        for i in 0...inviteFriendsUIPersonalButtons.count - 1 {
+            if sender == inviteFriendsUIPersonalButtons[i] {
+                let friend = friends[i]
+                let friendView = inviteFriendsUIPersonalViews[i]
+                if friendView.backgroundColor == UIColor(white: 0.05, alpha: 0.5) {
+                    friendView.backgroundColor = UIColor(white: 0.45, alpha: 0.5)
+                    selectedFriends.append(friend)
+                } else {
+                    friendView.backgroundColor = UIColor(white: 0.05, alpha: 0.5)
+                    for i in 0...selectedFriends.count - 1 {
+                        if selectedFriends[i].friendListNumber == friend.friendListNumber {
+                            selectedFriends.remove(at: i)
+                        }
+                    }                }
+            }
+        }
     }
     
     
