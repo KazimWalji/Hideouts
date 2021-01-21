@@ -221,6 +221,7 @@ class HomeViewController: UIViewController {
             for friend in friends {
                 if friend.starButton == button {
                     nameLabel?.text = friend.name
+                    nameLabel?.font = UIFont(name: (nameLabel?.font.fontName)!, size: 18)
                     nameLabel?.center.x = (button?.center.x)!
                     nameLabel?.center.y = (button?.center.y)! - 30
                 }
