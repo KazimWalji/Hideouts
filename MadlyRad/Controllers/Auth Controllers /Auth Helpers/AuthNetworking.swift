@@ -53,8 +53,7 @@ class AuthNetworking {
                   let isTyping = snapshot.get(.isTyping) as? Bool,
                   let lastLogin = (snapshot.get(.lastLogin) as? Timestamp)?.dateValue(),
                   let deviceToken = Messaging.messaging().fcmToken,
-                  let firstName = snapshot.get(.firstName) as? String,
-                  let lastName = snapshot.get(.lastName) as? String,
+                  let name = snapshot.get(.name) as? String,
                   let pronouns = snapshot.get(.pronouns) as? String,
                   let profileImageURL = snapshot.get(.profileImageURL) as? String,
                   let friendRequestCode = snapshot.get(.friendRequestCode) as? String,
@@ -81,8 +80,7 @@ class AuthNetworking {
                                         isTyping: isTyping,
                                         lastLogin: lastLogin,
                                         deviceToken: deviceToken,
-                                        firstName: firstName,
-                                        lastName: lastName,
+                                        name: name,
                                         pronouns: pronouns,
                                         profileImageURL: profileImageURL,
                                         friendRequestCode: friendRequestCode,
@@ -120,6 +118,23 @@ class AuthNetworking {
     // MARK: SIGN UP USER METHOD
     
     func registerUser(_ name: String, _ email: String, _ password: String, _ profileImage: UIImage?, _ userID: String,_ pronoun:String, completion: @escaping (_ error: String?) -> Void) {
+        func newFriendRequestCode() -> String {
+            let numDigits = 6
+            
+            func randomCodeCharacter() -> Character? {
+                return "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789".randomElement()
+            }
+            
+            var code = ""
+            while code.count < numDigits {
+                if let randomCharacter = randomCodeCharacter() {
+                    code.append(randomCharacter)
+                }
+            }
+            
+            return code
+        }
+        
         networkingLoadingIndicator.startLoadingAnimation()
         Auth.auth().createUser(withEmail: email, password: password) { (dataResult, error) in
             if let error = error {
@@ -137,27 +152,26 @@ class AuthNetworking {
                     return
                 }
                 guard let url = url else { return }
-                let values: [String: Any] = ["name": name, "email": email, "profileImage": url.absoluteString, "UserID": UserID,"pronoun":pronoun]
-                self.registerUserHandler(uid, values) { (error) in
-                    if let error = error {
-                        completion(error.localizedDescription)
-                        return
-                    } else {
-                        completion(nil)
-                    }
-                }
+                
+                let user = MRUser(userID: userID,
+                                  email: email,
+                                  isOnline: true,
+                                  isTyping: false,
+                                  lastLogin: nil,
+                                  deviceToken: nil,
+                                  name: name,
+                                  pronouns: pronoun,
+                                  profileImageURL: url.absoluteString,
+                                  friendRequestCode: newFriendRequestCode(),
+                                  smileNotes: [])
+                self.addUserToDatabase(user)
+                completion(nil)
             }
         }
     }
     
-    // ---------------------------------------------------------------------------------------------------------------------------------------------------- //
-    
-    private func registerUserHandler(_ uid: String, _ values: [String:Any], completion: @escaping (_ error: Error?) -> Void) {
-        let usersRef = Database.database().reference().child("users").child(uid)
-        usersRef.updateChildValues(values) { (error, dataRef) in
-            completion(error)
-            self.networkingLoadingIndicator.endLoadingAnimation()
-        }
+    private func addUserToDatabase(_ user: MRUser) {
+        Firestore.firestore().collection(.dev1).document(.users).collection(.users).addDocument(data: user.dictionary)
     }
     
     // ---------------------------------------------------------------------------------------------------------------------------------------------------- //

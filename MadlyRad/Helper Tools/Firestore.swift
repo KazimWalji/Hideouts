@@ -18,8 +18,7 @@ enum FirestorePath: String {
     case isTyping
     case lastLogin
     case deviceToken
-    case firstName
-    case lastName
+    case name
     case pronouns
     case profileImageURL
     case friendRequestCode

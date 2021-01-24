@@ -14,7 +14,6 @@ class SelectProfileImageVC: UIViewController, UIImagePickerControllerDelegate, U
     var UserID: String!
     var pronoun: String!
     var mainController: UIViewController!
-
     
     var authNetworking: AuthNetworking!
     var selectedImage: UIImage!
@@ -141,12 +140,14 @@ class SelectProfileImageVC: UIViewController, UIImagePickerControllerDelegate, U
     }
     
     private func goToDatePicker() {
-            let storyBoard : UIStoryboard = UIStoryboard(name: "HomeVC", bundle:nil)
-            let nextViewController = storyBoard.instantiateViewController(withIdentifier: "DatePicker") as! DatePicker
-            nextViewController.modalPresentationStyle = .fullScreen
-            //     let controller = WelcomeVC()
-            //controller.modalPresentationStyle = .fullScreen
-            self.mainController.present(nextViewController, animated: false, completion: nil)
+        let storyBoard : UIStoryboard = UIStoryboard(name: "HomeVC", bundle:nil)
+        let nextViewController = storyBoard.instantiateViewController(withIdentifier: "DatePicker") as! DatePicker
+        nextViewController.modalPresentationStyle = .fullScreen
+        //     let controller = WelcomeVC()
+        //controller.modalPresentationStyle = .fullScreen
+        
+        // TODO: make sure the homeVC is added to the loginVC, not the end of registration
+        present(nextViewController, animated: false, completion: nil)
     }
     
     // ---------------------------------------------------------------------------------------------------------------------------------------------------- //

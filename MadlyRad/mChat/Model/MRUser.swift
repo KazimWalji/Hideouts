@@ -17,13 +17,13 @@ struct MRUser: Encodable {
     let isOnline: Bool
     let isTyping: Bool
     let lastLogin: Date?
-    let deviceToken: String
-    let firstName: String
-    let lastName: String
+    let deviceToken: String?
+    let name: String
     let pronouns: String
-    let profileImageURL: String
+    let profileImageURL: String?
     let friendRequestCode: String
     let smileNotes: [SmileNote]
+    
 }
 
 struct SmileNote: Encodable {

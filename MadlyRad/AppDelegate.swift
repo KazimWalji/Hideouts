@@ -49,9 +49,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // ---------------------------------------------------------------------------------------------------------------------------------------------------- //
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
-        
-
-        
         Giphy.configure(apiKey: "LrJf34hRudUjbHHum4ShNwUGxm2UXjfa")
         ScreenShieldKit.setLicenseKey("MEYCIQDb+JhAa/gyMEcMUq2/zE+Vk3AWPF5MFszcWAf+4t6FEQIhAMw2u5LTiIehRHC3hBxYIEZNHeIBmxcjZWMeognRZjpk")
         
