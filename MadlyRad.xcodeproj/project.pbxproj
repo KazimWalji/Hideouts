@@ -8,10 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		0798438325A2972E004BBAC8 /* Star Fractal Noise.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 0798438225A2972E004BBAC8 /* Star Fractal Noise.mp4 */; };
-		07E033A225B3734A00755D3D /* Star Animation.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 07E033A125B3734A00755D3D /* Star Animation.mp4 */; };
-		07E6332E25AB8E2C00F2F902 /* Firestore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E6332D25AB8E2C00F2F902 /* Firestore.swift */; };
-		07E6335825AB953000F2F902 /* MRUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E6335725AB953000F2F902 /* MRUser.swift */; };
-		07E6335A25AB98F200F2F902 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E6335925AB98F200F2F902 /* Message.swift */; };
 		0FD9A3632558F83500877373 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB5E972524F760CE00FAEA6B /* StoreKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		0FD9A3652558F83C00877373 /* Pods_MadlyRad.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4AE685ADFD2349864470B8A3 /* Pods_MadlyRad.framework */; };
 		0FD9A3F5255CCCE700877373 /* ScreenShieldKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0FD9A2B1255390D600877373 /* ScreenShieldKit.xcframework */; };
@@ -185,14 +181,11 @@
 /* Begin PBXFileReference section */
 		0046A90C4A3E19B903C95D5D /* Pods-MadlyRad.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MadlyRad.debug.xcconfig"; path = "Target Support Files/Pods-MadlyRad/Pods-MadlyRad.debug.xcconfig"; sourceTree = "<group>"; };
 		0798438225A2972E004BBAC8 /* Star Fractal Noise.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Star Fractal Noise.mp4"; sourceTree = "<group>"; };
-		07E033A125B3734A00755D3D /* Star Animation.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Star Animation.mp4"; sourceTree = "<group>"; };
-		07E6332D25AB8E2C00F2F902 /* Firestore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Firestore.swift; sourceTree = "<group>"; };
-		07E6335725AB953000F2F902 /* MRUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MRUser.swift; sourceTree = "<group>"; };
-		07E6335925AB98F200F2F902 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		0FD9A2B1255390D600877373 /* ScreenShieldKit.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = ScreenShieldKit.xcframework; path = MadlyRad/ScreenShieldKit.xcframework; sourceTree = "<group>"; };
 		13A6FEA61B719E28D3D00C6A /* Pods-MadlyRad.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MadlyRad.release.xcconfig"; path = "Target Support Files/Pods-MadlyRad/Pods-MadlyRad.release.xcconfig"; sourceTree = "<group>"; };
 		4AE685ADFD2349864470B8A3 /* Pods_MadlyRad.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MadlyRad.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7A1F2A6925AE3B980054DBB9 /* Friend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Friend.swift; sourceTree = "<group>"; };
+		8F03D0FF25B2780D00FBB32D /* Star Animation.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Star Animation.mp4"; sourceTree = "<group>"; };
 		8F11A5A42565803900F5ECD9 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8F11A5A62565808D00F5ECD9 /* ChatVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatVC.swift; sourceTree = "<group>"; };
 		8F11A5A8256580A100F5ECD9 /* ConverstaionsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConverstaionsCell.swift; sourceTree = "<group>"; };
@@ -367,7 +360,7 @@
 			isa = PBXGroup;
 			children = (
 				0798438225A2972E004BBAC8 /* Star Fractal Noise.mp4 */,
-				07E033A125B3734A00755D3D /* Star Animation.mp4 */,
+				8F03D0FF25B2780D00FBB32D /* Star Animation.mp4 */,
 			);
 			path = Videos;
 			sourceTree = "<group>";
@@ -442,8 +435,6 @@
 				EB386E5C24F9704C00865A44 /* ThreadDataType.swift */,
 				EB3A636C24E1469800F82E93 /* WelcomeModel.swift */,
 				EB386E5E24F9707C00865A44 /* FirebaseData.swift */,
-				07E6335725AB953000F2F902 /* MRUser.swift */,
-				07E6335925AB98F200F2F902 /* Message.swift */,
 			);
 			name = Model;
 			path = mChat/Model;
@@ -457,7 +448,6 @@
 				EB3A636F24E1469800F82E93 /* LoadImage + Extension.swift */,
 				EB3A637024E1469800F82E93 /* Calendar + Extension.swift */,
 				EB3A637124E1469800F82E93 /* NavigationItem + Extension.swift */,
-				07E6332D25AB8E2C00F2F902 /* Firestore.swift */,
 			);
 			path = "Helper Tools";
 			sourceTree = "<group>";
@@ -921,7 +911,6 @@
 				EB3A636124E1405D00F82E93 /* GoogleService-Info.plist in Resources */,
 				EB3A648024E1469A00F82E93 /* chatTyping.json in Resources */,
 				EBCD2AD824C5141E00EC5F97 /* Certificates.p12 in Resources */,
-				07E033A225B3734A00755D3D /* Star Animation.mp4 in Resources */,
 				EB3A647624E1469A00F82E93 /* Assets.xcassets in Resources */,
 				EB288C0D253505A500F150B0 /* InfluencerDetailViewController.xib in Resources */,
 				EB288C0F253505A500F150B0 /* Influencers.xcassets in Resources */,
@@ -1006,7 +995,6 @@
 				EB15287D24F240480026BEF3 /* gifextention.swift in Sources */,
 				EB3A644124E1469A00F82E93 /* HandleSignInViewDelegate + Extension.swift in Sources */,
 				EB3A644C24E1469A00F82E93 /* ContactsVC.swift in Sources */,
-				07E6332E25AB8E2C00F2F902 /* Firestore.swift in Sources */,
 				EB3A644424E1469A00F82E93 /* SignInVC.swift in Sources */,
 				EB3A644024E1469A00F82E93 /* AuthKeyboardHandler.swift in Sources */,
 				FAB28F8F2583D971009AE1C3 /* ChatCell.swift in Sources */,
@@ -1014,7 +1002,6 @@
 				EB3A645424E1469A00F82E93 /* FriendRequestNetworking.swift in Sources */,
 				EB3A643B24E1469A00F82E93 /* SignInView.swift in Sources */,
 				EB3A646C24E1469A00F82E93 /* ChatNetworking.swift in Sources */,
-				07E6335A25AB98F200F2F902 /* Message.swift in Sources */,
 				EBCB19F724FE13BA006FF336 /* UploadPhotosPopup.swift in Sources */,
 				EBD1A54924E201D900A120F2 /* ResultVC.swift in Sources */,
 				EB3A645C24E1469A00F82E93 /* NewConvSelectedProtocol + Extension.swift in Sources */,
@@ -1063,7 +1050,6 @@
 				EB288C0E253505A500F150B0 /* InfluencersPopupViewController.swift in Sources */,
 				EB3A640624E1469A00F82E93 /* NetworkingLoadingIndicator.swift in Sources */,
 				EB3042D025036F9000FAD748 /* HideChatController.swift in Sources */,
-				07E6335825AB953000F2F902 /* MRUser.swift in Sources */,
 				8FF0133F25409903000B8A93 /* gifVC.swift in Sources */,
 				EB3A641924E1469A00F82E93 /* WelcomeVC.swift in Sources */,
 				FA7739CC256D7EB20000DA93 /* ChatBubblesAppearenceCell.swift in Sources */,
@@ -1255,14 +1241,14 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 50;
-				DEVELOPMENT_TEAM = 647BCL2NMU;
+				DEVELOPMENT_TEAM = 7Z64AR52G7;
 				INFOPLIST_FILE = MadlyRad/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.02;
-				PRODUCT_BUNDLE_IDENTIFIER = com.RobRoe.Hideouts1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.RobRoe.Hideouts;
 				PRODUCT_NAME = Hideouts;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_ENABLE_BATCH_MODE = NO;
@@ -1280,14 +1266,14 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 50;
-				DEVELOPMENT_TEAM = 647BCL2NMU;
+				DEVELOPMENT_TEAM = 7Z64AR52G7;
 				INFOPLIST_FILE = MadlyRad/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.02;
-				PRODUCT_BUNDLE_IDENTIFIER = com.RobRoe.Hideouts1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.RobRoe.Hideouts;
 				PRODUCT_NAME = Hideouts;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_ENABLE_BATCH_MODE = NO;

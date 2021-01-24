@@ -28,17 +28,40 @@ class HomeViewController: UIViewController {
     private var status = [2, 1, 0, 2, 0]
     private var images = ["Dinosaur", "hammer", "normalGopher", "Dinosaur", "Dinosaur"]
     
+    private var notificationTimer = Timer()
+    private var notificationImageViews: [UIImageView] = []
+    private var yellowNotificationImageViews: [UIImageView] = []
+
+    
     //temporary data for Stars
     private var starCoords: [[Int]] = [ [200, 75], [70,120], [180,230], [350, 250], [50,350] ]
     
-    private var stackView: UIStackView = UIStackView()
+    private var mediaView: UIView = UIView()
+    private var mediaViewButtons: [UIButton] = []
+    
+    private var notificationScrollView: UIScrollView = UIScrollView()
+    private var notificationScrollViewButtons: [UIButton] = []
+    
+    private var inviteFriendsView: UIView = UIView()
+    private var inviteFriendsScrollView: UIScrollView = UIScrollView()
+    private var inviteFriendsScrollViewSubviews: [UIView] = []
+    private var inviteFriendsCloseButton: UIButton = UIButton()
+    private var inviteFriendsUIButton: UIButton = UIButton()
+    private var inviteFriendsUIButtonClicked: Bool = true
+    private var inviteFriendsUIPersonalButtons: [UIButton] = []
+    private var inviteFriendsUIPersonalViews: [UIView] = []
+    private var selectedFriends: [Friend] = []
+
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupFriends()
         
+        friends = friends + friends + friends
         setupUI()
+
         
         NotificationCenter.default.addObserver(
             forName: UIApplication.userDidTakeScreenshotNotification,
@@ -70,6 +93,12 @@ class HomeViewController: UIViewController {
         view.addSubview(bell)
         
         createNameLabel()
+        
+        createMediaView()
+        
+        createInviteFriendsUIButton()
+        
+        createInviteFriendsScrollView()
 
     }
     
@@ -271,8 +300,8 @@ class HomeViewController: UIViewController {
     */
     
     private func createbell(x: Int, y: Int) -> UIButton {
-        let bellButton = UIButton(frame: CGRect(x: x, y: y, width: 50, height: 50))
-        bellButton.setBackgroundImage(UIImage(named: "bell icon (google)"), for: .normal)
+        let bellButton = UIButton(frame: CGRect(x: x, y: y, width: 40, height: 40))
+        bellButton.setBackgroundImage(UIImage(named: "white_bell"), for: .normal)
         bellButton.addTarget(self, action: #selector(bellButtonAction), for: .touchUpInside)
 
         return bellButton
@@ -282,114 +311,274 @@ class HomeViewController: UIViewController {
         bellClicked = !bellClicked
     
         if bellClicked {
-            createStackView()
+            createNotificationScrollView()
+            scheduledNotificationTimerWithTimeInterval()
         } else {
-            stackView.removeFromSuperview()
+            notificationScrollView.removeFromSuperview()
         }
     }
     
-    private func createStackView() {
+    @objc func notificationButtonAction(sender: UIButton!) {
+        for i in 0...notificationScrollViewButtons.count - 1 {
+            if notificationScrollViewButtons[i] == sender {
+                print("Sending the notification to: ", friends[i].name)
+            }
+        }
+    }
+    
+    func scheduledNotificationTimerWithTimeInterval(){
+        // Scheduling timer to Call the function "updateCounting" with the interval of 1 seconds
+        for imageView in notificationImageViews {
+            if imageView.layer.borderColor == UIColor.yellow.cgColor {
+                yellowNotificationImageViews.append(imageView)
+            }
+        }
+        notificationTimer = Timer.scheduledTimer(timeInterval: 0.2, target: self, selector: #selector(changeImageAlpha), userInfo: nil, repeats: true)
         
-        stackView = UIStackView()
-        view.addSubview(stackView)
-        stackView.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        stackView.widthAnchor.constraint(equalToConstant: CGFloat((friends.count * 50) + (friends.count - 1) * 10)).isActive = true
-        stackView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        stackView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -380).isActive = true
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.spacing = 10
-        stackView.distribution = .fillEqually
+    }
 
+    @objc func changeImageAlpha(){
+        for imageView in yellowNotificationImageViews {
+            imageView.isHidden = !imageView.isHidden
+        }
+    }
+    
+    private func createNotificationScrollView() {
+        
+        notificationScrollView = UIScrollView(frame: CGRect(x: 60, y: 50, width: 350, height: 40))
+        
+        view.addSubview(notificationScrollView)
+        
+        notificationScrollView.contentSize = CGSize(width: friends.count * 50, height: 40)
+
+        notificationScrollView.backgroundColor = .clear
+        notificationScrollView.translatesAutoresizingMaskIntoConstraints = false
+
+        var friendsRed: [Friend] = []
+        var friendsYellow: [Friend] = []
+        var friendsGreen: [Friend] = []
+        
+        for friend in friends {
+            switch friend.status {
+            case 0:
+                friendsRed.append(friend)
+            case 1:
+                friendsYellow.append(friend)
+            case 2:
+                friendsGreen.append(friend)
+            default:
+                print("Friend's status = ", friend.status)
+            }
+        }
+        
+        friends = friendsGreen + friendsYellow + friendsRed
+        var offsetX: Int = 5
         for friend in friends {
             do {
                 var image = try UIImage(named: friend.image)
-                var imageView = UIImageView(frame: CGRect(x: 50, y: 50, width: 40, height: 40))
+                var imageView = UIImageView(frame: CGRect(x: offsetX, y: 0, width: 40, height: 40))
+                let button = UIButton(frame: imageView.frame)
+                button.backgroundColor = .clear
+
                 imageView.image = image
                 imageView.layer.masksToBounds = false
                 imageView.clipsToBounds = true
-                imageView.backgroundColor = .red
-                imageView.layer.borderWidth = 1.5
+                imageView.backgroundColor = .clear
+                imageView.layer.borderWidth = 4
                 imageView.layer.cornerRadius = imageView.frame.height/2
+                
+                
+                
                 switch friend.status {
                 case 0:
                     imageView.layer.borderColor = UIColor.red.cgColor
                 case 1:
                     imageView.layer.borderColor = UIColor.yellow.cgColor
+                    button.addTarget(self, action: #selector(notificationButtonAction), for: .touchUpInside)
                 case 2:
                     imageView.layer.borderColor = UIColor.green.cgColor
+                    button.addTarget(self, action: #selector(starButtonAction), for: .touchUpInside)
                 default:
                     imageView.layer.borderColor = UIColor.white.cgColor
                 }
-                stackView.addArrangedSubview(imageView)
+                notificationScrollView.addSubview(imageView)
+                notificationScrollView.addSubview(button)
+                notificationScrollViewButtons.append(button)
+                notificationImageViews.append(imageView)
                 
             } catch {
                 print("Profile image not found for " + friend.name + " when the bell was pressed")
             }
+            
+            offsetX += 50
+        }
+
+    }
+    
+    
+    
+    //Side buttons
+    private func createMediaView() {
+        mediaView = UIStackView(frame: CGRect(x: 360, y: 350, width: 50, height: 140))
+        
+        view.addSubview(mediaView)
+        
+        mediaView.backgroundColor = UIColor(white: 0.05, alpha: 0.7)
+        mediaView.layer.cornerRadius = mediaView.frame.height/10
+        
+        let appleMusicButton = UIButton(frame: CGRect(x: 5, y: 5, width: 40, height: 40))
+        appleMusicButton.setBackgroundImage(UIImage(named: "AppleMusic"), for: .normal)
+        appleMusicButton.layer.cornerRadius = appleMusicButton.frame.height/4
+        appleMusicButton.layer.masksToBounds = true
+        
+        let netflixButton = UIButton(frame: CGRect(x: 5, y: 50, width: 40, height: 40))
+        netflixButton.setBackgroundImage(UIImage(named: "Netflix"), for: .normal)
+        netflixButton.layer.cornerRadius = netflixButton.frame.height/4
+        netflixButton.layer.masksToBounds = true
+        
+        let spotifyButton = UIButton(frame: CGRect(x: 5, y: 95, width: 40, height: 40))
+        spotifyButton.setBackgroundImage(UIImage(named: "Spotify"), for: .normal)
+        spotifyButton.layer.cornerRadius = spotifyButton.frame.height/4
+        spotifyButton.layer.masksToBounds = true
+        
+        mediaViewButtons = [appleMusicButton, netflixButton, spotifyButton]
+
+        mediaView.addSubview(appleMusicButton)
+        mediaView.addSubview(netflixButton)
+        mediaView.addSubview(spotifyButton)
+
+    }
+    
+    
+    
+    //Invite friends to chat
+    @objc func createInviteFriendsScrollView() {
+        inviteFriendsView = UIView(frame: CGRect(x: 220, y: 50, width: view.frame.width - 240, height: 700))
+        view.addSubview(inviteFriendsView)
+        
+        inviteFriendsScrollView = UIScrollView(frame: CGRect(x: 0, y: 40, width: inviteFriendsView.frame.width, height: inviteFriendsView.frame.height - 40 - 50))
+        inviteFriendsView.addSubview(inviteFriendsScrollView)
+        
+        let titleTextView = UITextView(frame: CGRect(x: 30, y: 0, width: inviteFriendsView.frame.width - 60, height: 40))
+//        inviteFriendsView.addSubview(titleTextView)
+        
+        let inviteFriendsButton = UIButton(frame: CGRect(x: inviteFriendsView.frame.width / 3, y: inviteFriendsView.frame.height - 45, width: inviteFriendsView.frame.width / 3, height: 40))
+        inviteFriendsView.addSubview(inviteFriendsButton)
+        
+        inviteFriendsCloseButton = UIButton(frame: CGRect(x: 15, y: 20, width: 15, height: 15))
+        inviteFriendsView.addSubview(inviteFriendsCloseButton)
+        
+        inviteFriendsView.backgroundColor = UIColor(white: 0.05, alpha: 0.6)
+        inviteFriendsView.backgroundColor = UIColor(white: 0.05, alpha: 0)
+        inviteFriendsView.layer.cornerRadius = mediaView.frame.height/10
+        
+        titleTextView.text = "Invite Friends"
+        titleTextView.textColor = .white
+        titleTextView.backgroundColor = UIColor(white: 0.05, alpha: 0)
+        titleTextView.textAlignment = .center
+        titleTextView.font = UIFont(name: titleTextView.font!.fontName, size: 14)
+        titleTextView.isEditable = false
+        
+//        inviteFriendsButton.backgroundColor = UIColor(with: "#3B0087")
+        inviteFriendsButton.backgroundColor = UIColor(white: 0.05, alpha: 0.6)
+        inviteFriendsButton.setTitle("Invite", for: .normal)
+        inviteFriendsButton.setTitleColor(.white, for: .normal)
+        inviteFriendsButton.addTarget(self, action: #selector(inviteFriends), for: .touchUpInside)
+        inviteFriendsButton.layer.cornerRadius = inviteFriendsButton.frame.height/2
+        
+        inviteFriendsCloseButton.setImage(UIImage(named: "close"), for: .normal)
+        inviteFriendsCloseButton.addTarget(self, action: #selector(closeInviteFriendsView), for: .touchUpInside)
+
+        
+        inviteFriendsScrollView.backgroundColor = UIColor(white: 0.05, alpha: 0)
+        inviteFriendsScrollView.layer.cornerRadius = mediaView.frame.height/10
+        inviteFriendsScrollView.contentSize = CGSize(width: inviteFriendsScrollView.frame.width, height: CGFloat(friends.count * 55))
+        
+        
+        var offsetY = 5
+        for friend in friends {
+            let friendView = UIView(frame: CGRect(x: 10, y: offsetY, width: Int(inviteFriendsScrollView.frame.width - 20), height: 50))
+            inviteFriendsScrollView.addSubview(friendView)
+            offsetY += Int(friendView.frame.height + 10)
+            
+            friendView.backgroundColor = UIColor(white: 0.05, alpha: 0.5)
+            friendView.layer.cornerRadius = friendView.frame.height/4
+            
+            var image = try UIImage(named: friend.image)
+            var imageView = UIImageView(frame: CGRect(x: 5, y: 5, width: 40, height: 40))
+
+            imageView.image = image
+            imageView.layer.masksToBounds = false
+            imageView.clipsToBounds = true
+            imageView.backgroundColor = .clear
+            imageView.layer.cornerRadius = imageView.frame.height/2
+            
+            var textView = UITextView(frame: CGRect(x: 50, y: 5, width: 150, height: 40))
+            textView.text = friend.name
+            textView.textAlignment = .left
+            textView.textColor = .white
+            textView.backgroundColor = .clear
+            textView.font = UIFont(name: textView.font!.fontName, size: 18)
+            textView.isEditable = false
+            
+            var button = UIButton(frame: friendView.frame)
+            button.backgroundColor = .clear
+            button.addTarget(self, action: #selector(friendSelected), for: .touchUpInside)
+            inviteFriendsUIPersonalButtons.append(button)
+            
+            friendView.addSubview(imageView)
+            friendView.addSubview(textView)
+            inviteFriendsScrollView.addSubview(button)
+            inviteFriendsUIPersonalViews.append(friendView)
+            
+            
+        }
+
+        
+    }
+    
+    private func createInviteFriendsUIButton() {
+        inviteFriendsUIButton = UIButton(frame: CGRect(x: view.frame.width - 60, y: 50, width: 50, height: 50))
+        inviteFriendsUIButton.setImage(UIImage(named: "ic_add"), for: .normal)
+        inviteFriendsUIButton.addTarget(self, action: #selector(createInviteFriendsScrollView), for: .touchUpInside)
+        view.addSubview(inviteFriendsUIButton)
+    }
+    
+    @objc func inviteFriends() {
+        print("Inviting ", selectedFriends.count, " friends!")
+        for friend in selectedFriends {
+            print(friend.name)
+        }
+        closeInviteFriendsView()
+    }
+    
+    @objc func closeInviteFriendsView() {
+        print("Closing InviteFriendsView")
+        inviteFriendsView.removeFromSuperview()
+    }
+    
+    @objc func friendSelected(sender: UIButton) {
+        for i in 0...inviteFriendsUIPersonalButtons.count - 1 {
+            if sender == inviteFriendsUIPersonalButtons[i] {
+                let friend = friends[i]
+                let friendView = inviteFriendsUIPersonalViews[i]
+                if friendView.backgroundColor == UIColor(white: 0.05, alpha: 0.5) {
+                    friendView.backgroundColor = UIColor(white: 0.45, alpha: 0.5)
+                    selectedFriends.append(friend)
+                } else {
+                    friendView.backgroundColor = UIColor(white: 0.05, alpha: 0.5)
+                    for i in 0...selectedFriends.count - 1 {
+                        if selectedFriends[i].friendListNumber == friend.friendListNumber {
+                            selectedFriends.remove(at: i)
+                        }
+                    }                }
+            }
         }
     }
+    
     
     //End of class
 }
-
-//extend the class to allow tableview to get data from HVC
-extension HomeViewController: UITableViewDataSource {
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-        return friends.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        
-        let imageView = UIImageView(frame: CGRect(x: 10, y: 10, width: 50, height: 50))
-        imageView.image = UIImage(named: friends[indexPath.row].image)
-        imageView.layer.borderWidth = 1
-        imageView.layer.borderColor = UIColor.black.cgColor
-        imageView.layer.masksToBounds = false
-        imageView.layer.cornerRadius = imageView.frame.height/2
-        imageView.clipsToBounds = true
-        
-        let nameView = UITextField(frame: CGRect(x: 70, y: 10, width: cell.frame.width - 80, height: 20))
-        nameView.text = friends[indexPath.row].name
-        nameView.font = UIFont(name: nameView.font!.fontName, size: 20)
-        
-        let statusView = UITextField(frame: CGRect(x: 70, y: 40, width: cell.frame.width - 80, height: 12))
-        
-        switch friends[indexPath.row].status {
-        case 0:
-            statusView.text = "I will not be on for a while."
-            cell.backgroundColor = .red
-            break
-        case 1:
-            statusView.text = "I will be on in 10 minutes."
-            cell.backgroundColor = .yellow
-            break
-        case 2:
-            statusView.text = "I am online and ready to chat!"
-            cell.backgroundColor = .green
-            break
-        default:
-            statusView.text = "Error getting status"
-            break;
-        }
-        
-        statusView.font = UIFont(name: statusView.font!.fontName, size: 12)
-        
-        cell.addSubview(imageView)
-        cell.addSubview(nameView)
-        cell.addSubview(statusView)
-        return cell
-    }
-}
-    
-    
-    
-    
-    
-    
-    
 
     
     
