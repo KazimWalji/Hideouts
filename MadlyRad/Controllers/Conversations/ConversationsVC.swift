@@ -6,18 +6,19 @@ import Lottie
 class ConversationsVC: UIViewController {
     
     // ---------------------------------------------------------------------------------------------------------------------------------------------------- //
-    // ConversationVC is responsible for showing recent messages from user's friends and their actions. (If user and his/her friend haven't had a conversation, then friend's cell in tableView won't be visible. 
+    // ConversationVC is responsible for showing recent messages from user's friends and their actions. (If user and his/her friend haven't had a conversation, then friend's cell in tableView won't be visible.
     
     let convNetworking = ConversationsNetworking()
     var messages = [Messages]()
     var contactsVC = ContactsVC()
-
+    
     let tableView = UITableView()
     let calendar = Calendar(identifier: .gregorian)
     var newConversationButton = UIBarButtonItem()
     var tabBarBadge: UITabBarItem!
     let blankLoadingView = AnimationView(animation: Animation.named("blankLoadingAnim"))
-    var emptyListView: EmptyListView!
+    
+    var emptyListView: EmptyListView! //view with button, when no item to show
     var contactNavigation = UIBarButtonItem()
     var groupedMessages = [String: Messages]()
     var unreadMessages = [String: Int]()
@@ -34,71 +35,62 @@ class ConversationsVC: UIViewController {
         super.viewDidLoad()
         navigationItem.title = "Chats"
         Friends.list = []
-       conversationBug.convoVC = self
+        setupUI()
+        conversationBug.convoVC = self
         conversationBug.observeFriendList()
         loadConversations()
-        setupUI()
+        setupNewConversationButton()
+        //        contactsButton()
+        setupTableView()
+        emptyListView = EmptyListView(nil, self, false) //false for conversation view and true for contacts view
+        setupBlankView(blankLoadingView) //skeleton view
+        Friends.convVC = self
+        
+        
         ConversationsNetworking()
         
         //tableView.backgroundColor = .white
-     //background
+        //background
         view.backgroundColor = .white
         tableView.backgroundColor = .white
         if let tabItems = tabBarController?.tabBar.items {
             tabBarBadge = tabItems[1]
         }
         
-       
+        
     }
     
-        override func viewDidAppear(_ animated: Bool) {
-            super.viewDidAppear(animated)
-            
-            tabBarController?.tabBar.isHidden = false
-    //        loadConversations()
-        //    setupUI()
-            //222
-           // backgroundImageController?.setupBackground()
-            //777
-            Friends.list = []
-            conversationBug.convoVC = self
-             conversationBug.observeFriendList()
-            DispatchQueue.main.async { [weak self] in
-                self?.loadConversations()
-                self?.setupUI()
-            }
-    //         loadConversations()
-    //         setupUI()
-    //         ConversationsNetworking()
-             
-             //tableView.backgroundColor = .white
-            // let backgroundImage = UIImageView(frame: UIScreen.main.bounds)
-            // backgroundImage.image = UIImage(named: "backgroundimageforhideouts.png")
-            // backgroundImage.contentMode = UIView.ContentMode.scaleAspectFill
-            // self.view.insertSubview(backgroundImage, at: 0)
-             if let tabItems = tabBarController?.tabBar.items {
-                 tabBarBadge = tabItems[1]
-             }
-             //222
-          //   backgroundImageController = BackgroundImageController(viewController: self, imageView: backgroundImage)
-        //     backgroundImageController?.setupBackground()
-        }
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         
+        tabBarController?.tabBar.isHidden = false
         //222
-        override func viewDidLayoutSubviews() {
-            super.viewDidLayoutSubviews()
-        //    backgroundImageController?.setupBackground()
+        // backgroundImageController?.setupBackground()
+        //777
+        Friends.list = []
+        conversationBug.convoVC = self
+        conversationBug.observeFriendList()
+        
+        
+        self.loadConversations()
+        
+        //tableView.backgroundColor = .white
+        // let backgroundImage = UIImageView(frame: UIScreen.main.bounds)
+        // backgroundImage.image = UIImage(named: "backgroundimageforhideouts.png")
+        // backgroundImage.contentMode = UIView.ContentMode.scaleAspectFill
+        // self.view.insertSubview(backgroundImage, at: 0)
+        if let tabItems = tabBarController?.tabBar.items {
+            tabBarBadge = tabItems[1]
         }
+        //222
+        //   backgroundImageController = BackgroundImageController(viewController: self, imageView: backgroundImage)
+        //     backgroundImageController?.setupBackground()
+    }
     
-    // ---------------------------------------------------------------------------------------------------------------------------------------------------- //
-    
-    private func setupUI(){
-        setupNewConversationButton()
-//        contactsButton()
-        setupTableView()
-        emptyListView = EmptyListView(nil, self, false)
-       setupBlankView(blankLoadingView)
-        Friends.convVC = self
+    //222
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        //    backgroundImageController?.setupBackground()
     }
     
     // ---------------------------------------------------------------------------------------------------------------------------------------------------- //
@@ -130,19 +122,19 @@ class ConversationsVC: UIViewController {
     }
     
     // ---------------------------------------------------------------------------------------------------------------------------------------------------- //
-  //  private func contactsButton() {
-  //      contactNavigation = UIBarButtonItem(image: UIImage(systemName: "person.fill"), style: .plain, target: self, action: #selector(contactsButtonTapped))
-   //     contactNavigation.tintColor = .black
+    //  private func contactsButton() {
+    //      contactNavigation = UIBarButtonItem(image: UIImage(systemName: "person.fill"), style: .plain, target: self, action: #selector(contactsButtonTapped))
+    //     contactNavigation.tintColor = .black
     //    navigationItem.leftBarButtonItem = contactNavigation
-        
-        
-   // }
+    
+    
+    // }
     @objc func newConversationTapped() {
-    let controller = NewConversationVC()
+        let controller = NewConversationVC()
         controller.conversationDelegate = self
         present(UINavigationController(rootViewController: controller), animated: true, completion: nil)
     }
-
+    
     @objc func contactsButtonTapped() {
         let controller = ContactsVC()
         present(UINavigationController(rootViewController: controller), animated: true, completion: nil)
@@ -159,7 +151,7 @@ class ConversationsVC: UIViewController {
     // ---------------------------------------------------------------------------------------------------------------------------------------------------- //
     
     func loadMessagesHandler(_ newMessages: [Messages]?) {
-      blankLoadingView.isHidden = true
+        blankLoadingView.isHidden = true
         if let newMessages = newMessages {
             handleReload(newMessages)
         }
@@ -237,7 +229,7 @@ class ConversationsVC: UIViewController {
     }
     
     // ---------------------------------------------------------------------------------------------------------------------------------------------------- //
- 
+    
     func handleReload(_ friends: [FriendInfo]){
         Friends.list = friends
         Friends.list.sort { (friend1, friend2) -> Bool in
@@ -251,6 +243,6 @@ class ConversationsVC: UIViewController {
         emptyListView.isHidden = !(Friends.list.count == 0)
         emptyListView.emptyButton.isHidden = !(Friends.list.count == 0)
     }
-
-
+    
+    
 }
