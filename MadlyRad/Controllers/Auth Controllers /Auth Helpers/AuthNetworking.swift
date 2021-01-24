@@ -119,7 +119,7 @@ class AuthNetworking {
     // ---------------------------------------------------------------------------------------------------------------------------------------------------- //
     // MARK: SIGN UP USER METHOD
     
-    func registerUser(_ name: String, _ email: String, _ password: String, _ profileImage: UIImage?, _ UserID: String,_ pronoun:String, completion: @escaping (_ error: String?) -> Void) {
+    func registerUser(_ name: String, _ email: String, _ password: String, _ profileImage: UIImage?, _ userID: String,_ pronoun:String, completion: @escaping (_ error: String?) -> Void) {
         networkingLoadingIndicator.startLoadingAnimation()
         Auth.auth().createUser(withEmail: email, password: password) { (dataResult, error) in
             if let error = error {

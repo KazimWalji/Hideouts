@@ -163,7 +163,17 @@ extension AppDelegate : MessagingDelegate {
     
     func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
         print("Firebase registration token: \(fcmToken)")
-        guard let fcmToken = fcmToken else { return }
+        guard let fcmToken = fcmToken,
+              let currentUser = MRUser.current else { return }
+        
+        Firestore.firestore()
+            .collection(.dev1)
+            .document(.users)
+            .collection(.users)
+            .whereField(.userID, in: [currentUser.userID]).getDocuments { currentUserQuerySnapshot, error in
+                guard let currentUserSnapshot = currentUserQuerySnapshot?.documents.first else { return }
+                currentUserSnapshot.reference.setData([FirestorePath.deviceToken.rawValue: fcmToken], merge: true)
+        }
         
         let dataDict:[String: String] = ["token": fcmToken]
         NotificationCenter.default.post(name: Notification.Name("FCMToken"), object: nil, userInfo: dataDict)

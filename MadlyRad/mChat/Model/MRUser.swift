@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct MRUser {
+struct MRUser: Encodable {
     
     static var current: MRUser?
     
@@ -16,7 +16,7 @@ struct MRUser {
     let email: String
     let isOnline: Bool
     let isTyping: Bool
-    let lastLogin: Date
+    let lastLogin: Date?
     let deviceToken: String
     let firstName: String
     let lastName: String
@@ -26,6 +26,6 @@ struct MRUser {
     let smileNotes: [SmileNote]
 }
 
-struct SmileNote {
+struct SmileNote: Encodable {
     let messageID: String
 }

@@ -185,8 +185,6 @@ class SignUpVC: UIViewController, UITextFieldDelegate, SFSafariViewControllerDel
             guard errorMessage == nil else {
                 self.signUpView.errorLabel.text = errorMessage
                 return
-            
-            
             }
         }
         let UserID = signUpView.userIDTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
