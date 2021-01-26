@@ -50,10 +50,16 @@ extension UIImageView {
         }
         let imgUrl = URL(string: url)
         if imgUrl == nil {
+            DispatchQueue.main.async {
+                indicator.stopAnimating()
+            }
             return
         }
         let task = URLSession.shared.dataTask(with: imgUrl!) { (data, response, error) in
             guard let data = data else {
+                DispatchQueue.main.async {
+                    indicator.stopAnimating()
+                }
                 return
             }
             DispatchQueue.main.async {
