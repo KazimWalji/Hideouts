@@ -17,7 +17,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(windowScene: sceneWindow)
         window?.rootViewController = LogoVC()
         window?.makeKeyAndVisible()
-        FirebaseApp.configure()
         getAppColors()
         if Auth.auth().currentUser != nil {
             let authNetworking = AuthNetworking(nil)

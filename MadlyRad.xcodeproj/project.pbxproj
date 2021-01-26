@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		078C405425BE14270019522E /* MRUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078C405225BE14270019522E /* MRUser.swift */; };
+		078C405525BE14270019522E /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078C405325BE14270019522E /* Message.swift */; };
+		078C405725BE143E0019522E /* Firestore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078C405625BE143E0019522E /* Firestore.swift */; };
 		0798438325A2972E004BBAC8 /* Star Fractal Noise.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 0798438225A2972E004BBAC8 /* Star Fractal Noise.mp4 */; };
 		0FD9A3632558F83500877373 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB5E972524F760CE00FAEA6B /* StoreKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		0FD9A3652558F83C00877373 /* Pods_MadlyRad.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4AE685ADFD2349864470B8A3 /* Pods_MadlyRad.framework */; };
@@ -180,6 +183,9 @@
 
 /* Begin PBXFileReference section */
 		0046A90C4A3E19B903C95D5D /* Pods-MadlyRad.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MadlyRad.debug.xcconfig"; path = "Target Support Files/Pods-MadlyRad/Pods-MadlyRad.debug.xcconfig"; sourceTree = "<group>"; };
+		078C405225BE14270019522E /* MRUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MRUser.swift; sourceTree = "<group>"; };
+		078C405325BE14270019522E /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
+		078C405625BE143E0019522E /* Firestore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Firestore.swift; sourceTree = "<group>"; };
 		0798438225A2972E004BBAC8 /* Star Fractal Noise.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Star Fractal Noise.mp4"; sourceTree = "<group>"; };
 		0FD9A2B1255390D600877373 /* ScreenShieldKit.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = ScreenShieldKit.xcframework; path = MadlyRad/ScreenShieldKit.xcframework; sourceTree = "<group>"; };
 		13A6FEA61B719E28D3D00C6A /* Pods-MadlyRad.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MadlyRad.release.xcconfig"; path = "Target Support Files/Pods-MadlyRad/Pods-MadlyRad.release.xcconfig"; sourceTree = "<group>"; };
@@ -428,6 +434,8 @@
 		EB3A636824E1469800F82E93 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				078C405325BE14270019522E /* Message.swift */,
+				078C405225BE14270019522E /* MRUser.swift */,
 				EB3A636924E1469800F82E93 /* Messages.swift */,
 				EBCB19F824FE14CC006FF336 /* LocalImages.swift */,
 				EB3A636A24E1469800F82E93 /* CurrentUser.swift */,
@@ -443,6 +451,7 @@
 		EB3A636D24E1469800F82E93 /* Helper Tools */ = {
 			isa = PBXGroup;
 			children = (
+				078C405625BE143E0019522E /* Firestore.swift */,
 				EB3A636E24E1469800F82E93 /* Helpers.swift */,
 				EBA4907D24EE40350058B379 /* PrivacyProtectionViewController.swift */,
 				EB3A636F24E1469800F82E93 /* LoadImage + Extension.swift */,
@@ -1037,6 +1046,7 @@
 				EB3A643724E1469A00F82E93 /* CurrentUserVC.swift in Sources */,
 				FAB28F932583DA22009AE1C3 /* AuthNetworking.swift in Sources */,
 				EB3A643524E1469A00F82E93 /* ChangePasswordVC.swift in Sources */,
+				078C405425BE14270019522E /* MRUser.swift in Sources */,
 				EB04713124E9C5D80015BDA8 /* DOB.swift in Sources */,
 				EB386E5F24F9707C00865A44 /* FirebaseData.swift in Sources */,
 				EB3A646124E1469A00F82E93 /* ProfileImageButton.swift in Sources */,
@@ -1046,6 +1056,7 @@
 				EB3A640A24E1469A00F82E93 /* CurrentUser.swift in Sources */,
 				EB386E6224FC620F00865A44 /* FindUsersTableViewController.swift in Sources */,
 				EB3A641024E1469A00F82E93 /* NavigationItem + Extension.swift in Sources */,
+				078C405725BE143E0019522E /* Firestore.swift in Sources */,
 				EB3A646A24E1469A00F82E93 /* FriendInformationVC.swift in Sources */,
 				EB288C0E253505A500F150B0 /* InfluencersPopupViewController.swift in Sources */,
 				EB3A640624E1469A00F82E93 /* NetworkingLoadingIndicator.swift in Sources */,
@@ -1059,6 +1070,7 @@
 				EB3A645B24E1469A00F82E93 /* ConversationsVC.swift in Sources */,
 				EB3A641224E1469A00F82E93 /* ThemeColors.swift in Sources */,
 				FAB28F912583D9D2009AE1C3 /* InfoMenuView.swift in Sources */,
+				078C405525BE14270019522E /* Message.swift in Sources */,
 				EB3A640E24E1469A00F82E93 /* LoadImage + Extension.swift in Sources */,
 				EB3A643F24E1469A00F82E93 /* RegistrationInfoView.swift in Sources */,
 				EB3A645024E1469A00F82E93 /* UserInfoView.swift in Sources */,
@@ -1144,7 +1156,6 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				"EXCLUDED_ARCHS[sdk=*]" = arm64;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -1209,7 +1220,6 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				"EXCLUDED_ARCHS[sdk=*]" = arm64;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -1241,14 +1251,14 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 50;
-				DEVELOPMENT_TEAM = 7Z64AR52G7;
+				DEVELOPMENT_TEAM = 9F7DKLUDCY;
 				INFOPLIST_FILE = MadlyRad/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.02;
-				PRODUCT_BUNDLE_IDENTIFIER = com.RobRoe.Hideouts;
+				PRODUCT_BUNDLE_IDENTIFIER = Raffi;
 				PRODUCT_NAME = Hideouts;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_ENABLE_BATCH_MODE = NO;
@@ -1273,7 +1283,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.02;
-				PRODUCT_BUNDLE_IDENTIFIER = com.RobRoe.Hideouts;
+				PRODUCT_BUNDLE_IDENTIFIER = RafF;
 				PRODUCT_NAME = Hideouts;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_ENABLE_BATCH_MODE = NO;

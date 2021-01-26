@@ -51,31 +51,31 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
         Giphy.configure(apiKey: "LrJf34hRudUjbHHum4ShNwUGxm2UXjfa")
         ScreenShieldKit.setLicenseKey("MEYCIQDb+JhAa/gyMEcMUq2/zE+Vk3AWPF5MFszcWAf+4t6FEQIhAMw2u5LTiIehRHC3hBxYIEZNHeIBmxcjZWMeognRZjpk")
+        FirebaseApp.configure()
         
         Messaging.messaging().delegate = self
         IQKeyboardManager.shared.enable = true
         
-        if #available(iOS 10.0, *) {
-            // For iOS 10 display notification (sent via APNS)
-            UNUserNotificationCenter.current().delegate = self
-            
-            let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
-            UNUserNotificationCenter.current().requestAuthorization(
-                options: authOptions,
-                completionHandler: {_, _ in })
-        } else {
-            let settings: UIUserNotificationSettings =
-                UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
-            application.registerUserNotificationSettings(settings)
-        }
-        
-        application.registerForRemoteNotifications()
+        requestAuthorizationForNotificationUI()
+        registerForRemoteNotifications(application)
         
         if let token = Messaging.messaging().fcmToken {
-            
             Database.database().reference().child("users").child("resigraotaon").child("registration_token").setValue(token)
         }
+        
         return true
+    }
+    
+    private func requestAuthorizationForNotificationUI() {
+        let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
+        UNUserNotificationCenter.current().requestAuthorization(
+            options: authOptions,
+            completionHandler: {_, _ in })
+    }
+    
+    private func registerForRemoteNotifications(_ application: UIApplication) {
+        UNUserNotificationCenter.current().delegate = self
+        application.registerForRemoteNotifications()
     }
     
     func updateFirebasePushToken() {
@@ -130,7 +130,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
 }
 
-@available(iOS 10.0, *)
 extension AppDelegate : UNUserNotificationCenterDelegate {
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void){
@@ -156,24 +155,18 @@ extension AppDelegate : UNUserNotificationCenterDelegate {
     }
 }
 
-extension AppDelegate : MessagingDelegate {
+extension AppDelegate: MessagingDelegate {
     
     func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
-        print("Firebase registration token: \(fcmToken)")
-        guard let fcmToken = fcmToken,
-              let currentUser = MRUser.current else { return }
+        guard let notificationToken = fcmToken else { return }
+        storeNotificationTokenOnDevice(notificationToken)
         
-        Firestore.firestore()
-            .collection(.dev1)
-            .document(.users)
-            .collection(.users)
-            .whereField(.userID, in: [currentUser.userID]).getDocuments { currentUserQuerySnapshot, error in
-                guard let currentUserSnapshot = currentUserQuerySnapshot?.documents.first else { return }
-                currentUserSnapshot.reference.setData([FirestorePath.deviceToken.rawValue: fcmToken], merge: true)
-        }
-        
-        let dataDict:[String: String] = ["token": fcmToken]
-        NotificationCenter.default.post(name: Notification.Name("FCMToken"), object: nil, userInfo: dataDict)
+//        let dataDict:[String: String] = ["token": fcmToken]
+//        NotificationCenter.default.post(name: Notification.Name("FCMToken"), object: nil, userInfo: dataDict)
+    }
+    
+    private func storeNotificationTokenOnDevice(_ notificationToken: String) {
+        UserDefaults.standard.setValue(notificationToken, forKey: UserDefaults.Key.notificationToken.rawValue)
     }
     
 }

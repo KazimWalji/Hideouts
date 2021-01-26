@@ -1,7 +1,7 @@
-
-
 import UIKit
 import FirebaseAuth
+import FirebaseFirestore
+
 //we protect your privacy; we only collect your email and never share or sell your information
 class SignInVC: UIViewController, UITextFieldDelegate {
     
@@ -210,7 +210,63 @@ class SignInVC: UIViewController, UITextFieldDelegate {
         authNetworking = AuthNetworking(self)
         authNetworking.signIn(with: email, and: password) { (error) in
             self.loginView.errorLabel.text = error?.localizedDescription
+            
+            guard error == nil,
+                  let notificationToken = UserDefaults
+                    .standard.value(forKey: UserDefaults.Key.notificationToken.rawValue) as? String,
+                  let currentUser = MRUser.current else { return }
+            
+            if let lastLoggedInUserID = UserDefaults.standard.value(forKey: UserDefaults.Key.lastLoggedInUserID.rawValue) as? String {
+                self.removeTokenFromUserInDatabase(user: currentUser, token: notificationToken)
+                self.replaceLastLoggedInUserInUserDefaults(with: currentUser)
+                
+                if lastLoggedInUserID != currentUser.userID {
+                    self.addNotificationTokenToDatabase(user: currentUser, token: notificationToken)
+                }
+            } else {
+                self.addNotificationTokenToDatabase(user: currentUser, token: notificationToken)
+            }
         }
+    }
+    
+    private func replaceLastLoggedInUserInUserDefaults(with newLoggedInUser: MRUser) {
+        UserDefaults.standard.setValue(newLoggedInUser.userID, forKey: UserDefaults.Key.lastLoggedInUserID.rawValue)
+    }
+    
+    private func removeTokenFromUserInDatabase(user: MRUser, token: String) {
+        Firestore.firestore()
+            .collection(.dev1)
+            .document(.users)
+            .collection(.users)
+            .whereField(.userID, in: [user.userID]).getDocuments { currentUserQuerySnapshot, error in
+                guard let currentUserSnapshot = currentUserQuerySnapshot?.documents.first else { return }
+                
+                let currentTokens = currentUserSnapshot.value(forKey: FirestorePath.notificationTokens.rawValue) as? [String] ?? []
+                
+                if !currentTokens.contains(token) {
+                    var updatedTokens = currentTokens
+                    updatedTokens.removeAll { $0 == token }
+                    currentUserSnapshot.reference.setData([FirestorePath.notificationTokens.rawValue: updatedTokens], merge: true)
+                }
+            }
+    }
+    
+    private func addNotificationTokenToDatabase(user: MRUser, token: String) {
+        Firestore.firestore()
+            .collection(.dev1)
+            .document(.users)
+            .collection(.users)
+            .whereField(.userID, in: [user.userID]).getDocuments { currentUserQuerySnapshot, error in
+                guard let currentUserSnapshot = currentUserQuerySnapshot?.documents.first else { return }
+                
+                let currentTokens = currentUserSnapshot.value(forKey: FirestorePath.notificationTokens.rawValue) as? [String] ?? []
+                
+                if !currentTokens.contains(token) {
+                    var updatedTokens = currentTokens
+                    updatedTokens.append(token)
+                    currentUserSnapshot.reference.setData([FirestorePath.notificationTokens.rawValue: updatedTokens], merge: true)
+                }
+            }
     }
     
     // ---------------------------------------------------------------------------------------------------------------------------------------------------- //

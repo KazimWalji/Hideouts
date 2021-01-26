@@ -106,3 +106,9 @@ extension Encodable {
     }
 }
 
+extension UserDefaults {
+    enum Key: String {
+        case notificationToken
+        case lastLoggedInUserID
+    }
+}
