@@ -20,7 +20,7 @@ struct Star {
     
     init(frame: CGRect) {
         self.view = UIView(frame: frame)
-        self.background = UIImageView(frame: frame)
+        self.background = UIImageView(frame: CGRect(x: 0, y: 0, width: frame.width, height: frame.height))
         guard let image = UIImage(named: "starStill") else { fatalError("Star image is not found") }
         self.background.setImage(image)
         self.view.addSubview(self.background)
@@ -34,12 +34,10 @@ struct Star {
         self.starPlayerLooper = AVPlayerLooper(player: queuePlayer, templateItem: playerItem)
                 
         self.playerLayer = AVPlayerLayer(player: queuePlayer)
-        playerLayer.frame = frame
+        playerLayer.frame = CGRect(x: 0, y: 0, width: frame.width, height: frame.height)
         playerLayer.videoGravity = .resizeAspectFill
         playerLayer.compositingFilter = "screenBlendMode"
         queuePlayer.play()
-        
-        view.layer.addSublayer(playerLayer)
     }
     
     func setBackground(animating: Bool) {
@@ -53,5 +51,6 @@ struct Star {
             view.addSubview(background)
         }
     }
+    
     
 }
