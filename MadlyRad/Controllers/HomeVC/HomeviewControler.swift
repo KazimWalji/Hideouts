@@ -15,7 +15,7 @@ class HomeViewController: UIViewController {
     private var playerLooper: AVPlayerLooper?
     private var starPlayerLoopers: [AVPlayerLooper] = []
     
-    private var nameLabel: UILabel?
+    private var nameLabels: [UILabel] = []
     private var bellClicked: Bool = false
     
     private var friends: [Friend] = []
@@ -34,23 +34,25 @@ class HomeViewController: UIViewController {
 
     
     //temporary data for Stars
-    private var starCoords: [[Int]] = [ [150, 75], [70,120], [110,300], [100, 250], [50,350] ]
+    private var starCoords: [[Int]] = [ [150, 75], [350,120], [110,600], [200, 550], [150,250] ]
     
     private var mediaView: UIView = UIView()
     private var mediaViewButtons: [UIButton] = []
     
-    private var notificationScrollView: UIScrollView = UIScrollView()
-    private var notificationScrollViewButtons: [UIButton] = []
+    private var inviteButton: UIButton?
+//
+//    private var notificationScrollView: UIScrollView = UIScrollView()
+//    private var notificationScrollViewButtons: [UIButton] = []
     
-    private var inviteFriendsView: UIView = UIView()
-    private var inviteFriendsScrollView: UIScrollView = UIScrollView()
-    private var inviteFriendsScrollViewSubviews: [UIView] = []
-    private var inviteFriendsCloseButton: UIButton = UIButton()
-    private var inviteFriendsUIButton: UIButton = UIButton()
-    private var inviteFriendsUIButtonClicked: Bool = true
-    private var inviteFriendsUIPersonalButtons: [UIButton] = []
-    private var inviteFriendsUIPersonalViews: [UIView] = []
-    private var selectedFriends: [Friend] = []
+//    private var inviteFriendsView: UIView = UIView()
+//    private var inviteFriendsScrollView: UIScrollView = UIScrollView()
+//    private var inviteFriendsScrollViewSubviews: [UIView] = []
+//    private var inviteFriendsCloseButton: UIButton = UIButton()
+//    private var inviteFriendsUIButton: UIButton = UIButton()
+//    private var inviteFriendsUIButtonClicked: Bool = true
+//    private var inviteFriendsUIPersonalButtons: [UIButton] = []
+//    private var inviteFriendsUIPersonalViews: [UIView] = []
+//    private var selectedFriends: [Friend] = []
 
     private var stars: [Star] = []
     
@@ -93,6 +95,8 @@ class HomeViewController: UIViewController {
         createNameLabel()
         
         createMediaView()
+        
+        initInviteButton()
 
 
     }
@@ -103,12 +107,17 @@ class HomeViewController: UIViewController {
     }
     
     private func createNameLabel() {
-        nameLabel = UILabel(frame: CGRect(x: view.frame.width/2-50, y: 50, width: 100, height: 40))
-        nameLabel?.textAlignment = .center
-        nameLabel?.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-        nameLabel?.font = UIFont.boldSystemFont(ofSize: 16)
-        nameLabel?.alpha = 0
-        view.addSubview(nameLabel!)
+        for friend in friends {
+            let nameLabel = UILabel(frame: CGRect(x: friend.starCoords[0], y: friend.starCoords[1] - 10, width: 40, height: 15))
+            nameLabel.text = friend.name
+            nameLabel.textAlignment = .center
+            nameLabel.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+            nameLabel.font = UIFont.boldSystemFont(ofSize: 12)
+            nameLabel.alpha = 0
+            nameLabels.append(nameLabel)
+            view.addSubview(nameLabel)
+        }
+        
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -214,49 +223,72 @@ class HomeViewController: UIViewController {
             star.view.layer.compositingFilter = "screenBlendMode"
             view.addSubview(star.view)
             stars.append(star)
+            print("Star x: ", friend.starCoords[0], " y: ", friend.starCoords[1])
+            print("Star x: ", star.view.frame.minX, " y: ", star.view.frame.minY)
+
         }
     }
     
-    @objc func starHeldDown(_ gestureRecognizer: UILongPressGestureRecognizer) {
+    private func initInviteButton() {
+        inviteButton = UIButton(frame: CGRect(x: view.frame.width - 40, y: 50, width: 20, height: 20))
+        guard let image = UIImage(named: "whitePlus") else { return }
+        inviteButton?.setBackgroundImage(image, for: .normal)
+        inviteButton!.addTarget(self, action: #selector(inviteFriends), for: .touchUpInside)
         
-        if gestureRecognizer.state == .began {
-            
-            guard let button: UIButton? = gestureRecognizer.view as! UIButton else { return }
-            for friend in friends {
-                if friend.starButton == button {
-                    nameLabel?.text = friend.name
-                    nameLabel?.font = UIFont(name: (nameLabel?.font.fontName)!, size: 18)
-                    nameLabel?.center.x = (button?.center.x)!
-                    nameLabel?.center.y = (button?.center.y)! - 30
-                }
+        view.addSubview(inviteButton!)
+    }
+    
+    @objc func inviteFriends() {
+        print("invite")
+        for label in nameLabels {
+            if label.alpha == 0 {
+                label.alpha = 1
+            } else {
+                label.alpha = 0
             }
-            showNameLabel()
         }
-        
-        if gestureRecognizer.state == .ended {
-            
-            hideNameLabel()
-        }
-        
     }
     
-    private func showNameLabel() {
-        let animationDuration = 0.25
-        
-        UIView.animate(withDuration: animationDuration, animations: { () -> Void in
-            self.nameLabel?.alpha = 1
-        })
-        
-    }
+//    @objc func starHeldDown(_ gestureRecognizer: UILongPressGestureRecognizer) {
+//        
+//        if gestureRecognizer.state == .began {
+//            
+//            guard let button: UIButton? = gestureRecognizer.view as! UIButton else { return }
+//            for friend in friends {
+//                if friend.starButton == button {
+//                    nameLabel?.text = friend.name
+//                    nameLabel?.font = UIFont(name: (nameLabel?.font.fontName)!, size: 18)
+//                    nameLabel?.center.x = (button?.center.x)!
+//                    nameLabel?.center.y = (button?.center.y)! - 30
+//                }
+//            }
+//            showNameLabel()
+//        }
+//        
+//        if gestureRecognizer.state == .ended {
+//            
+//            hideNameLabel()
+//        }
+//        
+//    }
     
-    private func hideNameLabel() {
-        let animationDuration = 0.25
-        
-        UIView.animate(withDuration: animationDuration, animations: { () -> Void in
-            self.nameLabel?.alpha = 0
-        })
-        
-    }
+//    private func showNameLabel() {
+//        let animationDuration = 0.25
+//
+//        UIView.animate(withDuration: animationDuration, animations: { () -> Void in
+//            self.nameLabel?.alpha = 1
+//        })
+//
+//    }
+//
+//    private func hideNameLabel() {
+//        let animationDuration = 0.25
+//
+//        UIView.animate(withDuration: animationDuration, animations: { () -> Void in
+//            self.nameLabel?.alpha = 0
+//        })
+//
+//    }
     
 //    private func createStar(x: Int, y: Int) {
 //        let starButton = UIButton(frame: CGRect(x: x, y: y, width: 60, height: 60))
@@ -416,7 +448,7 @@ class HomeViewController: UIViewController {
         appleMusicButton.layer.masksToBounds = true
         
         let netflixButton = UIButton(frame: CGRect(x: 5, y: 50, width: 40, height: 40))
-        netflixButton.setBackgroundImage(UIImage(named: "Netflix"), for: .normal)
+        netflixButton.setBackgroundImage(UIImage(named: "youTubeBlackRed"), for: .normal)
         netflixButton.layer.cornerRadius = netflixButton.frame.height/4
         netflixButton.layer.masksToBounds = true
         
