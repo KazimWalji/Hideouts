@@ -34,7 +34,7 @@ class HomeViewController: UIViewController {
 
     
     //temporary data for Stars
-    private var starCoords: [[Int]] = [ [150, 75], [70,120], [110,300], [100, 250], [50,350] ]
+    private var starCoords: [[Int]] = [ [150, 75], [350,120], [110,600], [200, 550], [150,250] ]
     
     private var mediaView: UIView = UIView()
     private var mediaViewButtons: [UIButton] = []
@@ -108,12 +108,14 @@ class HomeViewController: UIViewController {
     
     private func createNameLabel() {
         for friend in friends {
-            let nameLabel = UILabel(frame: CGRect(x: friend.starCoords[0] - 30, y: friend.starCoords[0] + 30, width: 60, height: 20))
+            let nameLabel = UILabel(frame: CGRect(x: friend.starCoords[0], y: friend.starCoords[1] - 10, width: 40, height: 15))
+            nameLabel.text = friend.name
             nameLabel.textAlignment = .center
             nameLabel.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-            nameLabel.font = UIFont.boldSystemFont(ofSize: 16)
+            nameLabel.font = UIFont.boldSystemFont(ofSize: 12)
             nameLabel.alpha = 0
             nameLabels.append(nameLabel)
+            view.addSubview(nameLabel)
         }
         
     }
@@ -221,6 +223,9 @@ class HomeViewController: UIViewController {
             star.view.layer.compositingFilter = "screenBlendMode"
             view.addSubview(star.view)
             stars.append(star)
+            print("Star x: ", friend.starCoords[0], " y: ", friend.starCoords[1])
+            print("Star x: ", star.view.frame.minX, " y: ", star.view.frame.minY)
+
         }
     }
     
@@ -228,8 +233,20 @@ class HomeViewController: UIViewController {
         inviteButton = UIButton(frame: CGRect(x: view.frame.width - 40, y: 50, width: 20, height: 20))
         guard let image = UIImage(named: "whitePlus") else { return }
         inviteButton?.setBackgroundImage(image, for: .normal)
+        inviteButton!.addTarget(self, action: #selector(inviteFriends), for: .touchUpInside)
         
         view.addSubview(inviteButton!)
+    }
+    
+    @objc func inviteFriends() {
+        print("invite")
+        for label in nameLabels {
+            if label.alpha == 0 {
+                label.alpha = 1
+            } else {
+                label.alpha = 0
+            }
+        }
     }
     
 //    @objc func starHeldDown(_ gestureRecognizer: UILongPressGestureRecognizer) {
