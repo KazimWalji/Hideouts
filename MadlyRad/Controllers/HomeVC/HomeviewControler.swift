@@ -448,7 +448,7 @@ class HomeViewController: UIViewController {
         appleMusicButton.layer.masksToBounds = true
         
         let netflixButton = UIButton(frame: CGRect(x: 5, y: 50, width: 40, height: 40))
-        netflixButton.setBackgroundImage(UIImage(named: "Netflix"), for: .normal)
+        netflixButton.setBackgroundImage(UIImage(named: "youTubeBlackRed"), for: .normal)
         netflixButton.layer.cornerRadius = netflixButton.frame.height/4
         netflixButton.layer.masksToBounds = true
         
