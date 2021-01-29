@@ -103,7 +103,7 @@ class HomeViewController: UIViewController {
     
     private func setupBackground() {
         setupBackgroundAnimation()
-//        setupBackgroundImage()
+        setupBackgroundImage()
     }
     
     private func createNameLabel() {
@@ -157,36 +157,10 @@ class HomeViewController: UIViewController {
     
     
     private func setupBackgroundImage() {
-        setupGirlAndWaterImage()
-        setupFullBackgroundImage()
-    }
-    
-    private func setupGirlAndWaterImage() {
-        let imageView = UIImageView(frame: .zero)
-        layoutGirlAndWaterImageView(imageView)
-        configureGirlAndWaterImageView(imageView)
-    }
-    
-    private func layoutGirlAndWaterImageView(_ imageView: UIImageView) {
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(imageView)
-        NSLayoutConstraint.activate([
-            imageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 193),
-            imageView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            imageView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            imageView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-        ])
-    }
-    
-    private func configureGirlAndWaterImageView(_ imageView: UIImageView) {
-        imageView.image = #imageLiteral(resourceName: "girl_and_water")
-
-    }
-    
-    private func setupFullBackgroundImage() {
         let imageView = UIImageView(frame: .zero)
         layoutFullBackgroundImageView(imageView)
         configureFullBackgroundImageView(imageView)
+        view.addSubview(imageView)
     }
     
     private func layoutFullBackgroundImageView(_ imageView: UIImageView) {
@@ -201,7 +175,7 @@ class HomeViewController: UIViewController {
     }
     
     private func configureFullBackgroundImageView(_ imageView: UIImageView) {
-        imageView.image = #imageLiteral(resourceName: "girl_standing_on_rock")
+        imageView.image = #imageLiteral(resourceName: "purpleBackground")
         imageView.layer.compositingFilter = "screenBlendMode"
     }
     
@@ -462,8 +436,33 @@ class HomeViewController: UIViewController {
         mediaView.addSubview(appleMusicButton)
         mediaView.addSubview(netflixButton)
         mediaView.addSubview(spotifyButton)
+        
+        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(swipedRight))
+        swipeRight.direction = .right
+        
+        let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(swipedLeft))
+        swipeLeft.direction = .left
+        
+        view.addGestureRecognizer(swipeRight)
+        view.addGestureRecognizer(swipeLeft)
+
 
     }
+    
+    @objc func swipedRight() {
+        let originalTransform = mediaView.transform
+        let scaledAndTranslatedTransform = originalTransform.translatedBy(x: 60, y: 0)
+        UIView.animate(withDuration: 0.7, animations: {
+                self.mediaView.transform = scaledAndTranslatedTransform
+        })
+    }
+    
+    @objc func swipedLeft() {
+        let originalTransform = mediaView.transform
+        let scaledAndTranslatedTransform = originalTransform.translatedBy(x: -60, y: 0)
+        UIView.animate(withDuration: 0.7, animations: {
+                self.mediaView.transform = scaledAndTranslatedTransform
+        })    }
     
     
     
