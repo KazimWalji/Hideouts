@@ -89,10 +89,10 @@ class HomeViewController: UIViewController {
         navigationController?.tabBarController?.tabBar.backgroundImage = UIImage()
         navigationController?.tabBarController?.tabBar.shadowImage = UIImage()
         navigationController?.tabBarController?.tabBar.bounds = tabBarBounds!
-        
+        createNameLabel()
         createStars()
                 
-        createNameLabel()
+        
         
         createMediaView()
         
@@ -186,14 +186,6 @@ class HomeViewController: UIViewController {
     private func createStars() {
         for friend in friends {
             let star = Star(frame: CGRect(x: friend.starCoords[0], y: friend.starCoords[1], width: 40, height: 40))
-            switch friend.status {
-            case 1:
-                star.setBackground(animating: true)
-            case 2:
-                star.setBackground(animating: false)
-            default:
-                print("Friend offline")
-            }
             star.view.layer.compositingFilter = "screenBlendMode"
             view.addSubview(star.view)
             stars.append(star)
@@ -201,28 +193,46 @@ class HomeViewController: UIViewController {
             print("Star x: ", star.view.frame.minX, " y: ", star.view.frame.minY)
 
         }
+        startTimer()
     }
     
     private func initInviteButton() {
         inviteButton = UIButton(frame: CGRect(x: view.frame.width - 40, y: 50, width: 20, height: 20))
         guard let image = UIImage(named: "whitePlus") else { return }
         inviteButton?.setBackgroundImage(image, for: .normal)
-        inviteButton!.addTarget(self, action: #selector(inviteFriends), for: .touchUpInside)
+        inviteButton!.addTarget(self, action: #selector(startTimer), for: .touchUpInside)
         
         view.addSubview(inviteButton!)
     }
     
-    @objc func inviteFriends() {
-        print("invite")
+    
+    @objc func startTimer() {
+        for star in stars {
+            star.setBackgroundBW(white: true)
+        }
         for label in nameLabels {
-            if label.alpha == 0 {
-                label.alpha = 1
-            } else {
-                label.alpha = 0
+            label.alpha = 1
+        }
+        let timer = Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(fireTimer), userInfo: nil, repeats: false)
+    }
+    
+    @objc func fireTimer() {
+        for label in nameLabels {
+            label.alpha = 0
+        }
+        for i in 0...friends.count - 1 {
+            switch friends[i].status {
+            case 0:
+                stars[i].setBackgroundBW(white: false)
+            case 1:
+                stars[i].setBackgroundColored(animating: true)
+            case 2:
+                stars[i].setBackgroundColored(animating: false)
+            default:
+                fatalError("Friend status is not 0-2")
             }
         }
     }
-    
 //    @objc func starHeldDown(_ gestureRecognizer: UILongPressGestureRecognizer) {
 //        
 //        if gestureRecognizer.state == .began {

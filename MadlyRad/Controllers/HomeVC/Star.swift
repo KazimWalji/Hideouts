@@ -14,6 +14,9 @@ struct Star {
     var view: UIView
     var background: UIImageView
     
+    var colorImage: UIImage
+    var whiteImage: UIImage
+    
     var starPlayerLooper: AVPlayerLooper
     var queuePlayer: AVQueuePlayer
     var playerLayer: AVPlayerLayer
@@ -21,8 +24,10 @@ struct Star {
     init(frame: CGRect) {
         self.view = UIView(frame: frame)
         self.background = UIImageView(frame: CGRect(x: 0, y: 0, width: frame.width, height: frame.height))
-        guard let image = UIImage(named: "starStill") else { fatalError("Star image is not found") }
-        self.background.setImage(image)
+        guard let colorImage = UIImage(named: "starStillColor") else { fatalError("Star image is not found") }
+        self.colorImage = colorImage
+        guard let whiteImage = UIImage(named: "starStillWhite") else { fatalError("Star image is not found") }
+        self.whiteImage = whiteImage
         self.view.addSubview(self.background)
         
         guard let animationPath = Bundle.main.path(forResource: "Star Animation", ofType: "mp4") else { fatalError("Star Animation is not found") }
@@ -40,16 +45,41 @@ struct Star {
         queuePlayer.play()
     }
     
-    func setBackground(animating: Bool) {
-        if animating == true {
+    func setBackgroundColored(animating: Bool) {
+        
+        if background.superview != nil {
             background.removeFromSuperview()
-            view.layer.addSublayer(playerLayer)
+        }
+        if playerLayer.superlayer != nil {
+            playerLayer.removeFromSuperlayer()
         }
         
-        if animating == false {
-            playerLayer.removeFromSuperlayer()
+        if animating {
+            view.layer.addSublayer(playerLayer)
+        } else {
+            background.setImage(colorImage)
             view.addSubview(background)
         }
+        
+    }
+    
+    func setBackgroundBW(white: Bool) {
+        
+        if background.superview != nil {
+            background.removeFromSuperview()
+        }
+        if playerLayer.superlayer != nil {
+            playerLayer.removeFromSuperlayer()
+        }
+        
+        if white {
+            background.setImage(whiteImage)
+            view.addSubview(background)
+        } else {
+            background.setImage(UIImage())
+            view.addSubview(background)
+        }
+        
     }
     
     
