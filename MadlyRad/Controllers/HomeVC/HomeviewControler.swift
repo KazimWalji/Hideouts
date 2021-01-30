@@ -34,7 +34,9 @@ class HomeViewController: UIViewController {
 
     
     //temporary data for Stars
-    private var starCoords: [[Int]] = [ [150, 75], [350,120], [110,600], [200, 550], [150,250] ]
+    private var starCoords: [[Int]] = [ [230, 80], [260,130], [280,460], [330, 590], [370,620] ]
+    private var whiteStarCoords: [[Int]] = [ [80, 100], [105,200], [15,215], [80, 350], [130,500] ]
+
     
     private var mediaView: UIView = UIView()
     private var mediaViewButtons: [UIButton] = []
@@ -91,6 +93,7 @@ class HomeViewController: UIViewController {
         navigationController?.tabBarController?.tabBar.bounds = tabBarBounds!
         createNameLabel()
         createStars()
+        createWhiteStars()
                 
         
         
@@ -194,6 +197,15 @@ class HomeViewController: UIViewController {
 
         }
         startTimer()
+    }
+    
+    private func createWhiteStars() {
+        for i in 0...4 {
+            let star = Star(frame: CGRect(x: whiteStarCoords[i][0], y: whiteStarCoords[i][1], width: 40, height: 40))
+            star.view.layer.compositingFilter = "screenBlendMode"
+            star.setBackgroundBW(white: true)
+            view.addSubview(star.view)
+        }
     }
     
     private func initInviteButton() {
@@ -435,7 +447,7 @@ class HomeViewController: UIViewController {
     
     //Side buttons
     private func createMediaView() {
-        mediaView = UIStackView(frame: CGRect(x: 360, y: 350, width: 50, height: 140))
+        mediaView = UIStackView(frame: CGRect(x: 420, y: 350, width: 50, height: 140))
         
         view.addSubview(mediaView)
         
