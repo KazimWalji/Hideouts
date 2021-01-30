@@ -15,7 +15,10 @@ class ChangeBackgroundVC: UIViewController {
         super.viewDidLoad()
         navigationController?.navigationBar.isHidden = true
         navigationItem.title = "Change Background"
-        view.backgroundColor = .green
+        let background = UIImageView(frame: view.frame)
+        background.bounds = view.bounds
+        background.image = #imageLiteral(resourceName: "purpleBackground")
+        view.addSubview(background)
         
     }
     
