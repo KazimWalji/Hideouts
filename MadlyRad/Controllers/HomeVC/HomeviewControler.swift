@@ -227,12 +227,28 @@ class HomeViewController: UIViewController {
             case 1:
                 stars[i].setBackgroundColored(animating: true)
             case 2:
-                stars[i].setBackgroundColored(animating: false)
+                stars[i].setBackgroundRed()
+                nameLabels[i].textColor = .red
+                nameLabels[i].alpha = 1
+                let timer = Timer.scheduledTimer(timeInterval: 3.0, target: self, selector: #selector(fireTimerRed), userInfo: nil, repeats: false)
             default:
                 fatalError("Friend status is not 0-2")
             }
         }
     }
+    
+    @objc func fireTimerRed() {
+        for i in 0...friends.count - 1 {
+            if friends[i].status == 2 {
+                stars[i].setBackgroundBW(white: false)
+                nameLabels[i].textColor = .white
+                nameLabels[i].alpha = 0
+            }
+        }
+    }
+    
+    
+    
 //    @objc func starHeldDown(_ gestureRecognizer: UILongPressGestureRecognizer) {
 //        
 //        if gestureRecognizer.state == .began {
