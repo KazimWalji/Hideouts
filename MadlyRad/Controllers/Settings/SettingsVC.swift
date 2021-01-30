@@ -202,15 +202,20 @@ extension SettingsVC: UITableViewDelegate, UITableViewDataSource {
             }else{ //if indexPath.section == 2
                 let item = settingsItems[indexPath.row]
                 if item == "About"{
-                let controller = AboutViewController()
-                show(controller, sender: nil)
+                    let controller = AboutViewController()
+                    show(controller, sender: nil)
                 }
                 if item == "Contact Us!"{
-                if let url = URL(string: "https://hideoutsusa.com/contact/"){
-                let safariVC = SFSafariViewController(url: url)
-                    self.present(safariVC, animated: true, completion: nil)
+                    if let url = URL(string: "https://hideoutsusa.com/contact/"){
+                    let safariVC = SFSafariViewController(url: url)
+                        self.present(safariVC, animated: true, completion: nil)
 
+                    }
                 }
+                
+                if item == "Background Image" {
+                    let controller = ChangeBackgroundVC()
+                    show(controller, sender: nil)
                 }
     }
     
