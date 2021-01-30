@@ -35,13 +35,15 @@ class HomeViewController: UIViewController {
     
     //temporary data for Stars
     private var starCoords: [[Int]] = [ [230, 80], [260,130], [280,460], [330, 590], [370,620] ]
-    private var whiteStarCoords: [[Int]] = [ [80, 100], [105,200], [15,215], [80, 350], [130,500] ]
+    private var whiteStarCoords: [[Int]] = [ [80, 100], [105,200], [15,215], [80, 350], [120,470] ]
 
     
     private var mediaView: UIView = UIView()
     private var mediaViewButtons: [UIButton] = []
     
     private var inviteButton: UIButton?
+    
+    private var artLayer: CALayer?
 //
 //    private var notificationScrollView: UIScrollView = UIScrollView()
 //    private var notificationScrollViewButtons: [UIButton] = []
@@ -57,6 +59,8 @@ class HomeViewController: UIViewController {
 //    private var selectedFriends: [Friend] = []
 
     private var stars: [Star] = []
+    private var whiteStars: [Star] = []
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -100,6 +104,11 @@ class HomeViewController: UIViewController {
         createMediaView()
         
         initInviteButton()
+        
+        artLayer = CALayer()
+        view.layer.addSublayer(artLayer!)
+        
+        drawLines()
 
 
     }
@@ -178,7 +187,7 @@ class HomeViewController: UIViewController {
     }
     
     private func configureFullBackgroundImageView(_ imageView: UIImageView) {
-        imageView.image = #imageLiteral(resourceName: "purpleBackground")
+        imageView.image = #imageLiteral(resourceName: "blueBackground")
         imageView.layer.compositingFilter = "screenBlendMode"
     }
     
@@ -204,6 +213,7 @@ class HomeViewController: UIViewController {
             let star = Star(frame: CGRect(x: whiteStarCoords[i][0], y: whiteStarCoords[i][1], width: 40, height: 40))
             star.view.layer.compositingFilter = "screenBlendMode"
             star.setBackgroundBW(white: true)
+            whiteStars.append(star)
             view.addSubview(star.view)
         }
     }
@@ -258,6 +268,57 @@ class HomeViewController: UIViewController {
             }
         }
     }
+    
+// ------------------------ Draw lines ------------------------
+    
+    func drawLines() {
+        
+        drawLine(onLayer: artLayer!, fromPoint: whiteStars[0].view.center, toPoint: whiteStars[1].view.center)
+        drawLine(onLayer: artLayer!, fromPoint: whiteStars[1].view.center, toPoint: whiteStars[2].view.center)
+        drawLine(onLayer: artLayer!, fromPoint: whiteStars[1].view.center, toPoint: whiteStars[3].view.center)
+        drawLine(onLayer: artLayer!, fromPoint: whiteStars[3].view.center, toPoint: whiteStars[4].view.center)
+
+        
+
+    }
+    
+    func drawLine(onLayer layer: CALayer, fromPoint start: CGPoint, toPoint end: CGPoint) {
+        let line = CAShapeLayer()
+        let linePath = UIBezierPath()
+        linePath.move(to: start)
+        linePath.addLine(to: end)
+        line.path = linePath.cgPath
+        line.fillColor = nil
+        line.opacity = 1.0
+        line.lineWidth = 1.0
+        line.strokeColor = #colorLiteral(red: 0.3113748179, green: 0.6002139096, blue: 0.9686274529, alpha: 1).cgColor
+        layer.addSublayer(line)
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     
