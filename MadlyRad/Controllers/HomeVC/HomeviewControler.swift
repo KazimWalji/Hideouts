@@ -277,6 +277,23 @@ class HomeViewController: UIViewController {
         drawLine(onLayer: artLayer!, fromPoint: whiteStars[1].view.center, toPoint: whiteStars[2].view.center)
         drawLine(onLayer: artLayer!, fromPoint: whiteStars[1].view.center, toPoint: whiteStars[3].view.center)
         drawLine(onLayer: artLayer!, fromPoint: whiteStars[3].view.center, toPoint: whiteStars[4].view.center)
+        drawLine(onLayer: artLayer!, fromPoint: whiteStars[4].view.center, toPoint: CGPoint(x: 160, y: 630))
+        drawLine(onLayer: artLayer!, fromPoint: whiteStars[3].view.center, toPoint: CGPoint(x: 20, y: 480))
+        drawLine(onLayer: artLayer!, fromPoint: CGPoint(x: 20, y: 480), toPoint: CGPoint(x: 80, y: 650))
+        
+        drawLine(onLayer: artLayer!, fromPoint: stars[0].view.center, toPoint: stars[1].view.center)
+        
+        drawLine(onLayer: artLayer!, fromPoint: stars[1].view.center, toPoint: CGPoint(x: 300, y: 240))
+        drawLine(onLayer: artLayer!, fromPoint: CGPoint(x: 400, y: 235), toPoint: CGPoint(x: 300, y: 240))
+
+        drawLine(onLayer: artLayer!, fromPoint: CGPoint(x: 300, y: 240), toPoint: CGPoint(x: 210, y: 220))
+        drawLine(onLayer: artLayer!, fromPoint: whiteStars[1].view.center, toPoint: CGPoint(x: 210, y: 220))
+        drawLine(onLayer: artLayer!, fromPoint: CGPoint(x: 300, y: 240), toPoint: stars[2].view.center)
+        drawLine(onLayer: artLayer!, fromPoint: stars[2].view.center, toPoint: stars[3].view.center)
+        drawLine(onLayer: artLayer!, fromPoint: stars[3].view.center, toPoint: stars[4].view.center)
+        drawLine(onLayer: artLayer!, fromPoint: stars[2].view.center, toPoint: CGPoint(x: 250, y: 630))
+
+
 
         
 
@@ -291,7 +308,7 @@ class HomeViewController: UIViewController {
         line.fillColor = nil
         line.opacity = 1.0
         line.lineWidth = 1.0
-        line.strokeColor = #colorLiteral(red: 0.3113748179, green: 0.6002139096, blue: 0.9686274529, alpha: 1).cgColor
+        line.strokeColor = #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1).cgColor
         layer.addSublayer(line)
     }
     
