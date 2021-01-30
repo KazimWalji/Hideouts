@@ -10,8 +10,8 @@ class SettingsVC: UIViewController, UIImagePickerControllerDelegate, UINavigatio
     let logoutButton = UIButton(type: .system)
     let tableView = UITableView()
     
-    let settingsItems = ["Appearance", "Early Supports", "About", "Contact Us!", "Background Image"]
-    let settingsImages = ["paint_icon", "question-mark", "question-mark", "abuse_icon", "backgroundIcon"]
+    let settingsItems = ["Appearance", "Early Supports", "About", "Contact Us!", "Background Image","Share With Friends"]
+    let settingsImages = ["paint_icon", "question-mark", "question-mark", "abuse_icon", "backgroundIcon","share1"]
     
     var settingsNetworking: SettingsNetworking!
     
