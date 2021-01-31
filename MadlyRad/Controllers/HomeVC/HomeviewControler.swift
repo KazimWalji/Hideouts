@@ -22,7 +22,7 @@ class HomeViewController: UIViewController {
     private var names = ["Timmy", "John", "Kyle", "Ana", "Rachel"]
     private var ages = [17, 15, 16, 17, 16]
     private var listNumbers = [1, 2, 3, 4, 5]
-    private var status = [2, 1, 1, 2, 1]
+    private var status = [0, 1, 0, 2, 1]
     private var images = ["Dinosaur", "hammer", "normalGopher", "Dinosaur", "Dinosaur"]
     private var starCoords: [[Int]] = [ [175, 325], [260,130], [50,150], [100, 500], [300,550] ]
     
@@ -195,8 +195,11 @@ class HomeViewController: UIViewController {
             star.view.isHidden = false
             star.setBackgroundBW(white: true)
         }
-        for label in nameLabels {
-            label.isHidden = false
+        for i in 0...friends.count - 1 {
+            nameLabels[i].isHidden = false
+            if friends[i].status == 2 {
+                nameLabels[i].textColor = .green
+            }
         }
         let timer = Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(fireInviteTimer), userInfo: nil, repeats: false)
     }
@@ -209,14 +212,14 @@ class HomeViewController: UIViewController {
             stars[i].view.isHidden = false
             switch friends[i].status {
             case 0:
-                stars[i].setBackgroundBW(white: false)
-            case 1:
-                stars[i].setBackgroundColored(animating: true)
-            case 2:
                 stars[i].setBackgroundRed()
                 nameLabels[i].textColor = .red
                 nameLabels[i].alpha = 1
                 let timer = Timer.scheduledTimer(timeInterval: 3.0, target: self, selector: #selector(fireTimerRed), userInfo: nil, repeats: false)
+            case 1:
+                stars[i].setBackgroundColored(animating: true)
+            case 2:
+                stars[i].setBackgroundColored(animating: false)
             default:
                 fatalError("Friend status is not 0-2")
             }
@@ -225,10 +228,10 @@ class HomeViewController: UIViewController {
     
     @objc func fireTimerRed() {
         for i in 0...friends.count - 1 {
-            if friends[i].status == 2 {
+            if friends[i].status == 0 {
                 stars[i].setBackgroundBW(white: false)
                 nameLabels[i].textColor = .white
-                nameLabels[i].alpha = 0
+                nameLabels[i].isHidden = true
             }
         }
     }
