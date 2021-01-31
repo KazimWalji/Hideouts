@@ -34,14 +34,16 @@ class HomeViewController: UIViewController {
 
     
     //temporary data for Stars
-    private var starCoords: [[Int]] = [ [230, 80], [260,130], [280,460], [330, 590], [370,620] ]
-    private var whiteStarCoords: [[Int]] = [ [80, 100], [105,200], [15,215], [80, 350], [120,470] ]
-
+    private var starCoords: [[Int]] = [ [175, 325], [260,130], [50,150], [100, 500], [300,550] ]
+//    private var whiteStarCoords: [[Int]] = [ [80, 100], [105,200], [15,215], [80, 350], [120,470] ]
+    
+    private var isInviteTimerRunning: Bool = false
     
     private var mediaView: UIView = UIView()
     private var mediaViewButtons: [UIButton] = []
     
     private var inviteButton: UIButton?
+    private var starButtons: [UIButton] = []
     
     private var artLayer: CALayer?
 //
@@ -59,7 +61,7 @@ class HomeViewController: UIViewController {
 //    private var selectedFriends: [Friend] = []
 
     private var stars: [Star] = []
-    private var whiteStars: [Star] = []
+//    private var whiteStars: [Star] = []
 
     
     override func viewDidLoad() {
@@ -97,7 +99,7 @@ class HomeViewController: UIViewController {
         navigationController?.tabBarController?.tabBar.bounds = tabBarBounds!
         createNameLabel()
         createStars()
-        createWhiteStars()
+//        createWhiteStars()
                 
         
         
@@ -108,7 +110,7 @@ class HomeViewController: UIViewController {
         artLayer = CALayer()
         view.layer.addSublayer(artLayer!)
         
-        drawLines()
+//        drawLines()
 
 
     }
@@ -125,7 +127,7 @@ class HomeViewController: UIViewController {
             nameLabel.textAlignment = .center
             nameLabel.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
             nameLabel.font = UIFont.boldSystemFont(ofSize: 12)
-            nameLabel.alpha = 0
+            nameLabel.isHidden = false
             nameLabels.append(nameLabel)
             view.addSubview(nameLabel)
         }
@@ -199,7 +201,11 @@ class HomeViewController: UIViewController {
         for friend in friends {
             let star = Star(frame: CGRect(x: friend.starCoords[0], y: friend.starCoords[1], width: 40, height: 40))
             star.view.layer.compositingFilter = "screenBlendMode"
+            let button = UIButton(frame: star.background.frame)
+            button.addTarget(self, action: #selector(starIsClicked), for: .touchUpInside)
+            star.view.addSubview(button)
             view.addSubview(star.view)
+            starButtons.append(button)
             stars.append(star)
             print("Star x: ", friend.starCoords[0], " y: ", friend.starCoords[1])
             print("Star x: ", star.view.frame.minX, " y: ", star.view.frame.minY)
@@ -208,15 +214,21 @@ class HomeViewController: UIViewController {
         startTimer()
     }
     
-    private func createWhiteStars() {
-        for i in 0...4 {
-            let star = Star(frame: CGRect(x: whiteStarCoords[i][0], y: whiteStarCoords[i][1], width: 40, height: 40))
-            star.view.layer.compositingFilter = "screenBlendMode"
-            star.setBackgroundBW(white: true)
-            whiteStars.append(star)
-            view.addSubview(star.view)
-        }
+    @objc func starIsClicked(sender: UIButton) {
+        let index = Int(starButtons.firstIndex(of: sender)!)
+        stars[index].view.isHidden = true
+        nameLabels[index].isHidden = true
     }
+    
+//    private func createWhiteStars() {
+//        for i in 0...4 {
+//            let star = Star(frame: CGRect(x: whiteStarCoords[i][0], y: whiteStarCoords[i][1], width: 40, height: 40))
+//            star.view.layer.compositingFilter = "screenBlendMode"
+//            star.setBackgroundBW(white: true)
+//            whiteStars.append(star)
+//            view.addSubview(star.view)
+//        }
+//    }
     
     private func initInviteButton() {
         inviteButton = UIButton(frame: CGRect(x: view.frame.width - 40, y: 50, width: 20, height: 20))
@@ -229,20 +241,23 @@ class HomeViewController: UIViewController {
     
     
     @objc func startTimer() {
+        isInviteTimerRunning = true
         for star in stars {
+            star.view.isHidden = false
             star.setBackgroundBW(white: true)
         }
         for label in nameLabels {
-            label.alpha = 1
+            label.isHidden = false
         }
-        let timer = Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(fireTimer), userInfo: nil, repeats: false)
+        let timer = Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(inviteTimer), userInfo: nil, repeats: false)
     }
     
-    @objc func fireTimer() {
+    @objc func inviteTimer() {
         for label in nameLabels {
-            label.alpha = 0
+            label.isHidden = true
         }
         for i in 0...friends.count - 1 {
+            stars[i].view.isHidden = false
             switch friends[i].status {
             case 0:
                 stars[i].setBackgroundBW(white: false)
@@ -269,48 +284,45 @@ class HomeViewController: UIViewController {
         }
     }
     
+    
 // ------------------------ Draw lines ------------------------
     
-    func drawLines() {
-        
-        drawLine(onLayer: artLayer!, fromPoint: whiteStars[0].view.center, toPoint: whiteStars[1].view.center)
-        drawLine(onLayer: artLayer!, fromPoint: whiteStars[1].view.center, toPoint: whiteStars[2].view.center)
-        drawLine(onLayer: artLayer!, fromPoint: whiteStars[1].view.center, toPoint: whiteStars[3].view.center)
-        drawLine(onLayer: artLayer!, fromPoint: whiteStars[3].view.center, toPoint: whiteStars[4].view.center)
-        drawLine(onLayer: artLayer!, fromPoint: whiteStars[4].view.center, toPoint: CGPoint(x: 160, y: 630))
-        drawLine(onLayer: artLayer!, fromPoint: whiteStars[3].view.center, toPoint: CGPoint(x: 20, y: 480))
-        drawLine(onLayer: artLayer!, fromPoint: CGPoint(x: 20, y: 480), toPoint: CGPoint(x: 80, y: 650))
-        
-        drawLine(onLayer: artLayer!, fromPoint: stars[0].view.center, toPoint: stars[1].view.center)
-        
-        drawLine(onLayer: artLayer!, fromPoint: stars[1].view.center, toPoint: CGPoint(x: 300, y: 240))
-        drawLine(onLayer: artLayer!, fromPoint: CGPoint(x: 400, y: 235), toPoint: CGPoint(x: 300, y: 240))
+//    func drawLines() {
+//
+//        drawLine(onLayer: artLayer!, fromPoint: whiteStars[0].view.center, toPoint: whiteStars[1].view.center)
+//        drawLine(onLayer: artLayer!, fromPoint: whiteStars[1].view.center, toPoint: whiteStars[2].view.center)
+//        drawLine(onLayer: artLayer!, fromPoint: whiteStars[1].view.center, toPoint: whiteStars[3].view.center)
+//        drawLine(onLayer: artLayer!, fromPoint: whiteStars[3].view.center, toPoint: whiteStars[4].view.center)
+//        drawLine(onLayer: artLayer!, fromPoint: whiteStars[4].view.center, toPoint: CGPoint(x: 160, y: 630))
+//        drawLine(onLayer: artLayer!, fromPoint: whiteStars[3].view.center, toPoint: CGPoint(x: 20, y: 480))
+//        drawLine(onLayer: artLayer!, fromPoint: CGPoint(x: 20, y: 480), toPoint: CGPoint(x: 80, y: 650))
+//
+//        drawLine(onLayer: artLayer!, fromPoint: stars[0].view.center, toPoint: stars[1].view.center)
+//
+//        drawLine(onLayer: artLayer!, fromPoint: stars[1].view.center, toPoint: CGPoint(x: 300, y: 240))
+//        drawLine(onLayer: artLayer!, fromPoint: CGPoint(x: 400, y: 235), toPoint: CGPoint(x: 300, y: 240))
+//
+//        drawLine(onLayer: artLayer!, fromPoint: CGPoint(x: 300, y: 240), toPoint: CGPoint(x: 210, y: 220))
+//        drawLine(onLayer: artLayer!, fromPoint: whiteStars[1].view.center, toPoint: CGPoint(x: 210, y: 220))
+//        drawLine(onLayer: artLayer!, fromPoint: CGPoint(x: 300, y: 240), toPoint: stars[2].view.center)
+//        drawLine(onLayer: artLayer!, fromPoint: stars[2].view.center, toPoint: stars[3].view.center)
+//        drawLine(onLayer: artLayer!, fromPoint: stars[3].view.center, toPoint: stars[4].view.center)
+//        drawLine(onLayer: artLayer!, fromPoint: stars[2].view.center, toPoint: CGPoint(x: 250, y: 630))
 
-        drawLine(onLayer: artLayer!, fromPoint: CGPoint(x: 300, y: 240), toPoint: CGPoint(x: 210, y: 220))
-        drawLine(onLayer: artLayer!, fromPoint: whiteStars[1].view.center, toPoint: CGPoint(x: 210, y: 220))
-        drawLine(onLayer: artLayer!, fromPoint: CGPoint(x: 300, y: 240), toPoint: stars[2].view.center)
-        drawLine(onLayer: artLayer!, fromPoint: stars[2].view.center, toPoint: stars[3].view.center)
-        drawLine(onLayer: artLayer!, fromPoint: stars[3].view.center, toPoint: stars[4].view.center)
-        drawLine(onLayer: artLayer!, fromPoint: stars[2].view.center, toPoint: CGPoint(x: 250, y: 630))
-
-
-
-        
-
-    }
+//    }
     
-    func drawLine(onLayer layer: CALayer, fromPoint start: CGPoint, toPoint end: CGPoint) {
-        let line = CAShapeLayer()
-        let linePath = UIBezierPath()
-        linePath.move(to: start)
-        linePath.addLine(to: end)
-        line.path = linePath.cgPath
-        line.fillColor = nil
-        line.opacity = 1.0
-        line.lineWidth = 1.0
-        line.strokeColor = #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1).cgColor
-        layer.addSublayer(line)
-    }
+//    func drawLine(onLayer layer: CALayer, fromPoint start: CGPoint, toPoint end: CGPoint) {
+//        let line = CAShapeLayer()
+//        let linePath = UIBezierPath()
+//        linePath.move(to: start)
+//        linePath.addLine(to: end)
+//        line.path = linePath.cgPath
+//        line.fillColor = nil
+//        line.opacity = 1.0
+//        line.lineWidth = 1.0
+//        line.strokeColor = #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1).cgColor
+//        layer.addSublayer(line)
+//    }
     
     
     
