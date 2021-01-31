@@ -10,7 +10,7 @@ class SettingsVC: UIViewController, UIImagePickerControllerDelegate, UINavigatio
     let logoutButton = UIButton(type: .system)
     let tableView = UITableView()
     
-    let settingsItems = ["Appearance", "Early Supports", "About", "Contact Us!", "Background Image","Share With Friends"]
+    let settingsItems = ["Appearance", "Early Supports", "About", "Contact Us!", "Background Image","Share BestFriends with friends"]
     let settingsImages = ["paint_icon", "question-mark", "question-mark", "abuse_icon", "backgroundIcon","share1"]
     
     var settingsNetworking: SettingsNetworking!
@@ -183,7 +183,7 @@ extension SettingsVC: UITableViewDelegate, UITableViewDataSource {
             cell.settingsLabel.text = item
             cell.settingsLabel.textColor = .white
             cell.settingsImage.image = UIImage(named: itemImg)
-            cell.backgroundColor = UIColor(white: 0.05, alpha: 0.5)
+            cell.backgroundColor = UIColor(white: 0.05, alpha: 0.3)
             return cell
         }
     }
@@ -212,7 +212,7 @@ extension SettingsVC: UITableViewDelegate, UITableViewDataSource {
 
                     }
                 }
-                if item == "Share With Friends"{
+                if item == "Share BestFriends with friends"{
                         
                         // Setting description
                             let firstActivityItem = "Check out this app!"
