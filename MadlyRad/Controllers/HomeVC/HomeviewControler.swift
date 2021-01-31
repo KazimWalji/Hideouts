@@ -2,8 +2,8 @@
 //  HomeviewControler.swift
 //  MadlyRad
 //
-//  Created by JOJO on 9/7/20.
-//  Copyright © 2020 MadlyRad. All rights reserved.
+//  Created by Alex Titov on 1/10/2021
+//  Copyright © 2021 MadlyRad. All rights reserved.
 //
 
 import Foundation
@@ -12,66 +12,36 @@ import AVKit
 
 class HomeViewController: UIViewController {
     
-    private var playerLooper: AVPlayerLooper?
-    private var starPlayerLoopers: [AVPlayerLooper] = []
+    private var playerLooper: AVPlayerLooper?  //the background star animation player looper
+    private var starPlayerLoopers: [AVPlayerLooper] = []  //individual animations for the stars (fading in and out)
     
-    private var nameLabels: [UILabel] = []
-    private var bellClicked: Bool = false
+    private var nameLabels: [UILabel] = []  //labels that are above each star
     
+    // Temporary data for the friends
     private var friends: [Friend] = []
-    private var currentFriend: Friend?
-    
-    //temporary data for NotificationView
     private var names = ["Timmy", "John", "Kyle", "Ana", "Rachel"]
     private var ages = [17, 15, 16, 17, 16]
     private var listNumbers = [1, 2, 3, 4, 5]
     private var status = [2, 1, 1, 2, 1]
     private var images = ["Dinosaur", "hammer", "normalGopher", "Dinosaur", "Dinosaur"]
-    
-    private var notificationTimer = Timer()
-    private var notificationImageViews: [UIImageView] = []
-    private var yellowNotificationImageViews: [UIImageView] = []
-
-    
-    //temporary data for Stars
     private var starCoords: [[Int]] = [ [175, 325], [260,130], [50,150], [100, 500], [300,550] ]
-//    private var whiteStarCoords: [[Int]] = [ [80, 100], [105,200], [15,215], [80, 350], [120,470] ]
     
     private var isInviteTimerRunning: Bool = false
     
-    private var mediaView: UIView = UIView()
-    private var mediaViewButtons: [UIButton] = []
+    private var mediaView: UIView = UIView()  //uiview with the 3 buttons that slides in and out
+    private var mediaViewButtons: [UIButton] = []  //buttons on the media view
     
-    private var inviteButton: UIButton?
-    private var starButtons: [UIButton] = []
-    
-    private var artLayer: CALayer?
-//
-//    private var notificationScrollView: UIScrollView = UIScrollView()
-//    private var notificationScrollViewButtons: [UIButton] = []
-    
-//    private var inviteFriendsView: UIView = UIView()
-//    private var inviteFriendsScrollView: UIScrollView = UIScrollView()
-//    private var inviteFriendsScrollViewSubviews: [UIView] = []
-//    private var inviteFriendsCloseButton: UIButton = UIButton()
-//    private var inviteFriendsUIButton: UIButton = UIButton()
-//    private var inviteFriendsUIButtonClicked: Bool = true
-//    private var inviteFriendsUIPersonalButtons: [UIButton] = []
-//    private var inviteFriendsUIPersonalViews: [UIView] = []
-//    private var selectedFriends: [Friend] = []
+    private var inviteButton: UIButton?  //plus button at the top right
+    private var starButtons: [UIButton] = []  //buttons for each of the stars
 
-    private var stars: [Star] = []
-//    private var whiteStars: [Star] = []
+    private var stars: [Star] = [] //array of class Star (Star.swift) that hold all the subviews of each star
 
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setupFriends()
-        
         setupUI()
 
-        
         NotificationCenter.default.addObserver(
             forName: UIApplication.userDidTakeScreenshotNotification,
             object: nil, queue: nil) { _ in
@@ -87,11 +57,7 @@ class HomeViewController: UIViewController {
     }
     
     private func setupUI() {
-        
-        print("Width: ", view.frame.width, " Height: ", view.frame.height)
-        
         setupBackground()
-        
         navigationController?.navigationBar.isHidden = true
         var tabBarBounds = navigationController?.tabBarController?.tabBar.bounds
         navigationController?.tabBarController?.tabBar.backgroundImage = UIImage()
@@ -99,28 +65,16 @@ class HomeViewController: UIViewController {
         navigationController?.tabBarController?.tabBar.bounds = tabBarBounds!
         createNameLabel()
         createStars()
-//        createWhiteStars()
-                
-        
-        
         createMediaView()
-        
         initInviteButton()
-        
-        artLayer = CALayer()
-        view.layer.addSublayer(artLayer!)
-        
-//        drawLines()
-
-
     }
     
     private func setupBackground() {
-        setupBackgroundAnimation()
-        setupBackgroundImage()
+        setupBackgroundAnimation()  //white stars fading in and out
+        setupBackgroundImage() //main background image
     }
     
-    private func createNameLabel() {
+    private func createNameLabel() {  //create name label for each star
         for friend in friends {
             let nameLabel = UILabel(frame: CGRect(x: friend.starCoords[0], y: friend.starCoords[1] - 10, width: 40, height: 15))
             nameLabel.text = friend.name
@@ -131,14 +85,13 @@ class HomeViewController: UIViewController {
             nameLabels.append(nameLabel)
             view.addSubview(nameLabel)
         }
-        
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
     
-    private func setupBackgroundAnimation() {
+    private func setupBackgroundAnimation() {  //stars fading in and out
         guard let animationPath = Bundle.main.path(forResource: "Star Fractal Noise", ofType: "mp4") else { return }
         let animationURL = URL(fileURLWithPath: animationPath)
         var videoAsset = AVAsset(url: animationURL)
@@ -157,7 +110,7 @@ class HomeViewController: UIViewController {
         queuePlayer.play()
     }
     
-    private func layoutVideoView(videoView: UIView) {
+    private func layoutVideoView(videoView: UIView) {  //set constraints for the video view that shows stars fading in and out
         videoView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(videoView)
         
@@ -170,14 +123,14 @@ class HomeViewController: UIViewController {
     }
     
     
-    private func setupBackgroundImage() {
+    private func setupBackgroundImage() {  //setup the background image
         let imageView = UIImageView(frame: .zero)
         layoutFullBackgroundImageView(imageView)
         configureFullBackgroundImageView(imageView)
         view.addSubview(imageView)
     }
     
-    private func layoutFullBackgroundImageView(_ imageView: UIImageView) {
+    private func layoutFullBackgroundImageView(_ imageView: UIImageView) {  //layout of the full background view
         imageView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(imageView)
         NSLayoutConstraint.activate([
@@ -188,14 +141,14 @@ class HomeViewController: UIViewController {
         ])
     }
     
-    private func configureFullBackgroundImageView(_ imageView: UIImageView) {
+    private func configureFullBackgroundImageView(_ imageView: UIImageView) { //setup image
         imageView.image = #imageLiteral(resourceName: "blueBackground")
         imageView.layer.compositingFilter = "screenBlendMode"
     }
     
-    /*
-    --------------------- Star Buttons Code ---------------------
-    */
+    
+//  --------------------------------------------------------------- Star Buttons Code ---------------------------------------------------------------
+    
     
     private func createStars() {
         for friend in friends {
@@ -219,16 +172,12 @@ class HomeViewController: UIViewController {
         stars[index].view.isHidden = true
         nameLabels[index].isHidden = true
     }
+
     
-//    private func createWhiteStars() {
-//        for i in 0...4 {
-//            let star = Star(frame: CGRect(x: whiteStarCoords[i][0], y: whiteStarCoords[i][1], width: 40, height: 40))
-//            star.view.layer.compositingFilter = "screenBlendMode"
-//            star.setBackgroundBW(white: true)
-//            whiteStars.append(star)
-//            view.addSubview(star.view)
-//        }
-//    }
+    
+    
+    
+    //  --------------------------------------------------------------- Timers Code ---------------------------------------------------------------
     
     private func initInviteButton() {
         inviteButton = UIButton(frame: CGRect(x: view.frame.width - 40, y: 50, width: 20, height: 20))
@@ -249,10 +198,10 @@ class HomeViewController: UIViewController {
         for label in nameLabels {
             label.isHidden = false
         }
-        let timer = Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(inviteTimer), userInfo: nil, repeats: false)
+        let timer = Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(fireInviteTimer), userInfo: nil, repeats: false)
     }
     
-    @objc func inviteTimer() {
+    @objc func fireInviteTimer() {
         for label in nameLabels {
             label.isHidden = true
         }
@@ -285,6 +234,65 @@ class HomeViewController: UIViewController {
     }
     
     
+//  --------------------------------------------------------------- Side Buttons Code ---------------------------------------------------------------
+        private func createMediaView() {
+            mediaView = UIStackView(frame: CGRect(x: 420, y: 350, width: 50, height: 140))
+            
+            view.addSubview(mediaView)
+            
+            mediaView.backgroundColor = UIColor(white: 0.05, alpha: 0.7)
+            mediaView.layer.cornerRadius = mediaView.frame.height/10
+            
+            let appleMusicButton = UIButton(frame: CGRect(x: 5, y: 5, width: 40, height: 40))
+            appleMusicButton.setBackgroundImage(UIImage(named: "AppleMusic"), for: .normal)
+            appleMusicButton.layer.cornerRadius = appleMusicButton.frame.height/4
+            appleMusicButton.layer.masksToBounds = true
+            
+            let netflixButton = UIButton(frame: CGRect(x: 5, y: 50, width: 40, height: 40))
+            netflixButton.setBackgroundImage(UIImage(named: "youTubeBlackRed"), for: .normal)
+            netflixButton.layer.cornerRadius = netflixButton.frame.height/4
+            netflixButton.layer.masksToBounds = true
+            
+            let spotifyButton = UIButton(frame: CGRect(x: 5, y: 95, width: 40, height: 40))
+            spotifyButton.setBackgroundImage(UIImage(named: "Spotify"), for: .normal)
+            spotifyButton.layer.cornerRadius = spotifyButton.frame.height/4
+            spotifyButton.layer.masksToBounds = true
+            
+            mediaViewButtons = [appleMusicButton, netflixButton, spotifyButton]
+
+            mediaView.addSubview(appleMusicButton)
+            mediaView.addSubview(netflixButton)
+            mediaView.addSubview(spotifyButton)
+            
+            let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(swipedRight))
+            swipeRight.direction = .right
+            
+            let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(swipedLeft))
+            swipeLeft.direction = .left
+            
+            view.addGestureRecognizer(swipeRight)
+            view.addGestureRecognizer(swipeLeft)
+
+
+        }
+        
+        @objc func swipedRight() {
+            let originalTransform = mediaView.transform
+            let scaledAndTranslatedTransform = originalTransform.translatedBy(x: 60, y: 0)
+            UIView.animate(withDuration: 0.7, animations: {
+                    self.mediaView.transform = scaledAndTranslatedTransform
+            })
+        }
+        
+        @objc func swipedLeft() {
+            let originalTransform = mediaView.transform
+            let scaledAndTranslatedTransform = originalTransform.translatedBy(x: -60, y: 0)
+            UIView.animate(withDuration: 0.7, animations: {
+                    self.mediaView.transform = scaledAndTranslatedTransform
+            })
+        }
+    
+    private func commentedCode() {
 // ------------------------ Draw lines ------------------------
     
 //    func drawLines() {
@@ -323,33 +331,7 @@ class HomeViewController: UIViewController {
 //        line.strokeColor = #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1).cgColor
 //        layer.addSublayer(line)
 //    }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
     
 //    @objc func starHeldDown(_ gestureRecognizer: UILongPressGestureRecognizer) {
 //        
@@ -535,62 +517,7 @@ class HomeViewController: UIViewController {
 //
 //
     
-    //Side buttons
-    private func createMediaView() {
-        mediaView = UIStackView(frame: CGRect(x: 420, y: 350, width: 50, height: 140))
-        
-        view.addSubview(mediaView)
-        
-        mediaView.backgroundColor = UIColor(white: 0.05, alpha: 0.7)
-        mediaView.layer.cornerRadius = mediaView.frame.height/10
-        
-        let appleMusicButton = UIButton(frame: CGRect(x: 5, y: 5, width: 40, height: 40))
-        appleMusicButton.setBackgroundImage(UIImage(named: "AppleMusic"), for: .normal)
-        appleMusicButton.layer.cornerRadius = appleMusicButton.frame.height/4
-        appleMusicButton.layer.masksToBounds = true
-        
-        let netflixButton = UIButton(frame: CGRect(x: 5, y: 50, width: 40, height: 40))
-        netflixButton.setBackgroundImage(UIImage(named: "youTubeBlackRed"), for: .normal)
-        netflixButton.layer.cornerRadius = netflixButton.frame.height/4
-        netflixButton.layer.masksToBounds = true
-        
-        let spotifyButton = UIButton(frame: CGRect(x: 5, y: 95, width: 40, height: 40))
-        spotifyButton.setBackgroundImage(UIImage(named: "Spotify"), for: .normal)
-        spotifyButton.layer.cornerRadius = spotifyButton.frame.height/4
-        spotifyButton.layer.masksToBounds = true
-        
-        mediaViewButtons = [appleMusicButton, netflixButton, spotifyButton]
 
-        mediaView.addSubview(appleMusicButton)
-        mediaView.addSubview(netflixButton)
-        mediaView.addSubview(spotifyButton)
-        
-        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(swipedRight))
-        swipeRight.direction = .right
-        
-        let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(swipedLeft))
-        swipeLeft.direction = .left
-        
-        view.addGestureRecognizer(swipeRight)
-        view.addGestureRecognizer(swipeLeft)
-
-
-    }
-    
-    @objc func swipedRight() {
-        let originalTransform = mediaView.transform
-        let scaledAndTranslatedTransform = originalTransform.translatedBy(x: 60, y: 0)
-        UIView.animate(withDuration: 0.7, animations: {
-                self.mediaView.transform = scaledAndTranslatedTransform
-        })
-    }
-    
-    @objc func swipedLeft() {
-        let originalTransform = mediaView.transform
-        let scaledAndTranslatedTransform = originalTransform.translatedBy(x: -60, y: 0)
-        UIView.animate(withDuration: 0.7, animations: {
-                self.mediaView.transform = scaledAndTranslatedTransform
-        })    }
     
     
     
@@ -719,7 +646,7 @@ class HomeViewController: UIViewController {
 //        }
 //    }
 //
-    
+    }  //this contains all commented code, DO NOT CALL
     //End of class
 }
 
