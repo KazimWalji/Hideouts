@@ -8,9 +8,11 @@
 
 import FirebaseFirestore
 
+/// A component of a path in the Firestore database. Don't use rawValue direclty, use stringValue.
 enum FirestorePath: String {
-    case dev1
     
+    case environment
+
     case users
     case userID
     case email
@@ -38,38 +40,54 @@ enum FirestorePath: String {
     case usersWithoutAccess
     
     case url
+    
+    case relationships
+    
+    var stringValue: String {
+        get {
+            if self == .environment {
+                #if DEBUG
+                return "dev1"
+                #else
+                return "prod"
+                #endif
+            } else {
+                return rawValue
+            }
+        }
+    }
 }
 
 
 extension Firestore {
     func collection(_ path: FirestorePath) -> CollectionReference {
-        return collection(path.rawValue)
+        return collection(path.stringValue)
     }
 }
 
 extension CollectionReference {
     func document(_ path: FirestorePath) -> DocumentReference {
-        return document(path.rawValue)
+        return document(path.stringValue)
     }
     
     func whereField(_ field: FirestorePath, in values: [Any]) -> Query {
-        return whereField(field.rawValue, in: values)
+        return whereField(field.stringValue, in: values)
     }
     
     func whereField(_ field: FirestorePath, isEqualTo value: Any) -> Query {
-        return whereField(field.rawValue, isEqualTo: value)
+        return whereField(field.stringValue, isEqualTo: value)
     }
     
 }
 
 extension DocumentReference {
     func collection(_ path: FirestorePath) -> CollectionReference {
-        return collection(path.rawValue)
+        return collection(path.stringValue)
     }
 }
 
 extension DocumentSnapshot {
     func get(_ path: FirestorePath) -> Any? {
-        return get(path.rawValue)
+        return get(path.stringValue)
     }
 }

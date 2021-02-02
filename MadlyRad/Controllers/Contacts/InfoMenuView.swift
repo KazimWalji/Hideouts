@@ -18,6 +18,9 @@ class InfoMenuView: UIView {
     let blurView = UIVisualEffectView()
     let stackView = UIStackView()
     
+    var writeMessageButton: UIButton?
+    var removeFriendButton: UIButton?
+    
     // ---------------------------------------------------------------------------------------------------------------------------------------------------- //
     
     init(cell: ContactsCell, cellFrame: CGRect, friend: FriendInfo, contactsVC: ContactsVC) {
@@ -55,8 +58,7 @@ class InfoMenuView: UIView {
     
     // ---------------------------------------------------------------------------------------------------------------------------------------------------- //
     // MARK: START ANIM METHOD
-    
-    func startingAnimationInfoMenu(){
+    func startingAnimationInfoMenu() {
         //blurView.layer.add(blurEffectAnim(), forKey: "ExpandBlurView")
         UIView.animate(withDuration: 0.2, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: .curveEaseOut, animations: {
             self.frame = CGRect(x: 40, y: self.contactsVC.view.center.y / 2, width: self.cellFrame.width - 80, height: self.cellFrame.height + 200)
@@ -172,9 +174,9 @@ class InfoMenuView: UIView {
         stackView.alignment = .fill
         //stackView.backgroundColor = .clear
         stackView.distribution = .equalSpacing
-        let view1 = setupInfoMenuButtons("square.and.pencil")
+        let writeMessageButton = setupInfoMenuButtons("square.and.pencil")
         
-        let view3 = setupInfoMenuButtons("person.badge.minus")
+        let removeFriendButton = setupInfoMenuButtons("person.badge.minus")
         stackView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(stackView)
         let constraints = [
@@ -182,9 +184,9 @@ class InfoMenuView: UIView {
             stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 70),
             stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -70),
             stackView.heightAnchor.constraint(equalToConstant: 40),
-            view1.widthAnchor.constraint(equalToConstant: 40),
+            writeMessageButton.widthAnchor.constraint(equalToConstant: 40),
             //view2.widthAnchor.constraint(equalToConstant: 40),
-            view3.widthAnchor.constraint(equalToConstant: 40)
+            removeFriendButton.widthAnchor.constraint(equalToConstant: 40)
         ]
         NSLayoutConstraint.activate(constraints)
         stackView.alpha = 0
@@ -204,7 +206,7 @@ class InfoMenuView: UIView {
         stackView.addArrangedSubview(button)
         if imageName == "square.and.pencil" {
             button.addTarget(self, action: #selector(writeMessage), for: .touchUpInside)
-        }else{
+        } else {
             button.addTarget(self, action: #selector(removeFriend), for: .touchUpInside)
         }
         return button
@@ -219,8 +221,6 @@ class InfoMenuView: UIView {
         exitInfoMenuHandler()
         contactsVC.show(controller, sender: nil)
     }
-    
-
     
     @objc func removeFriend() {
         let controller = AddFriendVC()
@@ -262,7 +262,6 @@ class InfoMenuView: UIView {
         blurView.removeFromSuperview()
         removeFromSuperview()
         cell.isHidden = false
-        contactsVC.tableView.isUserInteractionEnabled = true
     }
     
     // ---------------------------------------------------------------------------------------------------------------------------------------------------- //

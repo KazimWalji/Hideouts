@@ -7,10 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		07528C5425C73DD400F0FBFD /* FriendsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07528C5325C73DD400F0FBFD /* FriendsProvider.swift */; };
 		078C405425BE14270019522E /* MRUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078C405225BE14270019522E /* MRUser.swift */; };
 		078C405525BE14270019522E /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078C405325BE14270019522E /* Message.swift */; };
 		078C405725BE143E0019522E /* Firestore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078C405625BE143E0019522E /* Firestore.swift */; };
 		0798438325A2972E004BBAC8 /* Star Fractal Noise.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 0798438225A2972E004BBAC8 /* Star Fractal Noise.mp4 */; };
+		07C6158F25C8DE0100049532 /* Conversation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C6158E25C8DE0100049532 /* Conversation.swift */; };
 		0FD9A3632558F83500877373 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB5E972524F760CE00FAEA6B /* StoreKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		0FD9A3652558F83C00877373 /* Pods_MadlyRad.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4AE685ADFD2349864470B8A3 /* Pods_MadlyRad.framework */; };
 		0FD9A3F5255CCCE700877373 /* ScreenShieldKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0FD9A2B1255390D600877373 /* ScreenShieldKit.xcframework */; };
@@ -102,7 +104,6 @@
 		EB3A645524E1469A00F82E93 /* FriendRequestCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB3A63CC24E1469900F82E93 /* FriendRequestCell.swift */; };
 		EB3A645624E1469A00F82E93 /* FriendRequestVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB3A63CD24E1469900F82E93 /* FriendRequestVC.swift */; };
 		EB3A645824E1469A00F82E93 /* ConversationsNetworking.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB3A63D024E1469900F82E93 /* ConversationsNetworking.swift */; };
-		EB3A645924E1469A00F82E93 /* ConvTableView + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB3A63D124E1469900F82E93 /* ConvTableView + Extension.swift */; };
 		EB3A645B24E1469A00F82E93 /* ConversationsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB3A63D324E1469900F82E93 /* ConversationsVC.swift */; };
 		EB3A645C24E1469A00F82E93 /* NewConvSelectedProtocol + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB3A63D424E1469900F82E93 /* NewConvSelectedProtocol + Extension.swift */; };
 		EB3A645D24E1469A00F82E93 /* NewConversationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB3A63D624E1469900F82E93 /* NewConversationVC.swift */; };
@@ -183,10 +184,12 @@
 
 /* Begin PBXFileReference section */
 		0046A90C4A3E19B903C95D5D /* Pods-MadlyRad.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MadlyRad.debug.xcconfig"; path = "Target Support Files/Pods-MadlyRad/Pods-MadlyRad.debug.xcconfig"; sourceTree = "<group>"; };
+		07528C5325C73DD400F0FBFD /* FriendsProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsProvider.swift; sourceTree = "<group>"; };
 		078C405225BE14270019522E /* MRUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MRUser.swift; sourceTree = "<group>"; };
 		078C405325BE14270019522E /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		078C405625BE143E0019522E /* Firestore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Firestore.swift; sourceTree = "<group>"; };
 		0798438225A2972E004BBAC8 /* Star Fractal Noise.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Star Fractal Noise.mp4"; sourceTree = "<group>"; };
+		07C6158E25C8DE0100049532 /* Conversation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Conversation.swift; sourceTree = "<group>"; };
 		0FD9A2B1255390D600877373 /* ScreenShieldKit.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = ScreenShieldKit.xcframework; path = MadlyRad/ScreenShieldKit.xcframework; sourceTree = "<group>"; };
 		13A6FEA61B719E28D3D00C6A /* Pods-MadlyRad.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MadlyRad.release.xcconfig"; path = "Target Support Files/Pods-MadlyRad/Pods-MadlyRad.release.xcconfig"; sourceTree = "<group>"; };
 		4AE685ADFD2349864470B8A3 /* Pods_MadlyRad.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MadlyRad.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -278,7 +281,6 @@
 		EB3A63CC24E1469900F82E93 /* FriendRequestCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendRequestCell.swift; sourceTree = "<group>"; };
 		EB3A63CD24E1469900F82E93 /* FriendRequestVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendRequestVC.swift; sourceTree = "<group>"; };
 		EB3A63D024E1469900F82E93 /* ConversationsNetworking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationsNetworking.swift; sourceTree = "<group>"; };
-		EB3A63D124E1469900F82E93 /* ConvTableView + Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ConvTableView + Extension.swift"; sourceTree = "<group>"; };
 		EB3A63D324E1469900F82E93 /* ConversationsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationsVC.swift; sourceTree = "<group>"; };
 		EB3A63D424E1469900F82E93 /* NewConvSelectedProtocol + Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NewConvSelectedProtocol + Extension.swift"; sourceTree = "<group>"; };
 		EB3A63D624E1469900F82E93 /* NewConversationVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewConversationVC.swift; sourceTree = "<group>"; };
@@ -457,6 +459,7 @@
 				EB3A636F24E1469800F82E93 /* LoadImage + Extension.swift */,
 				EB3A637024E1469800F82E93 /* Calendar + Extension.swift */,
 				EB3A637124E1469800F82E93 /* NavigationItem + Extension.swift */,
+				07528C5325C73DD400F0FBFD /* FriendsProvider.swift */,
 			);
 			path = "Helper Tools";
 			sourceTree = "<group>";
@@ -674,10 +677,10 @@
 				8F11A5A8256580A100F5ECD9 /* ConverstaionsCell.swift */,
 				EB3A63D024E1469900F82E93 /* ConversationsNetworking.swift */,
 				EB04711E24E5CE1B0015BDA8 /* conversationsBugFix.swift */,
-				EB3A63D124E1469900F82E93 /* ConvTableView + Extension.swift */,
 				EB3A63D324E1469900F82E93 /* ConversationsVC.swift */,
 				EB3A63D424E1469900F82E93 /* NewConvSelectedProtocol + Extension.swift */,
 				EB3A63D524E1469900F82E93 /* NewConversations */,
+				07C6158E25C8DE0100049532 /* Conversation.swift */,
 			);
 			path = Conversations;
 			sourceTree = "<group>";
@@ -1035,7 +1038,6 @@
 				EB61439125074F6100FF9456 /* HomeviewControler.swift in Sources */,
 				EB3A640D24E1469A00F82E93 /* Helpers.swift in Sources */,
 				D61A2D4225A250270093F708 /* EmptyListView.swift in Sources */,
-				EB3A645924E1469A00F82E93 /* ConvTableView + Extension.swift in Sources */,
 				EB3A647524E1469A00F82E93 /* ChatTabBar.swift in Sources */,
 				EB26C3F824F6D2EA002D6674 /* StickerImageCell.swift in Sources */,
 				EB3A640924E1469A00F82E93 /* Messages.swift in Sources */,
@@ -1048,6 +1050,8 @@
 				EB3A643524E1469A00F82E93 /* ChangePasswordVC.swift in Sources */,
 				078C405425BE14270019522E /* MRUser.swift in Sources */,
 				EB04713124E9C5D80015BDA8 /* DOB.swift in Sources */,
+				07528C5425C73DD400F0FBFD /* FriendsProvider.swift in Sources */,
+				07C6158F25C8DE0100049532 /* Conversation.swift in Sources */,
 				EB386E5F24F9707C00865A44 /* FirebaseData.swift in Sources */,
 				EB3A646124E1469A00F82E93 /* ProfileImageButton.swift in Sources */,
 				FA7739C0256D7C160000DA93 /* SelectViewColorCell.swift in Sources */,

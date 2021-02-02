@@ -22,14 +22,14 @@ class ConversationsCell: UITableViewCell {
     var convVC: ConversationsVC!
     
     var message: Messages? {
-        didSet{
+        didSet {
             guard let message = message else { return }
             convVC.setupNoTypingCell(self)
             handleFriendInfo(message)
-            convVC.observeIsUserTypingHandler(message, self)
+//            convVC.observeIsUserTypingHandler(message, self)
             checkmark.image = UIImage(named: "checkmark_icon")
             handleSentMessages(message)
-            let date = NSDate(timeIntervalSince1970: message.time.doubleValue)
+            let date = NSDate()
             timeLabel.text = convVC.calendar.calculateTimePassed(date: date).uppercased()
             handleMessageType(message)
         }
@@ -48,8 +48,6 @@ class ConversationsCell: UITableViewCell {
         setupUserTypingView()
         setupUnreadMessagesView()
         setupCheckmark()
-        
-        
     }
     
     required init?(coder: NSCoder) {

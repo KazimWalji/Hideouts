@@ -12,10 +12,13 @@ class NewConversationVC: UIViewController {
     var conversationDelegate: ConversationsVC!
     var forwardName: String?
     
-    // ---------------------------------------------------------------------------------------------------------------------------------------------------- //
-    
+    private var friends = [FriendInfo]()
+        
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        friends = [FriendInfo(id: nil, name: "Name", profileImage: nil, email: "test@test.com", isOnline: nil, lastLogin: nil, UserID: nil)]
+
         setupForwardView()
         navigationController?.navigationBar.tintColor = .black
         setupTableView()
@@ -86,7 +89,7 @@ extension NewConversationVC: UITableViewDelegate, UITableViewDataSource {
     // ---------------------------------------------------------------------------------------------------------------------------------------------------- //
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return Friends.list.count
+        return friends.count
     }
     
     // ---------------------------------------------------------------------------------------------------------------------------------------------------- //
@@ -94,8 +97,13 @@ extension NewConversationVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "NewConversationCell") as! NewConversationCell
         cell.selectionStyle = .none
-        let friend = Friends.list[indexPath.row]
-        cell.profileImage.loadImage(url: friend.profileImage ?? "")
+        let friend = friends[indexPath.row]
+        
+        if let profileImageURL = friend.profileImage {
+            cell.profileImage.loadImage(url: friend.profileImage ?? "")
+        } else {
+            //TODO: implement default image
+        }
         cell.friendName.text = friend.name
         cell.friendEmail.text = friend.email
         return cell
@@ -104,7 +112,7 @@ extension NewConversationVC: UITableViewDelegate, UITableViewDataSource {
     // ---------------------------------------------------------------------------------------------------------------------------------------------------- //
  
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let friend = Friends.list[indexPath.row]
+        let friend = friends[indexPath.row]
         if let name = forwardName {
             //forwardDelegate?.forwardToSelectedFriend(friend: friend, for: name)
             dismiss(animated: true, completion: nil)

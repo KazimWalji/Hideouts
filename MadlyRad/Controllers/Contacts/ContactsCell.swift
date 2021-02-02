@@ -10,7 +10,7 @@ class ContactsCell: UITableViewCell {
     let friendName = UILabel()
     //let friendEmail = UILabel()
     let isOnlineView = UIView()
-    let UserID = UILabel()
+//    let UserID = UILabel()
     
     // ---------------------------------------------------------------------------------------------------------------------------------------------------- //
     
@@ -21,7 +21,7 @@ class ContactsCell: UITableViewCell {
         setupNameLabel()
 //        setupEmailLabel()
         setupIsOnlineImage()
-        setupUserID()
+//        setupUserID()
     }
     
     required init?(coder: NSCoder) {
@@ -31,6 +31,8 @@ class ContactsCell: UITableViewCell {
     // ---------------------------------------------------------------------------------------------------------------------------------------------------- //
     
     private func setupImage(){
+        // use default image, TODO: pull image from friend info
+        profileImage.image = UIImage(systemName: "folder.circle")
         addSubview(profileImage)
         profileImage.contentMode = .scaleAspectFill
         profileImage.layer.cornerRadius = 30
@@ -94,18 +96,18 @@ class ContactsCell: UITableViewCell {
         ]
         NSLayoutConstraint.activate(constraints)
     }
-    private func setupUserID(){
-        addSubview(UserID)
-        UserID.textColor = .lightGray
-        UserID.numberOfLines = 0
-        UserID.translatesAutoresizingMaskIntoConstraints = false
-        UserID.font = UIFont(name: "Proxima Nova", size: 18)
-        let constraints = [
-            UserID.topAnchor.constraint(equalTo: friendName.bottomAnchor),
-            UserID.leadingAnchor.constraint(equalTo: profileImage.trailingAnchor, constant: 15)
-        ]
-        NSLayoutConstraint.activate(constraints)
-    }
+//    private func setupUserID(){
+//        addSubview(UserID)
+//        UserID.textColor = .lightGray
+//        UserID.numberOfLines = 0
+//        UserID.translatesAutoresizingMaskIntoConstraints = false
+//        UserID.font = UIFont(name: "Proxima Nova", size: 18)
+//        let constraints = [
+//            UserID.topAnchor.constraint(equalTo: friendName.bottomAnchor),
+//            UserID.leadingAnchor.constraint(equalTo: profileImage.trailingAnchor, constant: 15)
+//        ]
+//        NSLayoutConstraint.activate(constraints)
+//    }
 
     // ---------------------------------------------------------------------------------------------------------------------------------------------------- //
     
