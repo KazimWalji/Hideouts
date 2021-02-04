@@ -10,8 +10,8 @@ class SettingsVC: UIViewController, UIImagePickerControllerDelegate, UINavigatio
     let logoutButton = UIButton(type: .system)
     let tableView = UITableView()
     
-    let settingsItems = ["Appearance", "Early Supports", "About", "Contact Us!"]
-    let settingsImages = ["paint_icon", "question-mark", "question-mark", "abuse_icon"]
+    let settingsItems = ["Appearance", "Early Supports", "About", "Contact Us!", "Background Image","Share BestFriends with friends"]
+    let settingsImages = ["paint_icon", "question-mark", "question-mark", "abuse_icon", "backgroundIcon","share1"]
     
     var settingsNetworking: SettingsNetworking!
     
@@ -20,19 +20,26 @@ class SettingsVC: UIViewController, UIImagePickerControllerDelegate, UINavigatio
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = "Settings"
+        
         view.backgroundColor = .white
+        let background = UIImageView(frame: view.frame)
+        background.bounds = view.bounds
+        background.image = #imageLiteral(resourceName: "purpleBackground")
+        view.addSubview(background)
         settingsNetworking = SettingsNetworking(self)
         setupTableView()
         setupRightNavButton()
-        view.backgroundColor = .white
+
    //background
 
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.navigationBar.isHidden = false
+        navigationController?.navigationBar.isHidden = true
+        navigationController?.navigationBar.barTintColor = .clear
         tabBarController?.tabBar.isHidden = false
+
     }
     
     // ---------------------------------------------------------------------------------------------------------------------------------------------------- //
@@ -132,7 +139,7 @@ extension SettingsVC: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = UIView()
-        headerView.backgroundColor = UIColor(white: 0.95, alpha: 1)
+        headerView.backgroundColor = .clear
         return headerView
     }
     
@@ -151,7 +158,7 @@ extension SettingsVC: UITableViewDelegate, UITableViewDataSource {
     // ---------------------------------------------------------------------------------------------------------------------------------------------------- //
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 0 { return 1 } else { return 4 }
+        if section == 0 { return 1 } else { return 6 }
     }
     
     // ---------------------------------------------------------------------------------------------------------------------------------------------------- //
@@ -166,6 +173,7 @@ extension SettingsVC: UITableViewDelegate, UITableViewDataSource {
             cell.pronounLabel.text = CurrentUser.pronoun
             cell.profileImage.loadImage(url: CurrentUser.profileImage)
             cell.settingsVC = self
+            cell.backgroundColor = .clear
             return cell
         }else{
             tableView.rowHeight = 45
@@ -173,7 +181,9 @@ extension SettingsVC: UITableViewDelegate, UITableViewDataSource {
             let item = settingsItems[indexPath.row]
             let itemImg = settingsImages[indexPath.row]
             cell.settingsLabel.text = item
+            cell.settingsLabel.textColor = .white
             cell.settingsImage.image = UIImage(named: itemImg)
+            cell.backgroundColor = UIColor(white: 0.05, alpha: 0.3)
             return cell
         }
     }
@@ -192,15 +202,63 @@ extension SettingsVC: UITableViewDelegate, UITableViewDataSource {
             }else{ //if indexPath.section == 2
                 let item = settingsItems[indexPath.row]
                 if item == "About"{
-                let controller = AboutViewController()
-                show(controller, sender: nil)
+                    let controller = AboutViewController()
+                    show(controller, sender: nil)
                 }
                 if item == "Contact Us!"{
-                if let url = URL(string: "https://hideoutsusa.com/contact/"){
-                let safariVC = SFSafariViewController(url: url)
-                    self.present(safariVC, animated: true, completion: nil)
+                    if let url = URL(string: "https://hideoutsusa.com/contact/"){
+                    let safariVC = SFSafariViewController(url: url)
+                        self.present(safariVC, animated: true, completion: nil)
 
+                    }
                 }
+                if item == "Share BestFriends with friends"{
+                        
+                        // Setting description
+                            let firstActivityItem = "Check out this app!"
+
+                            // Setting url
+                            let secondActivityItem : NSURL = NSURL(string: "https://apps.apple.com/tr/app/hideouts/id1525274348")!
+
+                            // If you want to use an image
+                            let image : UIImage = UIImage(named: "AppIcon")!
+                 
+                            let activityViewController : UIActivityViewController = UIActivityViewController(
+                                activityItems: [firstActivityItem, secondActivityItem, image], applicationActivities: nil)
+
+                            // This lines is for the popover you need to show in iPad
+                        activityViewController.popoverPresentationController?.sourceView = self.view
+
+                            // This line remove the arrow of the popover to show in iPad
+                            activityViewController.popoverPresentationController?.permittedArrowDirections = UIPopoverArrowDirection.down
+                            activityViewController.popoverPresentationController?.sourceRect = CGRect(x: 150, y: 150, width: 0, height: 0)
+
+                            // Pre-configuring activity items
+                            activityViewController.activityItemsConfiguration = [
+                            UIActivity.ActivityType.message
+                            ] as? UIActivityItemsConfigurationReading
+
+                            // Anything you want to exclude
+                            activityViewController.excludedActivityTypes = [
+                                UIActivity.ActivityType.postToWeibo,
+                                UIActivity.ActivityType.print,
+                                UIActivity.ActivityType.assignToContact,
+                                UIActivity.ActivityType.saveToCameraRoll,
+                                UIActivity.ActivityType.addToReadingList,
+                                UIActivity.ActivityType.postToFlickr,
+                                UIActivity.ActivityType.postToVimeo,
+                                UIActivity.ActivityType.postToTencentWeibo,
+                                UIActivity.ActivityType.postToFacebook
+                            ]
+
+                            activityViewController.isModalInPresentation = true
+                            self.present(activityViewController, animated: true, completion: nil)
+                        
+                    }
+                
+                if item == "Background Image" {
+                    let controller = ChangeBackgroundVC()
+                    show(controller, sender: nil)
                 }
     }
     
