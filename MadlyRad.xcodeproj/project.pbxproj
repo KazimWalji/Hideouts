@@ -14,7 +14,6 @@
 		0FD9A3F6255CCCE700877373 /* ScreenShieldKit.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0FD9A2B1255390D600877373 /* ScreenShieldKit.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		7A0247D725C5FC7200F71113 /* ChangeBackgroundVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A0247D625C5FC7200F71113 /* ChangeBackgroundVC.swift */; };
 		7A0248F225C605A400F71113 /* BackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A0248F125C605A400F71113 /* BackgroundView.swift */; };
-		7A1F2A6825AE144E0054DBB9 /* Star Animation.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 7A1F2A6725AE144E0054DBB9 /* Star Animation.mp4 */; };
 		7A1F2A6A25AE3B980054DBB9 /* Friend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A1F2A6925AE3B980054DBB9 /* Friend.swift */; };
 		7A70966225C49987004961C6 /* Star.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A70966125C49986004961C6 /* Star.swift */; };
 		8F11A5A52565803900F5ECD9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F11A5A42565803900F5ECD9 /* AppDelegate.swift */; };
@@ -191,7 +190,6 @@
 		4AE685ADFD2349864470B8A3 /* Pods_MadlyRad.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MadlyRad.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7A0247D625C5FC7200F71113 /* ChangeBackgroundVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeBackgroundVC.swift; sourceTree = "<group>"; };
 		7A0248F125C605A400F71113 /* BackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundView.swift; sourceTree = "<group>"; };
-		7A1F2A6725AE144E0054DBB9 /* Star Animation.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Star Animation.mp4"; path = "../../../../../../Downloads/Star Animation.mp4"; sourceTree = "<group>"; };
 		7A1F2A6925AE3B980054DBB9 /* Friend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Friend.swift; sourceTree = "<group>"; };
 		7A70966125C49986004961C6 /* Star.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Star.swift; sourceTree = "<group>"; };
 		8F11A5A42565803900F5ECD9 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -202,6 +200,7 @@
 		8F11A5AD2565810C00F5ECD9 /* ResponseView + Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ResponseView + Extension.swift"; sourceTree = "<group>"; };
 		8F11A5B02565813D00F5ECD9 /* ChatCollectionView + Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ChatCollectionView + Extension.swift"; sourceTree = "<group>"; };
 		8F11A5B42565815C00F5ECD9 /* MessageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
+		8F7AD02E25CCEF7E00221F23 /* Star Animation.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Star Animation.mp4"; sourceTree = "<group>"; };
 		8FF0133E25409903000B8A93 /* gifVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = gifVC.swift; sourceTree = "<group>"; };
 		8FF0134025409A38000B8A93 /* gifCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = gifCell.swift; sourceTree = "<group>"; };
 		8FF013472540A13D000B8A93 /* mChat.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = mChat.xcdatamodel; sourceTree = "<group>"; };
@@ -368,8 +367,8 @@
 		0798437D25A265AD004BBAC8 /* Videos */ = {
 			isa = PBXGroup;
 			children = (
+				8F7AD02E25CCEF7E00221F23 /* Star Animation.mp4 */,
 				0798438225A2972E004BBAC8 /* Star Fractal Noise.mp4 */,
-				7A1F2A6725AE144E0054DBB9 /* Star Animation.mp4 */,
 			);
 			path = Videos;
 			sourceTree = "<group>";
@@ -930,7 +929,6 @@
 				EB288C142535070000F150B0 /* UploadPhotosPopup.xib in Resources */,
 				EB3A647A24E1469A00F82E93 /* changeInfo_anim.json in Resources */,
 				EB3A636124E1405D00F82E93 /* GoogleService-Info.plist in Resources */,
-				7A1F2A6825AE144E0054DBB9 /* Star Animation.mp4 in Resources */,
 				EB3A648024E1469A00F82E93 /* chatTyping.json in Resources */,
 				EBCD2AD824C5141E00EC5F97 /* Certificates.p12 in Resources */,
 				EB3A647624E1469A00F82E93 /* Assets.xcassets in Resources */,
@@ -1266,9 +1264,10 @@
 				CODE_SIGN_ENTITLEMENTS = MadlyRad/MadlyRad.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 50;
+				CURRENT_PROJECT_VERSION = 55;
 				DEVELOPMENT_TEAM = 7Z64AR52G7;
 				INFOPLIST_FILE = MadlyRad/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1291,9 +1290,10 @@
 				CODE_SIGN_ENTITLEMENTS = MadlyRad/MadlyRad.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 50;
+				CURRENT_PROJECT_VERSION = 55;
 				DEVELOPMENT_TEAM = 7Z64AR52G7;
 				INFOPLIST_FILE = MadlyRad/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
