@@ -12,6 +12,7 @@
 		0FD9A3652558F83C00877373 /* Pods_MadlyRad.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4AE685ADFD2349864470B8A3 /* Pods_MadlyRad.framework */; };
 		0FD9A3F5255CCCE700877373 /* ScreenShieldKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0FD9A2B1255390D600877373 /* ScreenShieldKit.xcframework */; };
 		0FD9A3F6255CCCE700877373 /* ScreenShieldKit.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0FD9A2B1255390D600877373 /* ScreenShieldKit.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		3571B38B25C60F6D0079D68A /* NameTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3571B38A25C60F6D0079D68A /* NameTextField.swift */; };
 		7A0247D725C5FC7200F71113 /* ChangeBackgroundVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A0247D625C5FC7200F71113 /* ChangeBackgroundVC.swift */; };
 		7A1F2A6825AE144E0054DBB9 /* Star Animation.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 7A1F2A6725AE144E0054DBB9 /* Star Animation.mp4 */; };
 		7A1F2A6A25AE3B980054DBB9 /* Friend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A1F2A6925AE3B980054DBB9 /* Friend.swift */; };
@@ -139,7 +140,6 @@
 		EB52173824F6C21500A145CB /* 12634-audio-play.json in Resources */ = {isa = PBXBuildFile; fileRef = EB52173724F6C21500A145CB /* 12634-audio-play.json */; };
 		EB61439125074F6100FF9456 /* HomeviewControler.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB61439025074F6100FF9456 /* HomeviewControler.swift */; };
 		EB67595724EA2CB80024F8DE /* Intropage.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB67595624EA2CB80024F8DE /* Intropage.swift */; };
-		EB9295112523D3D9003C1CAA /* NameTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB9295102523D3D9003C1CAA /* NameTextField.swift */; };
 		EB9E7C6824E4697F005DC5BB /* Designable.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB9E7C6724E4697F005DC5BB /* Designable.swift */; };
 		EBA4907E24EE40350058B379 /* PrivacyProtectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBA4907D24EE40350058B379 /* PrivacyProtectionViewController.swift */; };
 		EBB839B1250D7496005098D8 /* loading.json in Resources */ = {isa = PBXBuildFile; fileRef = EBB839B0250D7496005098D8 /* loading.json */; };
@@ -187,6 +187,7 @@
 		0798438225A2972E004BBAC8 /* Star Fractal Noise.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Star Fractal Noise.mp4"; sourceTree = "<group>"; };
 		0FD9A2B1255390D600877373 /* ScreenShieldKit.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = ScreenShieldKit.xcframework; path = MadlyRad/ScreenShieldKit.xcframework; sourceTree = "<group>"; };
 		13A6FEA61B719E28D3D00C6A /* Pods-MadlyRad.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MadlyRad.release.xcconfig"; path = "Target Support Files/Pods-MadlyRad/Pods-MadlyRad.release.xcconfig"; sourceTree = "<group>"; };
+		3571B38A25C60F6D0079D68A /* NameTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NameTextField.swift; path = ../../../../../Downloads/NameTextField.swift; sourceTree = "<group>"; };
 		4AE685ADFD2349864470B8A3 /* Pods_MadlyRad.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MadlyRad.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7A0247D625C5FC7200F71113 /* ChangeBackgroundVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeBackgroundVC.swift; sourceTree = "<group>"; };
 		7A1F2A6725AE144E0054DBB9 /* Star Animation.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Star Animation.mp4"; path = "../../../../../../Downloads/Star Animation.mp4"; sourceTree = "<group>"; };
@@ -317,7 +318,6 @@
 		EB5E972524F760CE00FAEA6B /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		EB61439025074F6100FF9456 /* HomeviewControler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeviewControler.swift; sourceTree = "<group>"; };
 		EB67595624EA2CB80024F8DE /* Intropage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Intropage.swift; sourceTree = "<group>"; };
-		EB9295102523D3D9003C1CAA /* NameTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameTextField.swift; sourceTree = "<group>"; };
 		EB9E7C6724E4697F005DC5BB /* Designable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Designable.swift; sourceTree = "<group>"; };
 		EBA4907D24EE40350058B379 /* PrivacyProtectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyProtectionViewController.swift; sourceTree = "<group>"; };
 		EBB839B0250D7496005098D8 /* loading.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = loading.json; sourceTree = "<group>"; };
@@ -554,7 +554,7 @@
 			children = (
 				EBD3FCFC2500BA7F000C5231 /* ForgotPasswordPopupViewController.swift */,
 				EB3A63B624E1469900F82E93 /* SignInVC.swift */,
-				EB9295102523D3D9003C1CAA /* NameTextField.swift */,
+				3571B38A25C60F6D0079D68A /* NameTextField.swift */,
 				EB3A63A824E1469900F82E93 /* Auth Helpers */,
 				FAB28F942583DA54009AE1C3 /* SelectProfileImageVC.swift */,
 				FAB28F962583DA88009AE1C3 /* SignUpVC.swift */,
@@ -1004,7 +1004,6 @@
 				EBD1A54724E201D900A120F2 /* Welcome.swift in Sources */,
 				EBCB19FB24FE15AC006FF336 /* LocalStoreImagesService.swift in Sources */,
 				EB15287D24F240480026BEF3 /* gifextention.swift in Sources */,
-				EB9295112523D3D9003C1CAA /* NameTextField.swift in Sources */,
 				7A0247D725C5FC7200F71113 /* ChangeBackgroundVC.swift in Sources */,
 				EB3A644124E1469A00F82E93 /* HandleSignInViewDelegate + Extension.swift in Sources */,
 				EB3A644C24E1469A00F82E93 /* ContactsVC.swift in Sources */,
@@ -1056,6 +1055,7 @@
 				FA7739C0256D7C160000DA93 /* SelectViewColorCell.swift in Sources */,
 				EB3A645624E1469A00F82E93 /* FriendRequestVC.swift in Sources */,
 				EB3A646724E1469A00F82E93 /* SharedMediaCell.swift in Sources */,
+				3571B38B25C60F6D0079D68A /* NameTextField.swift in Sources */,
 				EB3A640A24E1469A00F82E93 /* CurrentUser.swift in Sources */,
 				EB386E6224FC620F00865A44 /* FindUsersTableViewController.swift in Sources */,
 				EB3A641024E1469A00F82E93 /* NavigationItem + Extension.swift in Sources */,
