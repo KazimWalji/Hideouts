@@ -191,7 +191,7 @@
 		4AE685ADFD2349864470B8A3 /* Pods_MadlyRad.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MadlyRad.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7A0247D625C5FC7200F71113 /* ChangeBackgroundVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeBackgroundVC.swift; sourceTree = "<group>"; };
 		7A0248F125C605A400F71113 /* BackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundView.swift; sourceTree = "<group>"; };
-		7A1F2A6725AE144E0054DBB9 /* Star Animation.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Star Animation.mp4"; path = "../../../../../../Downloads/Star Animation.mp4"; sourceTree = "<group>"; };
+		7A1F2A6725AE144E0054DBB9 /* Star Animation.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Star Animation.mp4"; sourceTree = "<group>"; };
 		7A1F2A6925AE3B980054DBB9 /* Friend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Friend.swift; sourceTree = "<group>"; };
 		7A70966125C49986004961C6 /* Star.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Star.swift; sourceTree = "<group>"; };
 		8F11A5A42565803900F5ECD9 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
