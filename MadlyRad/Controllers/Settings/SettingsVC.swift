@@ -10,7 +10,7 @@ class SettingsVC: UIViewController, UIImagePickerControllerDelegate, UINavigatio
     let logoutButton = UIButton(type: .system)
     let tableView = UITableView()
     
-    let settingsItems = ["Appearance", "Early Supports", "About", "Contact Us!", "Background Image","Share BestFriends with friends"]
+    let settingsItems = ["Appearance", "Early Supports", "General", "Contact Us!", "Background Image","Share BestFriends with friends"]
     let settingsImages = ["paint_icon", "question-mark", "question-mark", "abuse_icon", "backgroundIcon","share1"]
     
     var settingsNetworking: SettingsNetworking!
@@ -201,7 +201,7 @@ extension SettingsVC: UITableViewDelegate, UITableViewDataSource {
                 show(controller, sender: nil)
             }else{ //if indexPath.section == 2
                 let item = settingsItems[indexPath.row]
-                if item == "About"{
+                if item == "General"{
                     let controller = AboutViewController()
                     show(controller, sender: nil)
                 }

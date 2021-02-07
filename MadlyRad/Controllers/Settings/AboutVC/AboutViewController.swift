@@ -17,7 +17,6 @@ class AboutViewController: UIViewController {
         About()
         privacyPolicy()
         DonateToAGoodCause()
-        smileNotes()
         
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -116,15 +115,6 @@ class AboutViewController: UIViewController {
 
     }
 
-    }
-    private func smileNotes() {
-    let button = UIButton(frame: CGRect(x: self.view.center.x, y: 300, width: 325, height: 50))
-    button.center.x = self.view.center.x
-    button.setTitleColor(UIColor.black, for: UIControl.State.normal)
-      button.setTitle("Smile Notes :)", for: .normal)
-      button.addTarget(self, action: #selector(smileNotesAction), for: .touchUpInside)
-
-      self.view.addSubview(button)
     }
 
     @objc func smileNotesAction(sender: UIButton!) {
