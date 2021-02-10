@@ -164,7 +164,9 @@ class ChatCell: UICollectionViewCell {
                 //mediaMessage.contentMode = .scaleAspectFill
                 mediaMessage.isHidden = false
                 backgroundWidthAnchor.constant = 200
-                messageBackground.backgroundColor = UIColor(red: 247/255, green: 247/255, blue: 247/255, alpha: 1)
+                //messageBackground.backgroundColor = UIColor(red: 247/255, green: 247/255, blue: 247/255, alpha: 1)
+                messageBackground.backgroundColor = .clear
+                
                 
                 
                 

@@ -24,6 +24,7 @@
 		8F11A5AF2565810C00F5ECD9 /* ResponseView + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F11A5AD2565810C00F5ECD9 /* ResponseView + Extension.swift */; };
 		8F11A5B22565813D00F5ECD9 /* ChatCollectionView + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F11A5B02565813D00F5ECD9 /* ChatCollectionView + Extension.swift */; };
 		8F11A5B52565815C00F5ECD9 /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F11A5B42565815C00F5ECD9 /* MessageView.swift */; };
+		8FE077F425CDF9210035EC15 /* Star Animation.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 8F7AD02E25CCEF7E00221F23 /* Star Animation.mp4 */; };
 		8FF0133F25409903000B8A93 /* gifVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FF0133E25409903000B8A93 /* gifVC.swift */; };
 		8FF0134125409A38000B8A93 /* gifCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FF0134025409A38000B8A93 /* gifCell.swift */; };
 		8FF013482540A13E000B8A93 /* mChat.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8FF013462540A13D000B8A93 /* mChat.xcdatamodeld */; };
@@ -929,6 +930,7 @@
 				EB288C142535070000F150B0 /* UploadPhotosPopup.xib in Resources */,
 				EB3A647A24E1469A00F82E93 /* changeInfo_anim.json in Resources */,
 				EB3A636124E1405D00F82E93 /* GoogleService-Info.plist in Resources */,
+				8FE077F425CDF9210035EC15 /* Star Animation.mp4 in Resources */,
 				EB3A648024E1469A00F82E93 /* chatTyping.json in Resources */,
 				EBCD2AD824C5141E00EC5F97 /* Certificates.p12 in Resources */,
 				EB3A647624E1469A00F82E93 /* Assets.xcassets in Resources */,
@@ -949,7 +951,7 @@
 /* Begin PBXShellScriptBuildPhase section */
 		736E7A75C0DFAB55218FF414 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 12;
 			files = (
 			);
 			inputFileListPaths = (

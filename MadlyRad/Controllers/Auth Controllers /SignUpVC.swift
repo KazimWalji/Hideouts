@@ -20,7 +20,6 @@ class SignUpVC: UIViewController, UITextFieldDelegate, SFSafariViewControllerDel
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        signUpView.isHidden = true
        //background
         view.backgroundColor = .white
         authKeyboardHandler.view = view
@@ -40,6 +39,8 @@ class SignUpVC: UIViewController, UITextFieldDelegate, SFSafariViewControllerDel
         //setupGradientView()
         setupRegisterView()
         setupNameView()
+        signUpView.isHidden = false
+        nameTextView.isHidden = true
         setupContinueButton()
         setupBackButton()
         UserProtectionsButton()
