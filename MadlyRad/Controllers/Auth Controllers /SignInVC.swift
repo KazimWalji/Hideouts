@@ -199,6 +199,11 @@ class SignInVC: UIViewController, UITextFieldDelegate {
     // MARK: LOGIN METHOD
     
     @objc private func loginButtonPressed() {
+        #if targetEnvironment(simulator)
+        let controller = ChatTabBar()
+        present(controller, animated: false, completion: nil)
+        #endif
+        
         loginView.errorLabel.text = ""
         let validation = validateTF()
         if validation != nil {
@@ -235,7 +240,7 @@ class SignInVC: UIViewController, UITextFieldDelegate {
     
     private func removeTokenFromUserInDatabase(user: MRUser, token: String) {
         Firestore.firestore()
-            .collection(.dev1)
+            .collection(.environment)
             .document(.users)
             .collection(.users)
             .whereField(.userID, in: [user.userID]).getDocuments { currentUserQuerySnapshot, error in
@@ -253,7 +258,7 @@ class SignInVC: UIViewController, UITextFieldDelegate {
     
     private func addNotificationTokenToDatabase(user: MRUser, token: String) {
         Firestore.firestore()
-            .collection(.dev1)
+            .collection(.environment)
             .document(.users)
             .collection(.users)
             .whereField(.userID, in: [user.userID]).getDocuments { currentUserQuerySnapshot, error in

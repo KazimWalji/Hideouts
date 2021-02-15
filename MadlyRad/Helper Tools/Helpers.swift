@@ -5,9 +5,7 @@ import Lottie
 
 extension UIViewController {
     
-    // ---------------------------------------------------------------------------------------------------------------------------------------------------- //
-    // BLANK VIEW FOR CONTROLLERS WITH NO DATA.
-    
+    /// BLANK VIEW FOR CONTROLLERS WITH NO DATA.
     func setupBlankView(_ blankLoadingView: AnimationView) {
         view.addSubview(blankLoadingView)
         blankLoadingView.translatesAutoresizingMaskIntoConstraints = false

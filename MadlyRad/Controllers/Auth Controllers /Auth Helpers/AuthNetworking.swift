@@ -43,7 +43,7 @@ class AuthNetworking {
     // MARK: SETUP USER INFO METHOD
     
     func fetchUser(_ uid: String, handleCompletion: @escaping (_ wasSuccessful: Bool) -> Void) {
-        let currentUserDocumentReference = Firestore.firestore().collection(.dev1).document(.users).collection(.users).document(uid)
+        let currentUserDocumentReference = Firestore.firestore().collection(.environment).document(.users).collection(.users).document(uid)
         
         currentUserDocumentReference.getDocument { currentUserDocumentSnapshot, error in
             guard let snapshot = currentUserDocumentSnapshot,
@@ -171,7 +171,7 @@ class AuthNetworking {
     }
     
     private func addUserToDatabase(_ user: MRUser) {
-        Firestore.firestore().collection(.dev1).document(.users).collection(.users).addDocument(data: user.dictionary)
+        Firestore.firestore().collection(.environment).document(.users).collection(.users).addDocument(data: user.dictionary)
     }
     
     // ---------------------------------------------------------------------------------------------------------------------------------------------------- //

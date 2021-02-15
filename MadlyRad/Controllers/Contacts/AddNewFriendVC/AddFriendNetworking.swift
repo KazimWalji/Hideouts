@@ -35,7 +35,6 @@ class AddFriendNetworking {
                 completion(error)
             }
         }
-        Friends.contactsVC?.tableView.reloadData()
     }
 
     
