@@ -100,6 +100,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
         print("Unable to register for remote notifications: \(error.localizedDescription)")
+        
+        #if targetEnvironment(simulator)
+            
+        #endif
+        
     }
     
     

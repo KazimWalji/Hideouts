@@ -213,11 +213,9 @@ class AddFriendVC: UIViewController{
             addButton.layer.insertSublayer(grayGradientLayer, at: 0)
             redGradientLayer.removeFromSuperlayer()
             greenGradientLayer.removeFromSuperlayer()
-        }else{
-           
-                addFriendNetworking.removeFriendRequest()
-    addFriendNetworking.removeFriend(completion: {_ in})
-            Friends.contactsVC?.tableView.reloadData()
+        } else {
+            addFriendNetworking.removeFriendRequest()
+            addFriendNetworking.removeFriend(completion: {_ in})
             addButton.layer.insertSublayer(greenGradientLayer, at: 0)
             redGradientLayer.removeFromSuperlayer()
             grayGradientLayer.removeFromSuperlayer()

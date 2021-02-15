@@ -14,57 +14,57 @@ import ScreenShieldKit
 
 class ChatVC: UIViewController,UIImagePickerControllerDelegate, UINavigationControllerDelegate, AVAudioRecorderDelegate, GiphyDelegate, SKPaymentTransactionObserver, SKProductsRequestDelegate{
     
-     let productID = "com.RobRoe.Hideouts.stickers"
-       
-           func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) { //handles transaction
-           for transaction in transactions
-           {
-               switch transaction.transactionState {
-               case .purchasing:
-                   print("purchasing")
-                   SKPaymentQueue.default().finishTransaction(transaction)
-                   SKPaymentQueue.default().remove(self)
-                   break
-               case .purchased, .restored:
-                   
-                  // let storyboard = UIStoryboard(name: "HomeVC", bundle: nil)
-               //    let controller = storyboard.instantiateViewController(withIdentifier: "PaidStickerVC") as! PaidStickerVC
+    let productID = "com.RobRoe.Hideouts.stickers"
+    
+    func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) { //handles transaction
+        for transaction in transactions
+        {
+            switch transaction.transactionState {
+            case .purchasing:
+                print("purchasing")
+                SKPaymentQueue.default().finishTransaction(transaction)
+                SKPaymentQueue.default().remove(self)
+                break
+            case .purchased, .restored:
+                
+                // let storyboard = UIStoryboard(name: "HomeVC", bundle: nil)
+                //    let controller = storyboard.instantiateViewController(withIdentifier: "PaidStickerVC") as! PaidStickerVC
                 //   self.present(controller, animated: true, completion: nil)
-                   SKPaymentQueue.default().finishTransaction(transaction)
-                   SKPaymentQueue.default().remove(self)
-                   break
-              case let .failed:
-               print("failed: \(transaction.error)")
-               SKPaymentQueue.default().finishTransaction(transaction)
-               default:
-                   print("finish")
-                   SKPaymentQueue.default().finishTransaction(transaction)
-                   SKPaymentQueue.default().remove(self)
-                   break
-               }
-           }
-       }
-       func productsRequest(_ request: SKProductsRequest, didReceive response: SKProductsResponse) { //asking apple to process payment
-           if let product = response.products.first {
-               print(response.products.count)
-               myProduct = product
-               print(product.productIdentifier)
-               print(product.price)
-               print(product.localizedDescription)
-               print(product.localizedTitle)
-           }
-           else{
-               print(response.products.count)
-               print(response.products.first)
-           }
-       }
-
-
-
-
-       var myProduct: SKProduct? //product being putchased
-
-
+                SKPaymentQueue.default().finishTransaction(transaction)
+                SKPaymentQueue.default().remove(self)
+                break
+            case let .failed:
+                print("failed: \(transaction.error)")
+                SKPaymentQueue.default().finishTransaction(transaction)
+            default:
+                print("finish")
+                SKPaymentQueue.default().finishTransaction(transaction)
+                SKPaymentQueue.default().remove(self)
+                break
+            }
+        }
+    }
+    func productsRequest(_ request: SKProductsRequest, didReceive response: SKProductsResponse) { //asking apple to process payment
+        if let product = response.products.first {
+            print(response.products.count)
+            myProduct = product
+            print(product.productIdentifier)
+            print(product.price)
+            print(product.localizedDescription)
+            print(product.localizedTitle)
+        }
+        else{
+            print(response.products.count)
+            print(response.products.first)
+        }
+    }
+    
+    
+    
+    
+    var myProduct: SKProduct? //product being putchased
+    
+    
     // ---------------------------------------------------------------------------------------------------------------------------------------------------- //
     // ChatVC. This controller is responsible for sending and receiving messages. It supports text, audio, video and image messages.
     
@@ -87,8 +87,8 @@ class ChatVC: UIViewController,UIImagePickerControllerDelegate, UINavigationCont
     var hideKeyboardTap: UITapGestureRecognizer?
     
     
-
-
+    
+    
     
     
     // ---------------------------------------------------------------------------------------------------------------------------------------------------- //
@@ -102,28 +102,28 @@ class ChatVC: UIViewController,UIImagePickerControllerDelegate, UINavigationCont
         //background
         
         
-    //collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "collectionCell")
-
+        //collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "collectionCell")
+        
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(doubleTapped))
-             tap.numberOfTapsRequired = 2
-              view.addGestureRecognizer(tap)
+        tap.numberOfTapsRequired = 2
+        view.addGestureRecognizer(tap)
         let tap3 = UITapGestureRecognizer(target: self, action: #selector(tripleTapped))
         tap3.numberOfTapsRequired = 3
-         view.addGestureRecognizer(tap3)
+        view.addGestureRecognizer(tap3)
         hideChatController = HideChatController(viewController: self as! HideChatType)
         
-       
-
+        
+        
     }
-
+    
     @objc func doubleTapped() {
-       // collectionView.isHidden = true
+        // collectionView.isHidden = true
     }
     @objc func tripleTapped() {
-       // collectionView.isHidden = false
-       }
-
+        // collectionView.isHidden = false
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         tabBarController?.tabBar.isHidden = true
@@ -158,29 +158,29 @@ class ChatVC: UIViewController,UIImagePickerControllerDelegate, UINavigationCont
         hideKeyboardOnTap()
         collectionView.alpha = hideChatController!.isHidden ? 0 : 1
     }
-
     
-
+    
+    
     // ---------------------------------------------------------------------------------------------------------------------------------------------------- //
-
-
     
-   /* private func setupChatBlankView() {
-        view.addSubview(blankLoadingView)
-        blankLoadingView.translatesAutoresizingMaskIntoConstraints = false
-        blankLoadingView.backgroundColor = .white
-        blankLoadingView.play()
-        blankLoadingView.loopMode = .loop
-        blankLoadingView.backgroundBehavior = .pauseAndRestore
-        let constraints = [
-            blankLoadingView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            blankLoadingView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            blankLoadingView.bottomAnchor.constraint(equalTo: messageContainer.topAnchor),
-            blankLoadingView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor)
-        ]
-        NSLayoutConstraint.activate(constraints)
-    }
-    */
+    
+    
+    /* private func setupChatBlankView() {
+     view.addSubview(blankLoadingView)
+     blankLoadingView.translatesAutoresizingMaskIntoConstraints = false
+     blankLoadingView.backgroundColor = .white
+     blankLoadingView.play()
+     blankLoadingView.loopMode = .loop
+     blankLoadingView.backgroundBehavior = .pauseAndRestore
+     let constraints = [
+     blankLoadingView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+     blankLoadingView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+     blankLoadingView.bottomAnchor.constraint(equalTo: messageContainer.topAnchor),
+     blankLoadingView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor)
+     ]
+     NSLayoutConstraint.activate(constraints)
+     }
+     */
     // ---------------------------------------------------------------------------------------------------------------------------------------------------- //
     
     func setupChat(){
@@ -192,8 +192,8 @@ class ChatVC: UIViewController,UIImagePickerControllerDelegate, UINavigationCont
         
         observeFriendTyping()
     }
-
-
+    
+    
     // ---------------------------------------------------------------------------------------------------------------------------------------------------- //
     
     private func setupChatNavBar(){
@@ -206,7 +206,7 @@ class ChatVC: UIViewController,UIImagePickerControllerDelegate, UINavigationCont
             navigationItem.setNavTitles(navTitle: friend.name ?? "", navSubtitle: calendar.calculateLastLogin(loginDate))
         }
     }
-
+    
     // ---------------------------------------------------------------------------------------------------------------------------------------------------- //
     // MARK: CLIP IMAGE BUTTON PRESSED METHOD
     
@@ -220,30 +220,30 @@ class ChatVC: UIViewController,UIImagePickerControllerDelegate, UINavigationCont
         let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         let picture = UIAlertAction(title: NSLocalizedString("Take a Photo!", comment: ""), style: .default, handler: { _ in
             if UIImagePickerController.isSourceTypeAvailable(.camera) {
-                 imagePicker.sourceType = .camera
-                 self.present(imagePicker, animated: true, completion: nil)
-             }
+                imagePicker.sourceType = .camera
+                self.present(imagePicker, animated: true, completion: nil)
+            }
         })
         let imagePickerAlert = UIAlertAction(title: NSLocalizedString("Photo Library!", comment: ""), style: .default, handler: { _ in
             imagePicker.sourceType = .photoLibrary
             self.present(imagePicker, animated: true, completion: nil)
-
-            })
+            
+        })
         let action = UIAlertAction(title: NSLocalizedString("Gifs!", comment: ""), style: .default, handler: { _ in
-                     let giphy = GiphyViewController()
-                              giphy.delegate = self
-                             // self.present(giphy, animated: true, completion: nil)
-                              giphy.mediaTypeConfig = [.recents, .gifs]
-                               if let contentType = self.selectedContentType {
-                                      giphy.selectedContentType = contentType
-                                  }
-                                  if let user = self.showMoreByUser {
-                                      giphy.showMoreByUser = user
-                                  }
-                                  
-                              self.present(giphy, animated: true, completion: nil)
-              
-              })
+            let giphy = GiphyViewController()
+            giphy.delegate = self
+            // self.present(giphy, animated: true, completion: nil)
+            giphy.mediaTypeConfig = [.recents, .gifs]
+            if let contentType = self.selectedContentType {
+                giphy.selectedContentType = contentType
+            }
+            if let user = self.showMoreByUser {
+                giphy.showMoreByUser = user
+            }
+            
+            self.present(giphy, animated: true, completion: nil)
+            
+        })
         let stickers = UIAlertAction(title: NSLocalizedString("Custom Stickers!", comment: ""), style: .default, handler: { _ in
             let storyboard = UIStoryboard(name: "HomeVC", bundle: nil)
             let controller = storyboard.instantiateViewController(withIdentifier: "StickerVC") as! StickerVC
@@ -255,37 +255,37 @@ class ChatVC: UIViewController,UIImagePickerControllerDelegate, UINavigationCont
                 return 0
             }
             
-               })
+        })
         let paidstickers = UIAlertAction(title: NSLocalizedString("Premium stickers!", comment: ""), style: .default, handler: { _ in
             let storyboard = UIStoryboard(name: "HomeVC", bundle: nil)
-                               let controller = storyboard.instantiateViewController(withIdentifier: "PaidStickerVC") as! PaidStickerVC
-                               self.present(controller, animated: true, completion: nil)
-                               controller.sendSticker = {image in
-                                   self.chatNetworking.uploadImage(image: image) { (storageRef, image, mediaName) in
-                                       self.chatNetworking.downloadImage(storageRef, image, mediaName)
-                                   }
-                                   return 0
+            let controller = storyboard.instantiateViewController(withIdentifier: "PaidStickerVC") as! PaidStickerVC
+            self.present(controller, animated: true, completion: nil)
+            controller.sendSticker = {image in
+                self.chatNetworking.uploadImage(image: image) { (storageRef, image, mediaName) in
+                    self.chatNetworking.downloadImage(storageRef, image, mediaName)
+                }
+                return 0
             }
             
             /*
-         guard let myProduct = self.myProduct else
-         {
+             guard let myProduct = self.myProduct else
+             {
              return
-         }
-         if SKPaymentQueue.canMakePayments() { //sends payment
+             }
+             if SKPaymentQueue.canMakePayments() { //sends payment
              print("working")
              let payment = SKPayment(product: myProduct)
              SKPaymentQueue.default().add(self)
              SKPaymentQueue.default().add(payment)
-         }
-
-*/
+             }
+             
+             */
         })
         
         let gifs = UIAlertAction(title: NSLocalizedString("gifs!", comment: ""), style: .default, handler: { _ in
-        let storyboard = UIStoryboard(name: "HomeVC", bundle: nil)
-        let controller = storyboard.instantiateViewController(withIdentifier: "gifVC") as! gifVC
-        self.present(controller, animated: true, completion: nil)
+            let storyboard = UIStoryboard(name: "HomeVC", bundle: nil)
+            let controller = storyboard.instantiateViewController(withIdentifier: "gifVC") as! gifVC
+            self.present(controller, animated: true, completion: nil)
             
             controller.sendGif = {gifData in
                 self.chatNetworking.uploadGifImage(gifData: gifData) { (storageRef, gifData, mediaName) in
@@ -293,116 +293,116 @@ class ChatVC: UIViewController,UIImagePickerControllerDelegate, UINavigationCont
                 }
                 return 0
             }
-        
-           
-        
-           })
-    actionSheet.addAction(action)
-    actionSheet.addAction(gifs)
-    actionSheet.addAction(picture)
-    actionSheet.addAction(imagePickerAlert)
+            
+            
+            
+        })
+        actionSheet.addAction(action)
+        actionSheet.addAction(gifs)
+        actionSheet.addAction(picture)
+        actionSheet.addAction(imagePickerAlert)
         actionSheet.addAction(stickers)
-       actionSheet.addAction(paidstickers)
+        actionSheet.addAction(paidstickers)
         let image = UIImage(named: "giffy_logoa")
         action.setValue(image?.withRenderingMode(.alwaysOriginal), forKey: "image")
-
-    actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        
+        actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         self.present(actionSheet, animated: true, completion: nil)
-    /*
-        let imagePicker = UIImagePickerController()
-        imagePicker.delegate = self
-        imagePicker.mediaTypes = [kUTTypeImage as String, kUTTypeMovie as String]
-        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        let subview = alert.view.subviews.first! as UIView
-        let alertContentView = subview.subviews.first! as UIView
-    
-        alert.addAction(UIAlertAction(title: "Take Photo", style: .default, handler: { (alertAction) in
-            if UIImagePickerController.isSourceTypeAvailable(.camera) {
-                imagePicker.sourceType = .camera
-                self.present(imagePicker, animated: true, completion: nil)
-            }
-        }))
+        /*
+         let imagePicker = UIImagePickerController()
+         imagePicker.delegate = self
+         imagePicker.mediaTypes = [kUTTypeImage as String, kUTTypeMovie as String]
+         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+         let subview = alert.view.subviews.first! as UIView
+         let alertContentView = subview.subviews.first! as UIView
          
-        alert.addAction(UIAlertAction(title: "Open Photo Library", style: .default, handler: { (alertAction) in
-            imagePicker.sourceType = .photoLibrary
-            self.present(imagePicker, animated: true, completion: nil)
-        }))
-        alert.addAction(UIAlertAction(title: "Free Stickers", style: .default, handler: { (alertAction) in
-        
-                let storyboard = UIStoryboard(name: "HomeVC", bundle: nil)
-                let controller = storyboard.instantiateViewController(withIdentifier: "StickerVC") as! StickerVC
-                self.present(controller, animated: true, completion: nil)
-                controller.sendSticker = {image in
-                    self.chatNetworking.uploadImage(image: image) { (storageRef, image, mediaName) in
-                        self.chatNetworking.downloadImage(storageRef, image, mediaName)
-                    }
-                    return 0
-                }
-            }))
-        
-
-        alert.addAction(UIAlertAction(title: "Paid Stickers", style: .default, handler: { (alertAction) in
-            /*
-                    let storyboard = UIStoryboard(name: "HomeVC", bundle: nil)
-                    let controller = storyboard.instantiateViewController(withIdentifier: "PaidStickerVC") as! PaidStickerVC
-                    self.present(controller, animated: true, completion: nil)
-                    controller.sendSticker = {image in
-                        self.chatNetworking.uploadImage(image: image) { (storageRef, image, mediaName) in
-                            self.chatNetworking.downloadImage(storageRef, image, mediaName)
-                        }
-                        return 0
-                    }
-                   */
-          guard let myProduct = self.myProduct else
-            {                    let storyboard = UIStoryboard(name: "HomeVC", bundle: nil)
-                let controller = storyboard.instantiateViewController(withIdentifier: "PaidStickerVC") as! PaidStickerVC
-                self.present(controller, animated: true, completion: nil)
-                controller.sendSticker = {image in
-                    self.chatNetworking.uploadImage(image: image) { (storageRef, image, mediaName) in
-                        self.chatNetworking.downloadImage(storageRef, image, mediaName)
-                    }
-                    return 0
-                }
-
-                return
-                
-            }
-            if SKPaymentQueue.canMakePayments() { //sends payment
-                print("working")
-                let payment = SKPayment(product: myProduct)
-                SKPaymentQueue.default().add(self)
-                SKPaymentQueue.default().add(payment)
-            }
-
- 
-        }))
-        
-        alert.addAction(UIAlertAction(title: "Gifs!", style: .default, handler: { (alertAction) in
-
-
-            let giphy = GiphyViewController()
-            giphy.delegate = self
-           // self.present(giphy, animated: true, completion: nil)
-            giphy.mediaTypeConfig = [.recents, .gifs]
-             if let contentType = self.selectedContentType {
-                    giphy.selectedContentType = contentType
-                }
-                if let user = self.showMoreByUser {
-                    giphy.showMoreByUser = user
-                }
-                
-            self.present(giphy, animated: true, completion: nil)
-            
-
-            }))
-        
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-        cancelAction.setValue(UIColor.systemRed, forKey: "titleTextColor")
-        alert.addAction(cancelAction)
-        present(alert, animated: true, completion: nil)
-        */
+         alert.addAction(UIAlertAction(title: "Take Photo", style: .default, handler: { (alertAction) in
+         if UIImagePickerController.isSourceTypeAvailable(.camera) {
+         imagePicker.sourceType = .camera
+         self.present(imagePicker, animated: true, completion: nil)
+         }
+         }))
+         
+         alert.addAction(UIAlertAction(title: "Open Photo Library", style: .default, handler: { (alertAction) in
+         imagePicker.sourceType = .photoLibrary
+         self.present(imagePicker, animated: true, completion: nil)
+         }))
+         alert.addAction(UIAlertAction(title: "Free Stickers", style: .default, handler: { (alertAction) in
+         
+         let storyboard = UIStoryboard(name: "HomeVC", bundle: nil)
+         let controller = storyboard.instantiateViewController(withIdentifier: "StickerVC") as! StickerVC
+         self.present(controller, animated: true, completion: nil)
+         controller.sendSticker = {image in
+         self.chatNetworking.uploadImage(image: image) { (storageRef, image, mediaName) in
+         self.chatNetworking.downloadImage(storageRef, image, mediaName)
+         }
+         return 0
+         }
+         }))
+         
+         
+         alert.addAction(UIAlertAction(title: "Paid Stickers", style: .default, handler: { (alertAction) in
+         /*
+         let storyboard = UIStoryboard(name: "HomeVC", bundle: nil)
+         let controller = storyboard.instantiateViewController(withIdentifier: "PaidStickerVC") as! PaidStickerVC
+         self.present(controller, animated: true, completion: nil)
+         controller.sendSticker = {image in
+         self.chatNetworking.uploadImage(image: image) { (storageRef, image, mediaName) in
+         self.chatNetworking.downloadImage(storageRef, image, mediaName)
+         }
+         return 0
+         }
+         */
+         guard let myProduct = self.myProduct else
+         {                    let storyboard = UIStoryboard(name: "HomeVC", bundle: nil)
+         let controller = storyboard.instantiateViewController(withIdentifier: "PaidStickerVC") as! PaidStickerVC
+         self.present(controller, animated: true, completion: nil)
+         controller.sendSticker = {image in
+         self.chatNetworking.uploadImage(image: image) { (storageRef, image, mediaName) in
+         self.chatNetworking.downloadImage(storageRef, image, mediaName)
+         }
+         return 0
+         }
+         
+         return
+         
+         }
+         if SKPaymentQueue.canMakePayments() { //sends payment
+         print("working")
+         let payment = SKPayment(product: myProduct)
+         SKPaymentQueue.default().add(self)
+         SKPaymentQueue.default().add(payment)
+         }
+         
+         
+         }))
+         
+         alert.addAction(UIAlertAction(title: "Gifs!", style: .default, handler: { (alertAction) in
+         
+         
+         let giphy = GiphyViewController()
+         giphy.delegate = self
+         // self.present(giphy, animated: true, completion: nil)
+         giphy.mediaTypeConfig = [.recents, .gifs]
+         if let contentType = self.selectedContentType {
+         giphy.selectedContentType = contentType
+         }
+         if let user = self.showMoreByUser {
+         giphy.showMoreByUser = user
+         }
+         
+         self.present(giphy, animated: true, completion: nil)
+         
+         
+         }))
+         
+         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+         cancelAction.setValue(UIColor.systemRed, forKey: "titleTextColor")
+         alert.addAction(cancelAction)
+         present(alert, animated: true, completion: nil)
+         */
     }
-
+    
     // ---------------------------------------------------------------------------------------------------------------------------------------------------- //
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
@@ -477,7 +477,7 @@ class ChatVC: UIViewController,UIImagePickerControllerDelegate, UINavigationCont
         messageContainer.messageTV.text = ""
         messageContainer.messageTV.subviews[2].isHidden = false
         self.scrollToTheBottom(animated: false)
-       // hideKeyboard()
+        // hideKeyboard()
         chatNetworking.disableIsTyping()
         messageContainer.messageTV.constraints.forEach { (constraint) in
             if constraint.firstAttribute == .height {
@@ -516,7 +516,7 @@ class ChatVC: UIViewController,UIImagePickerControllerDelegate, UINavigationCont
     // ---------------------------------------------------------------------------------------------------------------------------------------------------- //
     
     private func observeMessageActions(){
-       // self.blankLoadingView.isHidden = true
+        // self.blankLoadingView.isHidden = true
         chatNetworking.observeUserMessageSeen()
         let ref = Database.database().reference().child("messages").child(CurrentUser.uid).child(friend.id ?? "")
         ref.observe(.childRemoved) { (snap) in
@@ -630,20 +630,20 @@ class ChatVC: UIViewController,UIImagePickerControllerDelegate, UINavigationCont
         NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardWillHide(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(willResignActive), name: UIApplication.willResignActiveNotification, object: nil)
         NotificationCenter.default.addObserver(forName: UIApplication.userDidTakeScreenshotNotification, object: nil, queue: OperationQueue.main) { [weak self] notification in
-             self?.sendScreenshootActionMessage()
-    }
+            self?.sendScreenshootActionMessage()
+        }
     }
     private func sendScreenshootActionMessage() {
         let trimmedMessage = "Hideouts: \(CurrentUser.name) as taken a screenshot"
-    //    guard let friendId = friend.id else { return }
+        //    guard let friendId = friend.id else { return }
         let senderRef = Database.database().reference().child("messages").child(CurrentUser.uid).child(friend.id ?? "").childByAutoId()
         let friendRef = Database.database().reference().child("messages").child(friend.id ?? "").child(CurrentUser.uid).child(senderRef.key!)
         guard let messageId = senderRef.key else { return }
         var values = ["message": trimmedMessage
-            , "sender": CurrentUser.uid!
-            , "recipient": friend.id!
-            , "time": Date().timeIntervalSince1970
-            , "messageId": messageId] as [String : Any]
+                      , "sender": CurrentUser.uid!
+                      , "recipient": friend.id!
+                      , "time": Date().timeIntervalSince1970
+                      , "messageId": messageId] as [String : Any]
         
         chatNetworking.sendMessageHandler(senderRef: senderRef, friendRef: friendRef, values: values) { (error) in
             self.handleMessageTextSent(error)
@@ -668,12 +668,12 @@ class ChatVC: UIViewController,UIImagePickerControllerDelegate, UINavigationCont
         }
         messageContainer.bottomAnchr.constant -= height
         collectionView.contentOffset.y += height
-            let buttonTransform = hideChatController?.hideButton.transform.translatedBy(x: 0, y: -height) ?? CGAffineTransform.identity
-            UIView.animate(withDuration: duration) {
-                self.view.layoutIfNeeded()
-                //111
-                self.hideChatController?.hideButton.transform = buttonTransform
-            }
+        let buttonTransform = hideChatController?.hideButton.transform.translatedBy(x: 0, y: -height) ?? CGAffineTransform.identity
+        UIView.animate(withDuration: duration) {
+            self.view.layoutIfNeeded()
+            //111
+            self.hideChatController?.hideButton.transform = buttonTransform
+        }
     }
     
     // ---------------------------------------------------------------------------------------------------------------------------------------------------- //
@@ -840,7 +840,7 @@ class ChatVC: UIViewController,UIImagePickerControllerDelegate, UINavigationCont
             self.messageContainer.actionCircle.isHidden = false
         }
     }
-
+    
     
     // ---------------------------------------------------------------------------------------------------------------------------------------------------- //
     
@@ -880,7 +880,7 @@ class ChatVC: UIViewController,UIImagePickerControllerDelegate, UINavigationCont
             
         }
     }
-
+    
     // ---------------------------------------------------------------------------------------------------------------------------------------------------- //
     
     private func removeRecordingUI(){
@@ -915,19 +915,19 @@ class ChatVC: UIViewController,UIImagePickerControllerDelegate, UINavigationCont
             chatAudio.audioPlayer?.pause()
         }
     }
-//GIFFFFFSSSS
+    //GIFFFFFSSSS
     func didSelectMedia(giphyViewController: GiphyViewController, media: GPHMedia) {
         let senderRef = Database.database().reference().child("messages").child(CurrentUser.uid).child(friend.id!).childByAutoId()
-         let friendRef = Database.database().reference().child("messages").child(friend.id!).child(CurrentUser.uid).child(senderRef.key!)
-         guard let messageId = senderRef.key else { return }
-         var values = ["sender": CurrentUser.uid!, "recipient": friend.id!, "time": Date().timeIntervalSince1970, "messageId": messageId, "media": media.id] as [String : Any]
-         chatNetworking.sendMessageHandler(senderRef: senderRef, friendRef: friendRef, values: values) { (error) in
-             print(error)
-         } //collects id and sends it under "media" label in message
-         
-         giphyViewController.dismiss(animated: true, completion: nil) //dismiss vc
-         
-
+        let friendRef = Database.database().reference().child("messages").child(friend.id!).child(CurrentUser.uid).child(senderRef.key!)
+        guard let messageId = senderRef.key else { return }
+        var values = ["sender": CurrentUser.uid!, "recipient": friend.id!, "time": Date().timeIntervalSince1970, "messageId": messageId, "media": media.id] as [String : Any]
+        chatNetworking.sendMessageHandler(senderRef: senderRef, friendRef: friendRef, values: values) { (error) in
+            print(error)
+        } //collects id and sends it under "media" label in message
+        
+        giphyViewController.dismiss(animated: true, completion: nil) //dismiss vc
+        
+        
     }
     
     func didDismiss(controller: GiphyViewController?) {
@@ -935,9 +935,9 @@ class ChatVC: UIViewController,UIImagePickerControllerDelegate, UINavigationCont
     }
     
 }
-    
-    // ---------------------------------------------------------------------------------------------------------------------------------------------------- //
-      
+
+// ---------------------------------------------------------------------------------------------------------------------------------------------------- //
+
 
 extension ChatVC: HideChatType {
     

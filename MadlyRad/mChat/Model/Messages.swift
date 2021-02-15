@@ -29,11 +29,7 @@ class Messages {
     
     
     func determineUser() -> String{
-        if sender == CurrentUser.uid {
-            return recipient
-        }else{
-            return sender
-        }
+        return sender
     }
      
 // ---------------------------------------------------------------------------------------------------------------------------------------------------- //

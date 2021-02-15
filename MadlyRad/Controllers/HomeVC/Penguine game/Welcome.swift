@@ -64,7 +64,7 @@ class Welcome: UIViewController {
                 if recognizer.state == .recognized {
                     let storyboard = UIStoryboard(name: "HomeVC", bundle: nil)
                     let controller = storyboard.instantiateViewController(withIdentifier: "WelcomeVC")
-                    self.present(controller, animated: false, completion: nil);
+                    self.present(controller, animated: false, completion: nil)
                 }
             }
         

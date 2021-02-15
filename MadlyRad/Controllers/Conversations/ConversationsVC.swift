@@ -34,45 +34,30 @@ class ConversationsVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = "Chats"
-        Friends.list = []
-        setupUI()
-        conversationBug.convoVC = self
-        conversationBug.observeFriendList()
+
         loadConversations()
-        setupNewConversationButton()
-        //        contactsButton()
-        setupTableView()
-        emptyListView = EmptyListView(nil, self, false) //false for conversation view and true for contacts view
-        setupBlankView(blankLoadingView) //skeleton view
-        Friends.convVC = self
-        
-        
-        ConversationsNetworking()
-        
-        //tableView.backgroundColor = .white
-        //background
-        view.backgroundColor = .white
-        tableView.backgroundColor = .white
-        if let tabItems = tabBarController?.tabBar.items {
-            tabBarBadge = tabItems[1]
-        }
-        
-        
+        setupUI()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
         tabBarController?.tabBar.isHidden = false
+        //        loadConversations()
+        //    setupUI()
         //222
         // backgroundImageController?.setupBackground()
         //777
         Friends.list = []
-        conversationBug.convoVC = self
-        conversationBug.observeFriendList()
-        
-        
-        self.loadConversations()
+//        conversationBug.convoVC = self
+//        conversationBug.observeFriendList()
+        DispatchQueue.main.async { [weak self] in
+            self?.loadConversations()
+            self?.setupUI()
+        }
+        //         loadConversations()
+        //         setupUI()
+        //         ConversationsNetworking()
         
         //tableView.backgroundColor = .white
         // let backgroundImage = UIImageView(frame: UIScreen.main.bounds)
@@ -85,12 +70,26 @@ class ConversationsVC: UIViewController {
         //222
         //   backgroundImageController = BackgroundImageController(viewController: self, imageView: backgroundImage)
         //     backgroundImageController?.setupBackground()
+        tableView.reloadData()
+        
+        blankLoadingView.isHidden = true
     }
     
     //222
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         //    backgroundImageController?.setupBackground()
+    }
+    
+    // ---------------------------------------------------------------------------------------------------------------------------------------------------- //
+    
+    private func setupUI(){
+        view.backgroundColor = .white
+        setupNewConversationButton()
+        //        contactsButton()
+        setupTableView()
+        emptyListView = EmptyListView(nil, self, false)
+        setupBlankView(blankLoadingView)
     }
     
     // ---------------------------------------------------------------------------------------------------------------------------------------------------- //
@@ -139,19 +138,21 @@ class ConversationsVC: UIViewController {
         let controller = ContactsVC()
         present(UINavigationController(rootViewController: controller), animated: true, completion: nil)
     }
-    
-    // ---------------------------------------------------------------------------------------------------------------------------------------------------- //
-    // MARK: LOAD CONVERSATIONS METHOD
-    
+
     private func loadConversations() {
-        convNetworking.convVC = self
-        convNetworking.observeFriendsList()
+        let recent = Messages()
+        recent.message = "Hi"
+        recent.sender = "Sender"
+        recent.time = NSNumber()
+        recent.id = UUID().uuidString
+        recent.imageWidth = NSNumber(floatLiteral: 100)
+        recent.imageHeight = NSNumber(floatLiteral: 100)
+        messages = [recent]
     }
     
     // ---------------------------------------------------------------------------------------------------------------------------------------------------- //
     
     func loadMessagesHandler(_ newMessages: [Messages]?) {
-        blankLoadingView.isHidden = true
         if let newMessages = newMessages {
             handleReload(newMessages)
         }
@@ -181,16 +182,6 @@ class ConversationsVC: UIViewController {
         convNetworking.observeNewMessages { (newMessages) in
             self.handleReload(newMessages)
         }
-    }
-    
-    // ---------------------------------------------------------------------------------------------------------------------------------------------------- //
-    
-    func nextControllerHandler(usr: FriendInfo) {
-        let controller = ChatVC()
-        controller.modalPresentationStyle = .fullScreen
-        controller.friend = usr
-        convNetworking.removeConvObservers()
-        show(controller, sender: nil)
     }
     
     // ---------------------------------------------------------------------------------------------------------------------------------------------------- //
@@ -236,13 +227,66 @@ class ConversationsVC: UIViewController {
             return friend1.name ?? "" < friend2.name ?? ""
         }
         handleEmptyList()
-        self.contactsVC.tableView.reloadData()
         self.tableView.reloadData()
     }
     func handleEmptyList() {
         emptyListView.isHidden = !(Friends.list.count == 0)
         emptyListView.emptyButton.isHidden = !(Friends.list.count == 0)
     }
+}
+
+extension ConversationsVC: UITableViewDelegate, UITableViewDataSource {
+        
+    func setupNoTypingCell(_ cell: ConversationsCell){
+        cell.isTypingView.isHidden = true
+        cell.recentMessage.isHidden = false
+        cell.timeLabel.isHidden = false
+        cell.backgroundColor = .clear
+    }
     
+    // ---------------------------------------------------------------------------------------------------------------------------------------------------- //
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return messages.count
+    }
+    
+    // ---------------------------------------------------------------------------------------------------------------------------------------------------- //
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "ConversationsCell") as! ConversationsCell
+        cell.selectionStyle = .none
+        let recent = messages.first!
+        cell.convVC = self
+        cell.message = recent
+        cell.unreadMessageView.isHidden = true
+        cell.backgroundColor = .clear
+//        convNetworking.observeUnreadMessages(recent.determineUser()) { (unreadMessage) in
+//            if let numOfMessages = unreadMessage[cell.message!.determineUser()], numOfMessages > 0 {
+//                cell.unreadMessageView.isHidden = false
+//                cell.unreadLabel.text = "\(numOfMessages)"
+//                cell.backgroundColor = .clear
+//            }else{
+//                cell.unreadMessageView.isHidden = true
+//                cell.backgroundColor = .clear
+//            }
+//        }
+        return cell
+    }
+    
+    // ---------------------------------------------------------------------------------------------------------------------------------------------------- //
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        let chat = messages[indexPath.row]
+        for usr in Friends.list {
+            if usr.id == chat.determineUser() {
+                let chatVC = ChatVC()
+                
+                break
+            }
+        }
+    }
+    
+    // ---------------------------------------------------------------------------------------------------------------------------------------------------- //
     
 }

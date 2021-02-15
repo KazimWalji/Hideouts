@@ -25,8 +25,6 @@ class SettingsVC: UIViewController, UIImagePickerControllerDelegate, UINavigatio
         setupTableView()
         setupRightNavButton()
         view.backgroundColor = .white
-   //background
-
     }
     
     override func viewWillAppear(_ animated: Bool) {

@@ -31,7 +31,7 @@ class EmptyListView: UIView {
             emptyLabel.text = "It looks like you have not added any friends yet".uppercased()
             emptyButton.setTitle("Add Friends", for: .normal)
             emptyButton.addTarget(self, action: #selector(contactsButtonPressed), for: .touchUpInside)
-        }else{
+        } else {
             controller.view.addSubview(self)
             setupEmptyListView()
             setupEmptyLabel()

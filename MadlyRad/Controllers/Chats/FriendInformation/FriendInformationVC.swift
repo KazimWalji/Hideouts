@@ -182,7 +182,6 @@ class FriendInformationVC: UIViewController, UITableViewDelegate, UITableViewDat
         addFriendNetworking.removeFriend(completion: { [weak self] _ in
             self?.navigationController?.popToRootViewController(animated: true)
         })
-        Friends.contactsVC?.tableView.reloadData()
     }
     //666
     func markUserAsReported() {
